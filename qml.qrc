@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+    </qresource>
+    <qresource prefix="/Gauges">
+        <file alias="secondhand.png">Gauges/secondhand.png</file>
+        <file alias="shorthand.png">Gauges/shorthand.png</file>
+        <file alias="longhand.png">Gauges/longhand.png</file>
+        <file alias="clock.png">Gauges/clock.png</file>
+        <file alias="Clock.qml">Gauges/Clock.qml</file>
+        <file alias="compass.png">Gauges/compass.png</file>
+        <file alias="compassneedle.png">Gauges/compassneedle.png</file>
+        <file alias="compassring.png">Gauges/compassring.png</file>
+        <file alias="Compass2.qml">Gauges/Compass2.qml</file>
+        <file alias="speed10.png">Gauges/speed10.png</file>
+        <file alias="speed200.png">Gauges/speed200.png</file>
+        <file alias="speedneedle.png">Gauges/speedneedle.png</file>
+        <file alias="Speedometer.qml">Gauges/Speedometer.qml</file>
+        <file alias="Altimeter.qml">Gauges/Altimeter.qml</file>
+        <file alias="satview.png">Gauges/satview.png</file>
+        <file alias="Satellites.qml">Gauges/Satellites.qml</file>
+        <file alias="Levels.qml">Gauges/Levels.qml</file>
+        <file alias="level.svt">Gauges/level.svg</file>
+        <file alias="leveltop.svg">Gauges/leveltop.svg</file>
+        <file alias="level.png">Gauges/level.png</file>
+        <file alias="levelhand.png">Gauges/levelhand.png</file>
+    </qresource>
+    <qresource prefix="/Dashboard">
+        <file alias="Dashboard.qml">Dashboard/Dashboard.qml</file>
+        <file alias="DashboardLayout.qml">Dashboard/DashboardLayout.qml</file>
+    </qresource>
+    <qresource prefix="/Buttons">
+        <file alias="exit.png">Buttons/exit.png</file>
+    </qresource>
+</RCC>
