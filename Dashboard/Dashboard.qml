@@ -113,9 +113,9 @@ Rectangle {
         compass:    (compasssensor.reading == null)? 0
                     : compasssensor.reading.calibrationLevel * 100
         vertical:   ((!positionsource.verticalAccuracyValid) || (positionsource.verticalAccuracy > 300))? 0
-                    : positionsource.verticalAccuracy/3
+                    : 100 - positionsource.verticalAccuracy/3
         horizontal: ((!positionsource.horizontalAccuracyValid) || (positionsource.horizontalAccuracy > 300))? 0
-                    : positionsource.horizontalAccuracy/3
+                    : 100 - positionsource.horizontalAccuracy/3
     }
 
     Satellites {
