@@ -3,9 +3,7 @@ import Local 1.0
 
 Item {
     id: root
-
-    property variant layout: Item {}
-    x: layout.x; y: layout.y; width: layout.width; height: layout.height
+    anchors.fill: parent
 
     property variant satellitemodel: null
 

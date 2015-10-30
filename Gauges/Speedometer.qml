@@ -3,9 +3,7 @@ import QtPositioning 5.2
 
 Item {
     id: root
-
-    property variant layout: Item {}
-    x: layout.x; y: layout.y; width: layout.width; height: layout.height
+    anchors.fill: parent
 
     property double current:  0
     property double average:  0
@@ -15,8 +13,8 @@ Item {
     property double monitor:  0
 
     property int analogmode: 0  // 0: current; 1: average; 2: minimum; 3: maximum; 4: distance; 5: monitor
-    property int topmode:    4
-    property int bottommode: 5
+    property int topmode:    1
+    property int bottommode: 3
 
     onCurrentChanged:      update()
     onAverageChanged:      update()
@@ -39,13 +37,37 @@ Item {
     property double topvalue: 0
     property double bottomvalue: 0
 
+    function updateCurrent(value) {
+        current = value;
+    }
+
+    function updateAverage(value) {
+        average = value;
+    }
+
+    function updateMinimum(value) {
+        minimum = value;
+    }
+
+    function updateMaximum(value) {
+        maximum = value;
+    }
+
+    function updateDistance(value) {
+        ascent = value;
+    }
+
+    function updateMonitor(value) {
+        descent = value;
+    }
+
     function update() {
         switch (analogmode)
         {
             case 0: analogvalue = current;  break;
-            case 1: analogvalue = minimum;  break;
-            case 2: analogvalue = maximum;  break;
-            case 3: analogvalue = average;  break;
+            case 1: analogvalue = average;  break;
+            case 2: analogvalue = minimum;  break;
+            case 3: analogvalue = maximum;  break;
             case 4: analogvalue = distance; break;
             case 5: analogvalue = monitor;  break;
         }
@@ -53,9 +75,9 @@ Item {
         switch (topmode)
         {
             case 0: topvalue = current;  break;
-            case 1: topvalue = minimum;  break;
-            case 2: topvalue = maximum;  break;
-            case 3: topvalue = average;  break;
+            case 1: topvalue = average;  break;
+            case 2: topvalue = minimum;  break;
+            case 3: topvalue = maximum;  break;
             case 4: topvalue = distance; break;
             case 5: topvalue = monitor;  break;
         }
@@ -63,9 +85,9 @@ Item {
         switch (bottommode)
         {
             case 0: bottomvalue = current;  break;
-            case 1: bottomvalue = minimum;  break;
-            case 2: bottomvalue = maximum;  break;
-            case 3: bottomvalue = average;  break;
+            case 1: bottomvalue = average;  break;
+            case 2: bottomvalue = minimum;  break;
+            case 3: bottomvalue = maximum;  break;
             case 4: bottomvalue = distance; break;
             case 5: bottomvalue = monitor;  break;
         }

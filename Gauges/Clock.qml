@@ -2,9 +2,7 @@ import QtQuick 2.5
 
 Item {
     id: root
-
-    property variant layout: Item {}
-    x: layout.x; y: layout.y; width: layout.width; height: layout.height
+    anchors.fill: parent
 
     property date current: new Date(0,0,0)
     property date elapsed: new Date(0,0,0)
@@ -26,6 +24,30 @@ Item {
     property date analogvalue: new Date(0,0,0)
     property date topvalue:    new Date(0,0,0)
     property date bottomvalue: new Date(0,0,0)
+
+    function updateCurrent(value) {
+        current = value;
+    }
+
+    function updateElapsed(value) {
+        elapsed = value;
+    }
+
+    function updateMonitor(value) {
+        monitor = value;
+    }
+
+    function updateAnalogmode(value) {
+        analogmode = value;
+    }
+
+    function updateTopmode(value) {
+        topmode = value;
+    }
+
+    function updateBottommode(value) {
+        bottommode = value;
+    }
 
     function update() {
         switch (analogmode)

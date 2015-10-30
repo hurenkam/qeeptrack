@@ -2,9 +2,7 @@ import QtQuick 2.5
 
 Item {
     id: root
-
-    property variant layout: Item {}
-    x: layout.x; y: layout.y; width: layout.width; height: layout.height
+    anchors.fill: parent
 
     property int mode:        1 // 0: northup; 1: headingup; 2: bearingup
     property double heading:  0
@@ -15,6 +13,18 @@ Item {
     onBearingChanged: update()
 
     Component.onCompleted: update()
+
+    function updateHeading(value) {
+        heading = value;
+    }
+
+    function updateBearing(value) {
+        bearing = value;
+    }
+
+    function updateMode(value) {
+        mode = value;
+    }
 
     function update() {
         shield.angle = (mode==0)? 0

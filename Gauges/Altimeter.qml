@@ -3,9 +3,7 @@ import QtPositioning 5.2
 
 Item {
     id: root
-
-    property variant layout: Item {}
-    x: layout.x; y: layout.y; width: layout.width; height: layout.height
+    anchors.fill: parent
 
     property int current: 0
     property int average: 0
@@ -15,8 +13,8 @@ Item {
     property int descent: 0
 
     property int analogmode: 0 // 0: current; 1: average; 2: minimum; 3: maximum; 4: ascent; 5: descent
-    property int topmode:    4
-    property int bottommode: 5
+    property int topmode:    2
+    property int bottommode: 3
 
     onCurrentChanged:     update()
     onAverageChanged:     update()
@@ -38,6 +36,30 @@ Item {
     property int analogvalue: 0
     property int topvalue: 0
     property int bottomvalue: 0
+
+    function updateCurrent(value) {
+        current = value;
+    }
+
+    function updateAverage(value) {
+        average = value;
+    }
+
+    function updateMinimum(value) {
+        minimum = value;
+    }
+
+    function updateMaximum(value) {
+        maximum = value;
+    }
+
+    function updateAscent(value) {
+        ascent = value;
+    }
+
+    function updateDescent(value) {
+        descent = value;
+    }
 
     function update() {
         switch (analogmode)

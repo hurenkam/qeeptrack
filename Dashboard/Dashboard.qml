@@ -7,67 +7,12 @@ import QtSensors 5.0
 import Local 1.0
 import "qrc:/Dashboard"
 import "qrc:/Gauges"
+import "qrc:/Models"
 
 Rectangle {
     id: root
     anchors.fill: parent
     color: "black"
-
-    property int clockindex:       0
-    property int compassindex:     1
-    property int speedometerindex: 2
-    property int altimeterindex:   3
-    property int levelsindex:      4
-    property int satellitesindex:  5
-
-    DashboardLayout {
-        id: layout;
-        mode: (root.height>root.width)? 0: 1
-    }
-
-    Timer {
-        id: timer
-        interval: 1000;
-        running: true;
-        repeat: true;
-        property date currenttime: new Date()
-
-        onTriggered: {            
-            currenttime = new Date()
-        }
-    }
-
-    OrientationSensor {
-        id: orientationsensor
-        property int rotation: 0
-
-        Component.onCompleted: {
-            orientationsensor.start()
-        }
-
-        onReadingChanged: {
-            switch (orientationsensor.reading.orientation) {
-                case OrientationReading.LeftUp:   rotation = 270; break;
-                case OrientationReading.TopDown:  rotation = 180; break;
-                case OrientationReading.RightUp:  rotation =  90; break;
-                default: rotation = 0; break;
-            }
-        }
-    }
-
-    Compass {
-        id: compasssensor
-        dataRate: 1
-        active: true
-
-        // Note: The orientation correction seems to be needed on iPhone 6s, but not on HTC Evo 3D.
-        //       How to solve this properly?
-        property int azimuth: (reading == null)? 0 : reading.azimuth + orientationsensor.rotation
-
-        Component.onCompleted: {
-            compasssensor.start()
-        }
-    }
 
     PositionSource {
         id: positionsource
@@ -81,52 +26,154 @@ Rectangle {
         }
     }
 
-    Altimeter {
-        id:      altimeter
-        layout:  layout.current[altimeterindex]
-        current: ((positionsource.position == null) || (!positionsource.position.altitudeValid))? 0
-                 : positionsource.position.coordinate.altitude
+    OrientationSensor {
+        id: orientationsensor
+
+        Component.onCompleted: {
+            orientationsensor.start()
+        }
     }
 
-    Speedometer {
-        id:      speedometer
-        layout:  layout.current[speedometerindex]
-        current: ((positionsource.position == null) || (!positionsource.position.speedValid))? 0
-                 : positionsource.position.speed * 3.6
+    Compass {
+        id: compasssensor
+        dataRate: 1
+        active: true
+
+        Component.onCompleted: {
+            compasssensor.start()
+        }
     }
 
-    Compass2 {
-        id:      compass
-        layout:  layout.current[compassindex]
-        heading: compasssensor.azimuth
+    ClockModel {
+        id: clockmodel
     }
 
-    Clock {
-        id:      clock
-        layout:  layout.current[clockindex]
-        current: timer.currenttime
+    SpeedModel {
+        id: speedmodel;
+        position: positionsource.position
     }
 
-    Levels {
-        id:         levels
-        layout:     layout.current[levelsindex]
-        compass:    (compasssensor.reading == null)? 0
-                    : compasssensor.reading.calibrationLevel * 100
-        vertical:   ((!positionsource.verticalAccuracyValid) || (positionsource.verticalAccuracy > 300))? 0
-                    : 100 - positionsource.verticalAccuracy/3
-        horizontal: ((!positionsource.horizontalAccuracyValid) || (positionsource.horizontalAccuracy > 300))? 0
-                    : 100 - positionsource.horizontalAccuracy/3
+    AltitudeModel {
+        id: altitudemodel;
+        position: positionsource.position
     }
 
-    Satellites {
-        id: satellites
-        layout: layout.current[satellitesindex]
+    MonitorModel {
+        id: monitormodel;
+        position: positionsource.position
+    }
 
-        // Note: On IOS there seems to be no satellite data source available, but this should work fine on Android
-        satellitemodel: SatelliteModel {
-            id: satellitemodel
-            singleRequestMode: false
-            running: true
+    CompassModel
+    {
+        id: compassmodel;
+        position: positionsource.position;
+        compass: compasssensor.reading;
+        orientation: orientationsensor.reading
+    }
+
+    DashboardLayout {
+        id: layout;
+        mode: (root.height>root.width)? 0: 1
+    }
+
+    ListModel {
+        id: gaugemodel
+        ListElement { index: 0; gauge: "clock";       name: "time" }
+        ListElement { index: 1; gauge: "compass";     name: "compass" }
+        ListElement { index: 2; gauge: "speedometer"; name: "speed" }
+        ListElement { index: 3; gauge: "altimeter";   name: "altitude" }
+        ListElement { index: 4; gauge: "levels";      }
+        ListElement { index: 5; gauge: "satellites";  }
+    }
+
+    Repeater {
+        anchors.fill: parent
+        model: gaugemodel
+        delegate: gaugedelegate
+    }
+
+    property list<QtObject> gauges: [
+        Item {},
+        Item {},
+        Item {},
+        Item {},
+        Item {},
+        Item {}
+    ]
+
+    Component {
+        id: gaugedelegate
+
+        Item {
+            id: gaugeitem
+            x: layout.current[index].x
+            y: layout.current[index].y
+            width: layout.current[index].width
+            height: layout.current[index].height
+            property string gaugetype: gauge
+            property int gaugeindex: index
+
+            Component.onCompleted: {
+                switch (gauge) {
+                    case "clock": {
+                        var component = Qt.createComponent("qrc:/Gauges/Clock.qml");
+                        var clock = component.createObject(gaugeitem, { } );
+                        clockmodel.timeUpdate.connect(clock.updateCurrent)
+                        clockmodel.elapsedUpdate.connect(clock.updateElapsed)
+                        monitormodel.remainingTimeChanged.connect(clock.updateMonitor)
+                        gauges[index] = clock
+                        break;
+                    }
+
+                    case "compass": {
+                        var component = Qt.createComponent("qrc:/Gauges/Compass2.qml");
+                        var compass = component.createObject(gaugeitem, { } );
+                        compassmodel.headingUpdate.connect(compass.updateHeading)
+                        gauges[index] = compass
+                        break;
+                    }
+
+                    case "altimeter": {
+                        var component = Qt.createComponent("qrc:/Gauges/Altimeter.qml");
+                        var altimeter = component.createObject(gaugeitem, { } );
+                        altitudemodel.currentUpdate.connect(altimeter.updateCurrent)
+                        altitudemodel.averageUpdate.connect(altimeter.updateAverage)
+                        altitudemodel.minimumUpdate.connect(altimeter.updateMinimum)
+                        altitudemodel.maximumUpdate.connect(altimeter.updateMaximum)
+                        gauges[index] = altimeter
+                        break;
+                    }
+
+                    case "speedometer": {
+                        var component = Qt.createComponent("qrc:/Gauges/Speedometer.qml");
+                        var speedometer = component.createObject(gaugeitem, { } );
+                        speedmodel.currentUpdate.connect(speedometer.updateCurrent)
+                        speedmodel.averageUpdate.connect(speedometer.updateAverage)
+                        speedmodel.minimumUpdate.connect(speedometer.updateMinimum)
+                        speedmodel.maximumUpdate.connect(speedometer.updateMaximum)
+                        monitormodel.remainingDistanceChanged.connect(speedometer.updateMonitor)
+                        gauges[index] = speedometer
+                        break;
+                    }
+
+                    case "levels": {
+                        var component = Qt.createComponent("qrc:/Gauges/Levels.qml");
+                        var levels = component.createObject(gaugeitem, { } );
+                        compassmodel.calibrationUpdate.connect(levels.updateCompassCalibration)
+                        //positionsource.verticalAccuracyChanged.connect(levels.updateVerticalAccuracy)
+                        //positionsource.horizontalAccuracyChanged.connect(levels.updateHorizontalAccuracy)
+                        gauges[index] = levels
+                        break;
+                    }
+
+                    case "satellites": {
+                        var component = Qt.createComponent("qrc:/Gauges/Satellites.qml");
+                        var satellites = component.createObject(gaugeitem, { } );
+                        gauges[index] = satellites
+                        break;
+                    }
+                }
+            }
         }
     }
 }

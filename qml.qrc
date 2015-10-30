@@ -32,4 +32,12 @@
     <qresource prefix="/Buttons">
         <file alias="exit.png">Buttons/exit.png</file>
     </qresource>
+    <qresource prefix="/Models">
+        <file alias="AltitudeModel.qml">Models/AltitudeModel.qml</file>
+        <file alias="SpeedModel.qml">Models/SpeedModel.qml</file>
+        <file alias="DistanceModel.qml">Models/DistanceModel.qml</file>
+        <file alias="MonitorModel.qml">Models/MonitorModel.qml</file>
+        <file alias="ClockModel.qml">Models/ClockModel.qml</file>
+        <file alias="CompassModel.qml">Models/CompassModel.qml</file>
+    </qresource>
 </RCC>

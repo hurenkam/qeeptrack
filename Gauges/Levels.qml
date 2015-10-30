@@ -2,14 +2,28 @@ import QtQuick 2.5
 
 Item {
     id: root
-
-    property variant layout: Item {}
-    x: layout.x; y: layout.y; width: layout.width; height: layout.height
+    anchors.fill: parent
 
     property int compass:     0
     property int battery:     0
     property int horizontal:  0
     property int vertical:    0
+
+    function updateBattery(value) {
+        battery = value;
+    }
+
+    function updateCompassCalibration(value) {
+        compass = value;
+    }
+
+    function updateVerticalAccuracy(value) {
+        vertical = value;
+    }
+
+    function updateHorizontalAccuracy(value) {
+        horizontal = value;
+    }
 
     Image {
         source: "level.png"
