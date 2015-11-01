@@ -2,6 +2,8 @@
 Advanced GPS dashboard with altimeter, speedometer and compass.
 
 ## Works: ##
+(note: currently only tested on iOS/iphone 6s)
+
  * Clock
    * Current time
    * Trip time
