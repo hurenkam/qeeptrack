@@ -22,12 +22,9 @@ Item {
 
         onTriggered: {
             var current = new Date()
-            var delta = (current.getTime() - start.getTime())
-
             var elapsed = new Date(0,0,0)
-            delta += elapsed.getTime()
-            elapsed.setTime(delta)
-
+            var delta = (current.getTime() - start.getTime())
+            elapsed.setTime(elapsed.getTime() + delta)
             root.time = current
             root.elapsed = elapsed
         }

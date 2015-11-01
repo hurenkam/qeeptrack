@@ -1,39 +1,39 @@
 import QtQuick 2.5
 import QtPositioning 5.2
+import "qrc:/Components"
 
 Item {
     id: root
     anchors.fill: parent
 
-    property int current: 0
-    property int average: 0
-    property int minimum: 0
-    property int maximum: 0
-    property int ascent:  0
-    property int descent: 0
+    property string name: "altitude (100m)"
+    property double current: 0
+    property double average: 0
+    property double minimum: 0
+    property double maximum: 0
+    property double ascent:  0
+    property double descent: 0
 
     property int analogmode: 0 // 0: current; 1: average; 2: minimum; 3: maximum; 4: ascent; 5: descent
     property int topmode:    2
     property int bottommode: 3
+    property int divider: 100
+    property int digits: 2
 
-    onCurrentChanged:     update()
-    onAverageChanged:     update()
-    onMinimumChanged:     update()
-    onMaximumChanged:     update()
-    onAscentChanged:      update()
-    onDescentChanged:     update()
-    onAnalogmodeChanged:  update()
-    onTopmodeChanged:     update()
-    onBottommodeChanged:  update()
+    onCurrentChanged:      update()
+    onAverageChanged:      update()
+    onMinimumChanged:      update()
+    onMaximumChanged:      update()
+    onAscentChanged:       update()
+    onDescentChanged:      update()
+    onAnalogmodeChanged:   update()
+    onTopmodeChanged:      update()
+    onBottommodeChanged:   update()
 
     Component.onCompleted: update()
 
-    Image {
-        source: "speed10.png"
-        anchors.fill: parent
-    }
-
     property int analogvalue: 0
+
     property int topvalue: 0
     property int bottomvalue: 0
 
@@ -98,6 +98,21 @@ Item {
         return s;
     }
 
+    Image {
+        source: "speed10.png"
+        anchors.fill: parent
+
+        Text {
+            id: nametext
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: parent.height * 0.3
+            text: root.name;
+            color: "white"
+            font.bold: true; font.pixelSize: parent.height/3* 0.18
+            style: Text.Raised; styleColor: "black"
+        }
+    }
+
     Rectangle {
         y: parent.height * 0.75
         height: parent.height * 0.16
@@ -109,7 +124,7 @@ Item {
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.margins: 2
-            text: root.toFixed(topvalue,1)
+            text: root.toFixed(topvalue/divider,digits)
             color: "white"
             font.bold: true; font.pixelSize: parent.height/3
             style: Text.Raised; styleColor: "black"
@@ -119,7 +134,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.margins: 2
-            text: root.toFixed(bottomvalue,1)
+            text: root.toFixed(bottomvalue/divider,digits)
             color: "white"
             font.bold: true; font.pixelSize: parent.height/3
             style: Text.Raised; styleColor: "black"
@@ -133,11 +148,12 @@ Item {
             id: shorthand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analogvalue/10000 * 360
+            angle: -180 + analogvalue/(100*divider) * 360
             Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
+                id: shorthandanimation
+                enabled: false
+                NumberAnimation {
+                    duration: 1000
                 }
             }
         }
@@ -150,11 +166,30 @@ Item {
             id: longhand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analogvalue/1000 * 360
+            angle: -180 + analogvalue/(10*divider) * 360
             Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
+                id: longhandanimation
+                enabled: false
+                NumberAnimation {
+                    duration: 1000
+                }
+            }
+        }
+    }
+
+    Image {
+        source: "secondhand.png"
+        anchors.fill: parent
+        transform: Rotation {
+            id: secondhand
+            origin.x: width/2
+            origin.y: height/2
+            angle: -180 + analogvalue/divider * 360
+            Behavior on angle {
+                id: secondhandanimation
+                enabled: false
+                NumberAnimation {
+                    duration: 1000
                 }
             }
         }

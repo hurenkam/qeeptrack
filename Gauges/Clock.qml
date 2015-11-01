@@ -1,9 +1,11 @@
 import QtQuick 2.5
+import "qrc:/Components"
 
 Item {
     id: root
     anchors.fill: parent
 
+    property string name: "clock"
     property date current: new Date(0,0,0)
     property date elapsed: new Date(0,0,0)
     property date monitor: new Date(0,0,0)
@@ -72,9 +74,30 @@ Item {
         }
     }
 
+    Timer {
+        id: timer
+        interval: 1500;
+        running: true;
+        repeat: false;
+
+        onTriggered: {
+            secondhandanimation.enabled = true
+        }
+    }
+
     Image {
         source: "clock.png";
         anchors.fill: parent
+
+        Text {
+            id: nametext
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: parent.height * 0.3
+            text: root.name;
+            color: "white"
+            font.bold: true; font.pixelSize: parent.height/3* 0.18
+            style: Text.Raised; styleColor: "black"
+        }
     }
 
     Rectangle {
@@ -109,16 +132,10 @@ Item {
             id: shorthand
             origin.x: width/2
             origin.y: height/2
-            angle: analogvalue.getHours()*360/12 +  analogvalue.getMinutes()/2
-            Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
-                    modulus: 360
-                }
-            }
+            angle: analogvalue.getHours()*360/12 + analogvalue.getMinutes()/2
         }
     }
+
     Image {
         source: "longhand.png"
         anchors.fill: parent
@@ -126,14 +143,7 @@ Item {
             id: longhand
             origin.x: width/2
             origin.y: height/2
-            angle: analogvalue.getMinutes()*360/60
-            Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
-                    modulus: 360
-                }
-            }
+            angle: analogvalue.getMinutes()*360/60 + analogvalue.getSeconds()/10
         }
     }
 
@@ -146,9 +156,10 @@ Item {
             origin.y: height/2
             angle: analogvalue.getSeconds()*360/60
             Behavior on angle {
+                id: secondhandanimation
+                enabled: false
                 SpringAnimation {
-                    spring: 1.3
-                    damping: .15
+                    velocity: 6
                     modulus: 360
                 }
             }

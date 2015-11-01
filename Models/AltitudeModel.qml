@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtPositioning 5.5
 
 Item {
+    id: root
     signal currentUpdate(double value)
     signal averageUpdate(double value)
     signal minimumUpdate(double value)
@@ -9,13 +10,63 @@ Item {
     signal ascentUpdate (double value)
     signal descentUpdate(double value)
 
+    property bool enableanimations: true
     readonly property bool valid: internal.valid
+
     property double current: 0
+    Behavior on current {
+        id: currentanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     property double average: 0
+    Behavior on average {
+        id: averageanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     property double minimum: 0
+    Behavior on minimum {
+        id: minimumanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     property double maximum: 0
+    Behavior on maximum {
+        id: maximumanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     property double ascent:  0
+    Behavior on ascent {
+        id: ascentanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     property double descent: 0
+    Behavior on descent {
+        id: descentanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     onCurrentChanged: currentUpdate(current)
     onAverageChanged: averageUpdate(average)
     onMinimumChanged: minimumUpdate(minimum)

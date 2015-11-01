@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import "qrc:/Components"
 
 Item {
     id: root
@@ -55,6 +56,7 @@ Item {
             }
         }
     }
+
     Image {
         source: "compass.png"
         anchors.fill: parent
@@ -72,6 +74,7 @@ Item {
             }
         }
     }
+
     Image {
         source: "compassneedle.png"
         anchors.fill: parent

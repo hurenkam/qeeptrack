@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import "qrc:/Components"
 
 Item {
     id: root

@@ -2,18 +2,52 @@ import QtQuick 2.5
 import QtPositioning 5.5
 
 Item {
+    id: root
     signal currentUpdate(double value)
     signal averageUpdate(double value)
     signal minimumUpdate(double value)
     signal maximumUpdate(double value)
 
     readonly property bool valid: internal.valid
+    property bool enableanimations: true
     property double current: 0
+    Behavior on current {
+        id: currentanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+/*
     property double average: 0
+    Behavior on average {
+        id: averageanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+*/
     property double minimum: 0
+    Behavior on minimum {
+        id: minimumanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     property double maximum: 0
+    Behavior on maximum {
+        id: maximumanimation
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
     onCurrentChanged: currentUpdate(current)
-    onAverageChanged: averageUpdate(average)
+    //onAverageChanged: averageUpdate(average)
     onMinimumChanged: minimumUpdate(minimum)
     onMaximumChanged: maximumUpdate(maximum)
 
@@ -41,7 +75,7 @@ Item {
 
         if (!internal.valid)
         {
-            average = value.speed * 3.6
+            //average = value.speed * 3.6
             minimum = value.speed * 3.6
             maximum = value.speed * 3.6
             internal.previous = current
@@ -52,7 +86,7 @@ Item {
 
         minimum = (current < minimum)? current : minimum
         maximum = (current > maximum)? current : maximum
-
+/*
         if (internal.average.length == internal.averagekeep)
         {
             var old = internal.average[0]
@@ -63,5 +97,6 @@ Item {
             internal.average.push(current)
             average = average/(internal.average.length) * (internal.average.length-1) + current/(internal.average.length)
         }
+*/
     }
 }

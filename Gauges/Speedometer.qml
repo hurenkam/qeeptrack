@@ -1,10 +1,12 @@
 import QtQuick 2.5
 import QtPositioning 5.2
+import "qrc:/Components"
 
 Item {
     id: root
     anchors.fill: parent
 
+    property string name: "speed"
     property double current:  0
     property double average:  0
     property double minimum:  0
@@ -13,7 +15,7 @@ Item {
     property double monitor:  0
 
     property int analogmode: 0  // 0: current; 1: average; 2: minimum; 3: maximum; 4: distance; 5: monitor
-    property int topmode:    1
+    property int topmode:    0
     property int bottommode: 3
 
     onCurrentChanged:      update()
@@ -94,9 +96,19 @@ Item {
     }
 
     Image {
-        source: (analogvalue>10)? "speed200.png" : "speed10.png"
+        source: ((analogvalue>10) || (maximum>10))? "speed200.png" : "speed10.png"
         width: parent.width
         height: parent.height
+
+        Text {
+            id: nametext
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: parent.height * 0.3
+            text: root.name;
+            color: "white"
+            font.bold: true; font.pixelSize: parent.height/3* 0.18
+            style: Text.Raised; styleColor: "black"
+        }
     }
 
     Rectangle {
@@ -133,13 +145,7 @@ Item {
             id: needle
             origin.x: width/2
             origin.y: height/2
-            angle: analogvalue<10? analogvalue/10*360 -180: analogvalue/200*360 -180
-            Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
-                }
-            }
+            angle: ((analogvalue<10) && (maximum<10))? analogvalue/10*360 -180: analogvalue/200*360 -180
         }
     }
 }
