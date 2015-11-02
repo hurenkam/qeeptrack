@@ -15,7 +15,7 @@ Item {
     property double monitor:  0
 
     property int analogmode: 0  // 0: current; 1: average; 2: minimum; 3: maximum; 4: distance; 5: monitor
-    property int topmode:    0
+    property int topmode:    1
     property int bottommode: 3
 
     onCurrentChanged:      update()

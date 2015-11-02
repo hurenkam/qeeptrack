@@ -18,16 +18,7 @@ Item {
             duration: 1000
         }
     }
-/*
-    property double average: 0
-    Behavior on average {
-        id: averageanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-*/
+
     property double minimum: 0
     Behavior on minimum {
         id: minimumanimation
@@ -86,17 +77,5 @@ Item {
 
         minimum = (current < minimum)? current : minimum
         maximum = (current > maximum)? current : maximum
-/*
-        if (internal.average.length == internal.averagekeep)
-        {
-            var old = internal.average[0]
-            internal.average.shift()
-            internal.average.push(current)
-            average = average - old/(internal.averagekeep) + current/(internal.averagekeep)
-        } else {
-            internal.average.push(current)
-            average = average/(internal.average.length) * (internal.average.length-1) + current/(internal.average.length)
-        }
-*/
     }
 }

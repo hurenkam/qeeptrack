@@ -161,7 +161,7 @@ Item {
                 var component = Qt.createComponent("qrc:/Gauges/Speedometer.qml");
                 var speedometer = component.createObject(gaugeitem, { "name": gaugename } );
                 speedmodel.currentUpdate.connect(speedometer.updateCurrent)
-                speedmodel.averageUpdate.connect(speedometer.updateAverage)
+                monitormodel.averageSpeedUpdate.connect(speedometer.updateAverage)
                 speedmodel.minimumUpdate.connect(speedometer.updateMinimum)
                 speedmodel.maximumUpdate.connect(speedometer.updateMaximum)
                 monitormodel.remainingDistanceUpdate.connect(speedometer.updateMonitor)
