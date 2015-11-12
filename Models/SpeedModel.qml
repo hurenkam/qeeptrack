@@ -55,8 +55,32 @@ Item {
         internal.valid = false
     }
 
+    property bool testmode: false
+    Timer {
+        id: timer
+        interval: 1000;
+        running: testmode;
+        repeat: true;
+
+        property double delta: 0.5
+        property double speed: 50
+        onSpeedChanged: updateSpeed(speed)
+
+        onTriggered: {
+            if (speed < 1)
+                delta = 0.5
+            if (speed > 120)
+                delta = -5
+            speed += delta
+        }
+    }
+
     property var position: null
-    onPositionChanged: updatePosition(position)
+    onPositionChanged: {
+        if (!testmode)
+            updatePosition(position)
+    }
+
     function updatePosition(value)
     {
         if (value == null)
@@ -64,16 +88,21 @@ Item {
         if (!value.speedValid)
             return
 
+        updateSpeed(value.speed*3.6)
+    }
+
+    function updateSpeed(value)
+    {
         if (!internal.valid)
         {
-            //average = value.speed * 3.6
-            minimum = value.speed * 3.6
-            maximum = value.speed * 3.6
+            //average = value
+            minimum = value
+            maximum = value
             internal.previous = current
             internal.average = new Array()
             internal.valid = true
         }
-        current = value.speed * 3.6
+        current = value
 
         minimum = (current < minimum)? current : minimum
         maximum = (current > maximum)? current : maximum

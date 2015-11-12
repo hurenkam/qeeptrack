@@ -3,27 +3,25 @@ import QtQuick 2.0
 Item {
     id: root
 
-    signal distanceUpdate(double value)
-    signal remainingDistanceUpdate(double value)
-    signal remainingAscentUpdate(double value)
-    signal bearingUpdate(double value)
-    signal remainingTimeUpdate(date value)
-    signal averageSpeedUpdate(double value)
-
-    property bool enableanimations: true
-    property double distance: 0
+    property bool   enableanimations: true
+    property double tripDistance: 0
+    property double totalDistance: 0
     property double remainingDistance: 0
     property double remainingAscent: 0
+    property date   remainingTime: new Date(0,0,0)
     property double bearing: 0
     property double averageSpeed: 0
 
-    onDistanceChanged: distanceUpdate(distance)
-    onRemainingDistanceChanged: remainingDistanceUpdate(remainingDistance)
-    onRemainingAscentChanged: remainingDistanceUpdate(remainingAscent)
-    onBearingChanged: bearingUpdate(bearing)
-    onAverageSpeedChanged: averageSpeedUpdate(averageSpeed)
+    property bool testmode: false
 
-    Behavior on distance {
+    Behavior on tripDistance {
+        enabled: root.enableanimations
+        NumberAnimation {
+            duration: 1000
+        }
+    }
+
+    Behavior on totalDistance {
         enabled: root.enableanimations
         NumberAnimation {
             duration: 1000
@@ -62,7 +60,8 @@ Item {
         id: internal
         property variant start: null
         property variant previous: null
-        property double distance: 0
+        property double tripDistance: 0
+        property double totalDistance: 0
         property double delta: 0
         property int hysteresis: 25
         property bool valid: false
@@ -71,7 +70,7 @@ Item {
         {
             start = root.position.coordinate
             previous = root.position.coordinate
-            distance = 0
+            tripDistance = 0
             delta = 0
             valid = true
         }
@@ -85,7 +84,9 @@ Item {
         if (!internal.valid)
             internal.initialise()
 
-        updateDistance()
+        updateTripDistance()
+        updateTotalDistance()
+
         if (elapsedtime != null)
             updateAverageSpeed()
 
@@ -116,15 +117,17 @@ Item {
         bearing = position.coordinate.bearingTo(waypoint.coordinate)
     }
 
-    function updateDistance() {
+    function updateTripAndTotalDistance() {
         internal.delta = internal.previous.distanceTo(position.coordinate)
         if (internal.delta > internal.hysteresis)
         {
             internal.previous = position.coordinate
-            internal.distance += internal.delta
+            internal.tripDistance += internal.delta
+            internal.totalDistance += internal.delta
             internal.delta = 0
         }
-        root.distance = internal.distance + internal.delta
+        root.tripDistance = internal.tripDistance + internal.delta
+        root.totalDistance = internal.totalDistance + internal.delta
     }
 
     function updateAverageSpeed() {

@@ -3,13 +3,6 @@ import QtPositioning 5.5
 
 Item {
     id: root
-    signal currentUpdate(double value)
-    signal averageUpdate(double value)
-    signal minimumUpdate(double value)
-    signal maximumUpdate(double value)
-    signal ascentUpdate (double value)
-    signal descentUpdate(double value)
-
     property bool enableanimations: true
     readonly property bool valid: internal.valid
 
@@ -67,13 +60,6 @@ Item {
         }
     }
 
-    onCurrentChanged: currentUpdate(current)
-    onAverageChanged: averageUpdate(average)
-    onMinimumChanged: minimumUpdate(minimum)
-    onMaximumChanged: maximumUpdate(maximum)
-    onAscentChanged:  ascentUpdate (ascent)
-    onDescentChanged: descentUpdate(descent)
-
     Item {
         id: internal
         property bool valid: false
@@ -88,8 +74,28 @@ Item {
         internal.valid = false
     }
 
+    property bool testmode: false
+    Timer {
+        id: timer
+        interval: 1000;
+        running: testmode;
+        repeat: true;
+
+        property double delta: 1
+        property double altitude: 1200
+        onAltitudeChanged: updateAltitude(altitude)
+
+        onTriggered: {
+            if (altitude < 1200)
+                delta = 1
+            if (altitude > 2800)
+                delta = -2
+            altitude += delta
+        }
+    }
+
     property var position: null
-    onPositionChanged: updatePosition(position)
+    onPositionChanged: if (testmode) updatePosition(position)
     function updatePosition(value)
     {
         if (value == null)
@@ -97,18 +103,24 @@ Item {
         if (!value.altitudeValid)
             return
 
+        updateAltitude(value.coordinate.altitude)
+    }
+
+    function updateAltitude(value)
+    {
+        //console.log("AltitudeModel.updateAltitude: ", value)
         if (!internal.valid)
         {
-            average = value.coordinate.altitude
-            minimum = value.coordinate.altitude
-            maximum = value.coordinate.altitude
+            average = value
+            minimum = value
+            maximum = value
             ascent = 0
             descent = 0
             internal.previous = current
             internal.average = new Array()
             internal.valid = true
         }
-        current = value.coordinate.altitude
+        current = value
 
         minimum = (current < minimum)? current : minimum
         maximum = (current > maximum)? current : maximum

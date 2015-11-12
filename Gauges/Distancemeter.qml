@@ -6,21 +6,18 @@ Item {
     id: root
     anchors.fill: parent
 
-    property string name:                  "altitude (100m)"
-    property string dialimagesource:       "speed10.png"
-    property string shorthandimagesource:  "shorthand.png"
-    property string longhandimagesource:   "longhand.png"
+    property string name: "distance (km)"
+    property string dialimagesource: "speed10.png"
+    property string shorthandimagesource: "shorthand.png"
+    property string longhandimagesource: "longhand.png"
     property string secondhandimagesource: "secondhand.png"
-    property int divider: 100
-    property int digits: 2
+    property int divider: 1000
+    property int digits: 1
 
     property list<QtObject> sources: [
-        Item { property string name: "Current Altitude";  property double source: altitudemodel.current },
-        Item { property string name: "Average Altitude";  property double source: altitudemodel.average },
-        Item { property string name: "Minimum Altitude";  property double source: altitudemodel.minimum },
-        Item { property string name: "Maximum Altitude";  property double source: altitudemodel.maximum },
-        Item { property string name: "Total Ascent";      property double source: altitudemodel.ascent  },
-        Item { property string name: "Total Descent";     property double source: altitudemodel.descent }
+        Item { property string name: "Trip Distance";       property double source: monitormodel.tripDistance },
+        Item { property string name: "Total Distance";      property double source: monitormodel.totalDistance },
+        Item { property string name: "Remaining Distance";  property double source: monitormodel.remainingDistance }
     ]
 
     property list<QtObject> targets: [
@@ -28,11 +25,6 @@ Item {
         Item { id: top;    property string name: "Top";     property int mode: 1; property double value: sources[mode].source },
         Item { id: bottom; property string name: "Bottom";  property int mode: 2; property double value: sources[mode].source }
     ]
-
-    function toFixed(num,count) {
-        var s = num.toFixed(count).toString();
-        return s;
-    }
 
     property Item optiontabs: TabLayout {
         id: tablayout
@@ -46,6 +38,11 @@ Item {
         TabItem {
             title: "Digital Bottom"
         }
+    }
+
+    function toFixed(num,count) {
+        var s = num.toFixed(count).toString();
+        return s;
     }
 
     Image {
@@ -70,6 +67,7 @@ Item {
         width: parent.width/4
         anchors.horizontalCenter: parent.horizontalCenter
         Text {
+            //id: top
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.margins: 2
@@ -79,6 +77,7 @@ Item {
             style: Text.Raised; styleColor: "black"
         }
         Text {
+            //id: bottom
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.margins: 2

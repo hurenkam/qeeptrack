@@ -7,12 +7,17 @@ import QtSensors 5.0
 import Local 1.0
 import "qrc:/Dashboard"
 import "qrc:/Gauges"
+import "qrc:/Components"
 
-Rectangle {
+//Rectangle {
+Page {
     id: root
     anchors.fill: parent
-    color: "black"
+    //color: "black"
+    onPushed: console.log("Dashboard.onPushed")
+    onPopped: console.log("Dashboard.onPopped")
 
+    property var stack: null
     property var gauges: []
 
     function zoomGauge(index)
@@ -51,6 +56,7 @@ Rectangle {
     DashboardLayout {
         id: layout;
         mode: (root.height>root.width)? 0: 1
+        anchors.fill: parent
     }
 
     Component {
@@ -65,10 +71,15 @@ Rectangle {
             gaugetype: gauge
             gaugeindex: index
             gaugename: name
+            stack: root.stack
 
             onClicked: root.zoomGauge(gaugeindex)
 
             Component.onCompleted: gauges.push(gaugeitem)
         }
+    }
+
+    Component.onCompleted: {
+        zoomGauge(0)
     }
 }

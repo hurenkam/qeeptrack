@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import QtQuick.Window 2.2
 import "qrc:/Components"
 
 Item {
@@ -6,77 +7,41 @@ Item {
     anchors.fill: parent
 
     property string name: "clock"
-    property date current: new Date(0,0,0)
-    property date elapsed: new Date(0,0,0)
-    property date monitor: new Date(0,0,0)
+    property list<QtObject> sources: [
+        Item { id: currenttime;   property string name: "Current Time";   property date source: clockmodel.time },
+        Item { id: elapsedtime;   property string name: "Elapsed Time";   property date source: clockmodel.elapsed },
+        Item { id: remainingtime; property string name: "Remaining Time"; property date source: monitormodel.remainingTime }
+    ]
 
-    property int analogmode: 0  // 0: current; 1: elapsed; 2: monitor
-    property int topmode:    1
-    property int bottommode: 2
+    property list<QtObject> targets: [
+        Item { id: analog; property string name: "Analog"; property int mode: 0; property date value: sources[mode].source },
+        Item { id: top;    property string name: "Top";    property int mode: 1; property date value: sources[mode].source },
+        Item { id: bottom; property string name: "Bottom"; property int mode: 2; property date value: sources[mode].source }
+    ]
 
-    onCurrentChanged:     update()
-    onElapsedChanged:     update()
-    onMonitorChanged:     update()
-    onAnalogmodeChanged:  update()
-    onTopmodeChanged:     update()
-    onBottommodeChanged:  update()
-
-    Component.onCompleted: update()
-
-    property date analogvalue: new Date(0,0,0)
-    property date topvalue:    new Date(0,0,0)
-    property date bottomvalue: new Date(0,0,0)
-
-    function updateCurrent(value) {
-        current = value;
+    onSourcesChanged: console.log("Clock.onSourcesChanged")
+    onTargetsChanged: console.log("Clock.onTargetsChanged")
+    Component.onCompleted: {
+        console.log("Clock.onCompleted")
     }
 
-    function updateElapsed(value) {
-        elapsed = value;
-    }
+    property Item optiontabs: TabLayout {
+        id: tablayout
 
-    function updateMonitor(value) {
-        monitor = value;
-    }
-
-    function updateAnalogmode(value) {
-        analogmode = value;
-    }
-
-    function updateTopmode(value) {
-        topmode = value;
-    }
-
-    function updateBottommode(value) {
-        bottommode = value;
-    }
-
-    function update() {
-        switch (analogmode)
-        {
-            case 0: analogvalue = current; break;
-            case 1: analogvalue = elapsed; break;
-            case 2: analogvalue = monitor; break;
+        TabItem {
+            title: "Analog"
         }
-
-        switch (topmode)
-        {
-            case 0: topvalue = current; break;
-            case 1: topvalue = elapsed; break;
-            case 2: topvalue = monitor; break;
+        TabItem {
+            title: "Digital Top"
         }
-
-        switch (bottommode)
-        {
-            case 0: bottomvalue = current; break;
-            case 1: bottomvalue = elapsed; break;
-            case 2: bottomvalue = monitor; break;
+        TabItem {
+            title: "Digital Bottom"
         }
     }
 
     Timer {
         id: timer
-        interval: 1500;
+        interval: 1100;
         running: true;
         repeat: false;
 
@@ -109,7 +74,7 @@ Item {
         Text {
             id: toptext
             anchors.horizontalCenter: parent.horizontalCenter
-            text: Qt.formatDateTime(topvalue,"hh:mm:ss");
+            text: Qt.formatDateTime(top.value,"hh:mm:ss");
             color: "white"
             font.bold: true; font.pixelSize: parent.height/3
             style: Text.Raised; styleColor: "black"
@@ -118,7 +83,7 @@ Item {
             y: parent.height/2
             id: bottomtext
             anchors.horizontalCenter: parent.horizontalCenter
-            text: Qt.formatDateTime(bottomvalue,"hh:mm:ss");
+            text: Qt.formatDateTime(bottom.value,"hh:mm:ss");
             color: "white"
             font.bold: true; font.pixelSize: parent.height/3
             style: Text.Raised; styleColor: "black"
@@ -132,7 +97,7 @@ Item {
             id: shorthand
             origin.x: width/2
             origin.y: height/2
-            angle: analogvalue.getHours()*360/12 + analogvalue.getMinutes()/2
+            angle: analog.value.getHours()*360/12 + analog.value.getMinutes()/2
         }
     }
 
@@ -143,7 +108,7 @@ Item {
             id: longhand
             origin.x: width/2
             origin.y: height/2
-            angle: analogvalue.getMinutes()*360/60 + analogvalue.getSeconds()/10
+            angle: analog.value.getMinutes()*360/60 + analog.value.getSeconds()/10
         }
     }
 
@@ -154,7 +119,7 @@ Item {
             id: secondhand
             origin.x: width/2
             origin.y: height/2
-            angle: analogvalue.getSeconds()*360/60
+            angle: analog.value.getSeconds()*360/60
             Behavior on angle {
                 id: secondhandanimation
                 enabled: false

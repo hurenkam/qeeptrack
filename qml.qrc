@@ -25,6 +25,12 @@
         <file alias="level.png">Gauges/level.png</file>
         <file alias="levelhand.png">Gauges/levelhand.png</file>
         <file alias="Gauge.qml">Gauges/Gauge.qml</file>
+        <file alias="GaugeOptions.qml">Gauges/GaugeOptions.qml</file>
+        <file alias="backc.png">Gauges/backc.png</file>
+        <file alias="confirmc.png">Gauges/confirmc.png</file>
+        <file alias="Distancemeter.qml">Gauges/Distancemeter.qml</file>
+        <file alias="CompassOptionsPage.qml">Gauges/CompassOptionsPage.qml</file>
+        <file alias="SpeedometerOptionsPage.qml">Gauges/SpeedometerOptionsPage.qml</file>
     </qresource>
     <qresource prefix="/Dashboard">
         <file alias="Dashboard.qml">Dashboard/Dashboard.qml</file>
@@ -42,5 +48,26 @@
     </qresource>
     <qresource prefix="/Components">
         <file alias="MouseHandler.qml">Components/MouseHandler.qml</file>
+        <file alias="GroupBoxStyle.qml">Components/GroupBoxStyle.qml</file>
+        <file alias="PageStack.qml">Components/PageStack.qml</file>
+        <file alias="PageStack.js">Components/PageStack.js</file>
+        <file alias="Page.qml">Components/Page.qml</file>
+        <file alias="TabOptionsPage.qml">Components/TabOptionsPage.qml</file>
+        <file alias="TabLayout.qml">Components/TabLayout.qml</file>
+        <file alias="TabItem.qml">Components/TabItem.qml</file>
+        <file alias="OptionList.qml">Components/OptionList.qml</file>
+        <file alias="OptionHeader.qml">Components/OptionHeader.qml</file>
+        <file alias="ToolButton.qml">Components/ToolButton.qml</file>
+        <file alias="back.png">Components/back.png</file>
+        <file alias="visible.png">Components/visible.png</file>
+        <file alias="RadioBox.qml">Components/RadioBox.qml</file>
+        <file alias="DynamicItemModel.qml">Components/DynamicItemModel.qml</file>
+        <file alias="DynamicList.js">Components/DynamicList.js</file>
+        <file alias="OptionRadioButton.qml">Components/OptionRadioButton.qml</file>
+        <file alias="OptionTextItem.qml">Components/OptionTextItem.qml</file>
+        <file alias="OptionItem.qml">Components/OptionItem.qml</file>
+        <file alias="options-bg.png">Components/options-bg.png</file>
+        <file alias="ticked.png">Components/ticked.png</file>
+        <file alias="unticked.png">Components/unticked.png</file>
     </qresource>
 </RCC>
