@@ -7,9 +7,13 @@ DynamicItemModel {
 
     //Settings { id: settings }
 
+    function updateTicked(value) {
+        ticked = value
+    }
+
     onTickedChanged: {
         //console.log("onTickedChanged",count(),ticked)
-        if (name != "") settings.setProperty(name,ticked)
+        //if (name != "") settings.setProperty(name,ticked)
         for (var i=0; i<root.count(); i++) {
             console.log("found radiobox item:", get(i))
             get(i).ticked = (ticked == i)

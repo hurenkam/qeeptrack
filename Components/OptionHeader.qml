@@ -63,7 +63,8 @@ Item {
             anchors.verticalCenterOffset: -5
             text: ""
             //font.pixelSize: parent.height/2
-            font.pixelSize: screen.pixelSize
+            //font.pixelSize: screen.pixelSize
+            font.pointSize: screen.pointSize
             color: "white"
             visible: (text!="")
         }

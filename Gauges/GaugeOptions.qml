@@ -31,8 +31,26 @@ TabOptionsPage {
             tabs.height= screen.landscape?                          parent.height : parent.height-parent.width-15
             for (var i=0; i<instance.targets.length; i++)
             {
-                var component = Qt.createComponent("qrc:/Components/TabItem.qml");
+                var component
+                component = Qt.createComponent("qrc:/Components/TabItem.qml");
                 var tabitem = component.createObject(tabs, { title: instance.targets[i].name } );
+
+                component = Qt.createComponent("qrc:/Components/OptionList.qml");
+                var optionlist = component.createObject(tabitem, { x: 0, y:0, width: parent.width } );
+
+                component = Qt.createComponent("qrc:/Components/RadioBox.qml");
+                var radiobox = component.createObject(optionlist, { } );
+
+                for (var j=0; j<instance.sources.length; j++)
+                {
+                    component = Qt.createComponent("qrc:/Components/OptionRadioButton.qml");
+                    var optionradiobutton = component.createObject(radiobox, { text: instance.sources[j].name } );
+                    radiobox.append(optionradiobutton)
+                }
+
+                optionlist.items = radiobox
+                optionlist.clicked.connect(radiobox.updateTicked)
+                radiobox.updateTicked(instance.targets[i].mode)
             }
             initTabs()
             layoutTabs()

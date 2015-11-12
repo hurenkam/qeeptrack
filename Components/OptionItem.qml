@@ -26,7 +26,7 @@ Item {
         visible: (! roundbottom) && underline
         x: -9;               width:  parent.width +20
         //y: parent.height+9;  height: 1
-        y: parent.height; height:1
+        y: parent.height+3; height:1
         color: "grey"
     }
 

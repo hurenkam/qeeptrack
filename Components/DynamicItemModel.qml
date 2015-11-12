@@ -14,8 +14,8 @@ Item {
     function get(index) {
         return JList.getItem(index)
     }
-    function append(index) {
-        JList.addItem(index)
+    function append(item) {
+        JList.addItem(item)
         listAppended()
     }
     function count() {

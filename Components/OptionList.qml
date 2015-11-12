@@ -2,9 +2,9 @@ import QtQuick 2.5
 
 Item {
     id: root
-    property alias title: header.text
+    property string title: ""
     property QtObject items: null
-    height: header.offset + box.height + 20
+    height: header.offset + box.height + 28
 
     signal clicked(int index, string text)
 
@@ -15,8 +15,8 @@ Item {
         color: "#505050"
         style: Text.Sunken
         styleColor: "black"
-        text: ""
-        font.pointSize: 8
+        text: root.title
+        font.pointSize: screen.pointSize
         property int offset: (text=="")? 10 : header.height + 20
     }
 
@@ -27,7 +27,7 @@ Item {
         width: root.width
         //height: 360 - header.offset
         //height: 100
-        height: root.height -header.offset-18
+        height: root.height -header.offset -18
         contentWidth: root.width
         contentHeight: box.height+2
         interactive: contentHeight > height? true: false
@@ -37,9 +37,9 @@ Item {
             id: box
 
             x: 10
-            y: 0
+            y: 10
             width: root.width -20
-            height: content.height
+            height: content.height +8 //-20
             radius: 12
             color: "white"
             border.color: "grey"
@@ -73,14 +73,13 @@ Item {
             function layoutItems(w) {
                 //console.log("OptionList.layoutItems(): got", items.count(), "items for model",items.name)
                 var h = 2;
-                for (var i=0; i<items.count(); ++i) {
-                    var item = items.get(i)
-                    //item.roundtop = false
-                    //item.roundbottom = false
+                var count = items.count()
+                for (var i=0; i<count; ) {
+                    var item = items.get(i++)
+                    item.roundtop = (i==1)
+                    item.roundbottom = (i==count)
                     h = layoutOptionItem(item,w,h+4) + 4;
                 }
-                //items.get(0).roundtop = true
-                items.get(items.count()-1).roundbottom = true
                 return h+2;
             }
 
