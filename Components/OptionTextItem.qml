@@ -9,7 +9,8 @@ OptionItem {
         id: txt
         color: "black"
         //font.bold: true
-        font.pointSize: Screen.pixelDensity * 1.0;
+        //font.pointSize: Screen.pixelDensity * 1.0;
+        font.pointSize: screen.pointSize;
         text: ""
     }
 }

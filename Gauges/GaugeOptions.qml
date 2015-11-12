@@ -12,13 +12,31 @@ TabOptionsPage {
     property list<QtObject> sources
     property list<QtObject> targets
 
-    tabs: if (instance) instance.optiontabs
-    onTabsChanged: {
-        console.log("GaugeOptions.onTabsChanged()")
-        tabs.x=      screen.landscape?                       parent.height+15 : 0
-        tabs.y=      screen.landscape?                                      0 : parent.width+15
-        tabs.width=  screen.landscape?          parent.width-parent.height-15 : parent.width
-        tabs.height= screen.landscape?                          parent.height : parent.height-parent.width-15
+    onInstanceChanged: {
+        console.log("GaugeOptions.onInstanceChanged: ",instance)
+        updateTabs()
+     }
+
+    function updateTabs() {
+        console.log("GaugeOptions.updateTabs()",instance.sources,instance.targets)
+        if (instance.sources) {
+            console.log("GaugeOptions.onInstanceChanged() targets:", instance.targets.length, "sources:", instance.sources.length)
+
+            var component = Qt.createComponent("qrc:/Components/TabLayout.qml");
+            if (tabs) tabs.destroy()
+            tabs = component.createObject(root, { } );
+            tabs.x=      screen.landscape?                       parent.height+15 : 0
+            tabs.y=      screen.landscape?                                      0 : parent.width+15
+            tabs.width=  screen.landscape?          parent.width-parent.height-15 : parent.width
+            tabs.height= screen.landscape?                          parent.height : parent.height-parent.width-15
+            for (var i=0; i<instance.targets.length; i++)
+            {
+                var component = Qt.createComponent("qrc:/Components/TabItem.qml");
+                var tabitem = component.createObject(tabs, { title: instance.targets[i].name } );
+            }
+            initTabs()
+            layoutTabs()
+        }
     }
 
     background: Rectangle {

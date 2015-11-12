@@ -10,11 +10,11 @@ import "qrc:/Components"
 ApplicationWindow {
     id:root
     visible: true
-    //visibility: "FullScreen"
-    //width: 667
-    //height: 375
-    width: 667
-    height: 375
+
+    visibility: "FullScreen"
+    width: 375
+    height: 667
+
     title: qsTr("qeeptrack")
     property int realwidth: (width>height)? height: width
     property int buttonheight: realwidth/10
@@ -29,6 +29,7 @@ ApplicationWindow {
         property double widthscale:  (landscape)?  width/667: width/375
         property double heightscale: (portrait)?  height/667: height/375
         property double scale:       (widthscale>heightscale)? heightscale: widthscale
+        property double pointSize:   12*heightscale
     }
 
     Dashboard {

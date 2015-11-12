@@ -124,7 +124,7 @@ Page {
     function initTabs() {
         if (tabs) {
             var count = tabs.children.length
-            console.log("TabOptionsPage.initTabs() count:",count)
+            //console.log("TabOptionsPage.initTabs() count:",count)
             tabs.parent = content
             tabs.z = 5
 
@@ -136,7 +136,7 @@ Page {
         }
         else
         {
-            console.log("TabOptionsPage.initTabs() tabs is undefined!")
+            //console.log("TabOptionsPage.initTabs() tabs is undefined!")
         }
 
         tabs.xChanged.connect(layoutPage)

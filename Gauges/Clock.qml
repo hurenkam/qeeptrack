@@ -19,26 +19,6 @@ Item {
         Item { id: bottom; property string name: "Bottom"; property int mode: 2; property date value: sources[mode].source }
     ]
 
-    onSourcesChanged: console.log("Clock.onSourcesChanged")
-    onTargetsChanged: console.log("Clock.onTargetsChanged")
-    Component.onCompleted: {
-        console.log("Clock.onCompleted")
-    }
-
-    property Item optiontabs: TabLayout {
-        id: tablayout
-
-        TabItem {
-            title: "Analog"
-        }
-        TabItem {
-            title: "Digital Top"
-        }
-        TabItem {
-            title: "Digital Bottom"
-        }
-    }
-
     Timer {
         id: timer
         interval: 1100;

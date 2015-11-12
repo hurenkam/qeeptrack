@@ -40,23 +40,6 @@ Item {
         }
     ]
 
-    property Item optiontabs: TabLayout {
-        id: tablayout
-
-        TabItem {
-            title: "Dial"
-        }
-        TabItem {
-            title: "Needle"
-        }
-        TabItem {
-            title: "Up"
-        }
-        TabItem {
-            title: "Ring"
-        }
-    }
-
     Image {
         source: "compassring.png"
         anchors.fill: parent

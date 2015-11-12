@@ -138,7 +138,7 @@ Item {
             y: 3
             color: "black"
             text: "tab"
-            font.pointSize: Screen.pixelDensity * 1.0
+            font.pointSize: screen.pointSize
         }
     }
     //onWidthChanged:        { console.log("TabItem.onWidthChanged()    ",x,y,width,height) }
