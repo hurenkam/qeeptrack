@@ -76,10 +76,7 @@ Item {
     }
 
     property var position: null
-    onPositionChanged: {
-        if (!testmode)
-            updatePosition(position)
-    }
+    onPositionChanged: if (!testmode) updatePosition(position)
 
     function updatePosition(value)
     {

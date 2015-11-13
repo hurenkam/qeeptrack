@@ -14,7 +14,7 @@ Item {
     property int gaugeindex: -1
     property var gaugeinstance
     property bool started: false
-    property bool testmode: true
+    property bool testmode: false
     property var stack: null
     property bool landscape: screen.landscape
 
@@ -161,9 +161,6 @@ Item {
             case "levels": {
                 var component = Qt.createComponent("qrc:/Gauges/Levels.qml");
                 var levels = component.createObject(parent, { } );
-                compassmodel.calibrationUpdate.connect(levels.updateCompassCalibration)
-                //positionsource.verticalAccuracyChanged.connect(levels.updateVerticalAccuracy)
-                //positionsource.horizontalAccuracyChanged.connect(levels.updateHorizontalAccuracy)
                 return levels;
             }
 

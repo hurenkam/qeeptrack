@@ -11,24 +11,9 @@ Item {
     property bool enableanimations: true
 
     property double course: 0
-    Behavior on course {
-        id: courseanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
     property double heading: 0
-    Behavior on heading {
-        id: headinganimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
     property double calibration: 0
+
     Behavior on calibration {
         id: calibrationanimation
         enabled: root.enableanimations

@@ -84,8 +84,7 @@ Item {
         if (!internal.valid)
             internal.initialise()
 
-        updateTripDistance()
-        updateTotalDistance()
+        updateTripAndTotalDistance()
 
         if (elapsedtime != null)
             updateAverageSpeed()
@@ -132,7 +131,7 @@ Item {
 
     function updateAverageSpeed() {
         var elapsedseconds = (elapsedtime.getTime() - new Date(0,0,0).getTime())/1000
-        root.averageSpeed = root.distance/elapsedseconds * 3.6
+        root.averageSpeed = root.tripDistance/elapsedseconds * 3.6
     }
 
     function updateRemainingDistance() {
