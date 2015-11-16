@@ -127,49 +127,51 @@ Item {
     }
 
     function createGauge(parent,gaugetype) {
+        var result = null
         switch (gaugetype) {
             case "clock": {
                 var component = Qt.createComponent("qrc:/Gauges/Clock.qml");
-                var clock = component.createObject(parent, { } );
-                return clock;
+                result = component.createObject(parent, { } );
+                break;
             }
 
             case "compass": {
                 var component = Qt.createComponent("qrc:/Gauges/Compass2.qml");
-                var compass = component.createObject(parent, { } );
-                return compass;
+                result =  component.createObject(parent, { } );
+                break;
             }
 
             case "altimeter": {
                 var component = Qt.createComponent("qrc:/Gauges/Altimeter.qml");
-                var altimeter = component.createObject(parent, { } );
-                return altimeter;
+                result = component.createObject(parent, { } );
+                break;
             }
 
             case "distance": {
                 var component = Qt.createComponent("qrc:/Gauges/Distancemeter.qml");
-                var distancemeter = component.createObject(parent, { } );
-                return distancemeter;
+                result = component.createObject(parent, { } );
+                break;
             }
 
             case "speedometer": {
                 var component = Qt.createComponent("qrc:/Gauges/Speedometer.qml");
-                var speedometer = component.createObject(parent, { } );
-                return speedometer;
+                result = component.createObject(parent, { } );
+                break;
             }
 
             case "levels": {
                 var component = Qt.createComponent("qrc:/Gauges/Levels.qml");
-                var levels = component.createObject(parent, { } );
-                return levels;
+                result = component.createObject(parent, { } );
+                break;
             }
 
             case "satellites": {
                 var component = Qt.createComponent("qrc:/Gauges/Satellites.qml");
-                var satellites = component.createObject(parent, { } );
-                return satellites;
+                result = component.createObject(parent, { } );
+                break;
             }
         }
+        return result
     }
 
     function draw() {

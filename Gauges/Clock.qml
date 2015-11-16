@@ -5,6 +5,7 @@ import "qrc:/Components"
 Item {
     id: root
     anchors.fill: parent
+    property bool enableanimations: false
 
     property string name: "clock"
     property list<QtObject> sources: [
@@ -14,20 +15,28 @@ Item {
     ]
 
     property list<QtObject> targets: [
-        Item { id: analog; property string name: "Analog"; property int mode: 0; property date value: sources[mode].source },
-        Item { id: top;    property string name: "Top";    property int mode: 1; property date value: sources[mode].source },
-        Item { id: bottom; property string name: "Bottom"; property int mode: 2; property date value: sources[mode].source }
+        Item { id: analog; property string name: "Analog"; property int mode: 0; property date value: sources[mode].source
+            function setMode(value,name) { disableAnimations(); analog.mode = value; console.log("analog.setMode() New mode:",value) } },
+        Item { id: top;    property string name: "Top";    property int mode: 1; property date value: sources[mode].source
+            function setMode(value,name) { disableAnimations(); top.mode = value; console.log("top.setMode() New mode:",value) } },
+        Item { id: bottom; property string name: "Bottom"; property int mode: 2; property date value: sources[mode].source
+            function setMode(value,name) { disableAnimations(); bottom.mode = value; console.log("bottom.setMode() New mode:",value) } }
     ]
 
     Timer {
         id: timer
-        interval: 1100;
+        interval: 50;
         running: true;
         repeat: false;
 
         onTriggered: {
-            secondhandanimation.enabled = true
+            enableanimations = true
         }
+    }
+
+    function disableAnimations() {
+        root.enableanimations = false
+        timer.running = true
     }
 
     Image {
@@ -100,9 +109,10 @@ Item {
             origin.x: width/2
             origin.y: height/2
             angle: analog.value.getSeconds()*360/60
+            //angle: (analog.value.getSeconds() * 1000 + analog.value.getMilliseconds()) * 360/60000
             Behavior on angle {
                 id: secondhandanimation
-                enabled: false
+                enabled: root.enableanimations
                 SpringAnimation {
                     velocity: 6
                     modulus: 360

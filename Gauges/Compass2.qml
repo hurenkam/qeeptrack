@@ -19,24 +19,28 @@ Item {
             property string name: "Dial";
             property int mode: 0;
             property double value: up.value + sources[mode].source
+            function setMode(value,name) { mode = value }
         },
         Item {
             id: needle;
             property string name: "Needle";
             property int mode: 1;
             property double value: up.value + sources[mode].source
+            function setMode(value,name) { mode = value }
         },
         Item {
             id: up;
             property string name: "Up";
             property int mode: 1;
             property double value: 360 - sources[mode].source
+            function setMode(value,name) { mode = value }
         },
         Item {
             id: ring;
             property string name: "Ring";
             property int mode: 3;
             property double value: up.value + sources[mode].source
+            function setMode(value,name) { mode = value }
         }
     ]
 

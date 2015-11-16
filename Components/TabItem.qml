@@ -85,8 +85,8 @@ Item {
         id: tab
         x: 0
         y: 0
-        width: header.width+13
-        height: header.height+3
+        width: header.width+15
+        height: header.height+4
 
         MouseArea {
             //anchors.fill:  parent
@@ -134,7 +134,7 @@ Item {
 
         Text {
             id: header
-            x: 6
+            x: 7
             y: 3
             color: "black"
             text: "tab"

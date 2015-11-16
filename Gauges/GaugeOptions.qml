@@ -12,15 +12,17 @@ TabOptionsPage {
     property list<QtObject> sources
     property list<QtObject> targets
 
-    onInstanceChanged: {
-        console.log("GaugeOptions.onInstanceChanged: ",instance)
-        updateTabs()
-     }
+    onGaugerefChanged: {
+        if (gaugeref) {
+            console.log("GaugeOptions.onGaugerefChanged: ",gaugeref, gaugeref.name, gaugeref.targets.length)
+            updateTabs()
+        }
+    }
 
     function updateTabs() {
         console.log("GaugeOptions.updateTabs()",instance.sources,instance.targets)
         if (instance.sources) {
-            console.log("GaugeOptions.onInstanceChanged() targets:", instance.targets.length, "sources:", instance.sources.length)
+            console.log("GaugeOptions.updateTabs() targets:", instance.targets.length, "sources:", instance.sources.length)
 
             var component = Qt.createComponent("qrc:/Components/TabLayout.qml");
             if (tabs) tabs.destroy()
@@ -29,28 +31,32 @@ TabOptionsPage {
             tabs.y=      screen.landscape?                                      0 : parent.width+15
             tabs.width=  screen.landscape?          parent.width-parent.height-15 : parent.width
             tabs.height= screen.landscape?                          parent.height : parent.height-parent.width-15
-            for (var i=0; i<instance.targets.length; i++)
+            for (var i=0; i<gaugeref.targets.length; i++)
             {
+                console.log("Adding tab:", gaugeref.targets[i].name)
+
                 var component
                 component = Qt.createComponent("qrc:/Components/TabItem.qml");
-                var tabitem = component.createObject(tabs, { title: instance.targets[i].name } );
+                var tabitem = component.createObject(tabs, { title: gaugeref.targets[i].name } );
 
                 component = Qt.createComponent("qrc:/Components/OptionList.qml");
-                var optionlist = component.createObject(tabitem, { x: 0, y:0, width: parent.width } );
+                var optionlist = component.createObject(tabitem, { x: 0, y:0, width: tabs.width } );
 
                 component = Qt.createComponent("qrc:/Components/RadioBox.qml");
                 var radiobox = component.createObject(optionlist, { } );
 
-                for (var j=0; j<instance.sources.length; j++)
+                for (var j=0; j<gaugeref.sources.length; j++)
                 {
                     component = Qt.createComponent("qrc:/Components/OptionRadioButton.qml");
-                    var optionradiobutton = component.createObject(radiobox, { text: instance.sources[j].name } );
+                    var optionradiobutton = component.createObject(radiobox, { text: gaugeref.sources[j].name } );
                     radiobox.append(optionradiobutton)
                 }
 
+                gaugeref.targets[i].setMode(instance.targets[i].mode)
+                radiobox.updateTicked(gaugeref.targets[i].mode)
                 optionlist.items = radiobox
                 optionlist.clicked.connect(radiobox.updateTicked)
-                radiobox.updateTicked(instance.targets[i].mode)
+                optionlist.clicked.connect(gaugeref.targets[i].setMode)
             }
             initTabs()
             layoutTabs()
@@ -108,14 +114,15 @@ TabOptionsPage {
 
             onClicked: {
                 console.log("GaugeOptions.onConfirm")
-                optionsChanged()
-                pageStack.pop()
+                //instance.disableAnimations()
+                for (var i=0; i<gaugeref.targets.length; i++)
+                    instance.targets[i].setMode(gaugeref.targets[i].mode)
+                root.cancel();
             }
-
         }
     }
 
-    property var gaugeref: null
+    property var gaugeref
     onPushed: {
         console.log("GaugeOptions.onPushed")
         gaugeref = root.gauge.createGauge(gaugecontainer,root.gauge.gaugetype)

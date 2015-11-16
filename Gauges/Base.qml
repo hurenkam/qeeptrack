@@ -16,9 +16,12 @@ Item {
 
     property list<QtObject> sources
     property list<QtObject> targets: [
-        Item { id: analog; property string name: "Analog";  property int mode: 0; property double value: sources[mode].source },
-        Item { id: top;    property string name: "Top";     property int mode: 1; property double value: sources[mode].source },
-        Item { id: bottom; property string name: "Bottom";  property int mode: 2; property double value: sources[mode].source }
+        Item { id: analog; property string name: "Analog";  property int mode: 0; property double value: sources[mode].source
+            function setMode(value,name) { mode = value } },
+        Item { id: top;    property string name: "Top";     property int mode: 1; property double value: sources[mode].source
+            function setMode(value,name) { mode = value } },
+        Item { id: bottom; property string name: "Bottom";  property int mode: 2; property double value: sources[mode].source
+            function setMode(value,name) { mode = value } }
     ]
     property double analogvalue: analog.value
     property double topvalue:    top.value
