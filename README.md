@@ -2,17 +2,23 @@
 Advanced GPS dashboard with altimeter, speedometer and compass.
 
 ## Works: ##
-(note: currently only tested on iOS/iphone 6s)
-
+ * Target platforms
+   * Macbook/iOS Simulator
+   * Macbook/OSX Desktop
+   * PC/Android Simulator
+   * PC/Windows Desktop
+   * iPhone 6s
  * Clock
    * Current time
    * Trip time
  * Compass
-   * Heading 
+   * Heading
+   * Course
  * Speedometer
    * Current speed
    * Minimum speed
    * Maximum speed
+   * Average speed
  * Altimeter
    * Current altitude
    * Minimum altitude
@@ -22,22 +28,23 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
  * Levels
    * Compass calibration 
  * Any gauge can be put in any spot (tap gauge to swap with maximized gauge)
+ * Options now work (but are not yet persistent over restart)
 
 ## Todo: ##
+ * Monitor
+   * Waypoint
+   * Route
  * Clock
-   * Time to waypoint
+   * Remaining time
  * Compass
-   * Bearing to waypoint
-   * Switch between GPS course & Compass azimuth as basis for heading
+   * Bearing to waypoint (or next routepoint)
  * Speedometer
-   * Average speed 
    * Ascent/Descent speed
  * Altimeter
    * Average altitude
  * Distance
    * Total
-   * Distance to waypoint
- * Options
+   * Remaining distance
  * Battery level / horizontal & vertical accuracy levels
- * Satellite view
+ * Satellite view (it seems Qt on iOS does not support this, so will probably work on android only)
  * MapView
