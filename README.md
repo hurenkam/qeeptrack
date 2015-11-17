@@ -30,7 +30,11 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
  * Any gauge can be put in any spot (tap gauge to swap with maximized gauge)
  * Options now work (but are not yet persistent over restart)
 
+## Bugs: ##
+ * PageStack push/pop animation doesn't seem to work (options screen)
+
 ## Todo: ##
+ * Persistent settings
  * Monitor
    * Waypoint
    * Route
