@@ -131,4 +131,8 @@ TabOptionsPage {
         console.log("GaugeOptions.onPopped")
         root.gauge.destroyGauge(gaugeref,"clock")
     }
+
+    MouseHandler {
+        anchors.fill: parent
+    }
 }

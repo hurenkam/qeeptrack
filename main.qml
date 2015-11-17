@@ -29,7 +29,7 @@ ApplicationWindow {
         property double widthscale:  (landscape)?  width/667: width/375
         property double heightscale: (portrait)?  height/667: height/375
         property double scale:       (widthscale>heightscale)? heightscale: widthscale
-        property double pointSize:   18*heightscale
+        property double pointSize:   18
     }
 
     Dashboard {

@@ -68,6 +68,39 @@ Page {
             y: layout.current[gaugeindex].y
             width: layout.current[gaugeindex].width
             height: layout.current[gaugeindex].height
+
+            Behavior on x {
+                PropertyAnimation {
+                    target: gaugeitem
+                    properties: "x,y,width,height"
+                    duration: 200
+                }
+            }
+
+            Behavior on y {
+                PropertyAnimation {
+                    target: gaugeitem
+                    properties: "x,y,width,height"
+                    duration: 200
+                }
+            }
+
+            Behavior on width {
+                PropertyAnimation {
+                    target: gaugeitem
+                    properties: "x,y,width,height"
+                    duration: 200
+                }
+            }
+
+            Behavior on height {
+                PropertyAnimation {
+                    target: gaugeitem
+                    properties: "x,y,width,height"
+                    duration: 200
+                }
+            }
+
             gaugetype: gauge
             gaugeindex: index
             gaugename: name
