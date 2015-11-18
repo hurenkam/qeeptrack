@@ -20,6 +20,25 @@ Page {
     property var stack: null
     property var gauges: []
 
+    property string prefix: "qeeptrack.dashboard."
+    function saveSettings() {
+        settings.setValue("gauge0.index",gauges[0].gaugeindex)
+        settings.setValue("gauge1.index",gauges[1].gaugeindex)
+        settings.setValue("gauge2.index",gauges[2].gaugeindex)
+        settings.setValue("gauge3.index",gauges[3].gaugeindex)
+        settings.setValue("gauge4.index",gauges[4].gaugeindex)
+        settings.setValue("gauge5.index",gauges[5].gaugeindex)
+    }
+
+    function loadSettings() {
+        gauges[0].gaugeindex = settings.getValue("gauge0.index","0")
+        gauges[1].gaugeindex = settings.getValue("gauge1.index","1")
+        gauges[2].gaugeindex = settings.getValue("gauge2.index","2")
+        gauges[3].gaugeindex = settings.getValue("gauge3.index","3")
+        gauges[4].gaugeindex = settings.getValue("gauge4.index","4")
+        gauges[5].gaugeindex = settings.getValue("gauge5.index","5")
+    }
+
     function zoomGauge(index)
     {
         var currentzoomed
@@ -32,8 +51,24 @@ Page {
                 newzoomed = i
         }
 
+        if (currentzoomed === newzoomed)
+        {
+            stack.pop()
+            return
+        }
+
         gauges[currentzoomed].gaugeindex = gauges[newzoomed].gaugeindex
         gauges[newzoomed].gaugeindex = 2
+
+        saveSettings()
+    }
+
+    SettingsDatabase {
+        id: settings
+        filename: "qeeptrack"
+        prefix: root.prefix
+
+        Component.onCompleted: root.loadSettings()
     }
 
     ListModel {
@@ -110,9 +145,5 @@ Page {
 
             Component.onCompleted: gauges.push(gaugeitem)
         }
-    }
-
-    Component.onCompleted: {
-        zoomGauge(0)
     }
 }

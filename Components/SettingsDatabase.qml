@@ -32,9 +32,11 @@ Item {
                 var result = tx.executeSql('SELECT * FROM Settings WHERE id=?', prefix+id);
                 if (result.rows.length > 0) {
                     tx.executeSql('UPDATE Settings SET value=? WHERE id=?', [ value, prefix+id ]);
+                    console.log("changed setting",prefix+id,"to value",value)
                 }
                 else {
                     tx.executeSql('INSERT INTO Settings VALUES(?, ?)', [ prefix+id, value ]);
+                    console.log("stored setting",prefix+id,"with value",value)
                 }
             }
         )

@@ -34,9 +34,7 @@
     <qresource prefix="/Dashboard">
         <file alias="Dashboard.qml">Dashboard/Dashboard.qml</file>
         <file alias="DashboardLayout.qml">Dashboard/DashboardLayout.qml</file>
-    </qresource>
-    <qresource prefix="/Buttons">
-        <file alias="exit.png">Buttons/exit.png</file>
+        <file alias="Mapview.qml">Dashboard/Mapview.qml</file>
     </qresource>
     <qresource prefix="/Models">
         <file alias="AltitudeModel.qml">Models/AltitudeModel.qml</file>
@@ -70,5 +68,14 @@
         <file alias="unticked.png">Components/unticked.png</file>
         <file alias="DynamicBinding.qml">Components/DynamicBinding.qml</file>
         <file alias="SettingsDatabase.qml">Components/SettingsDatabase.qml</file>
+        <file alias="category.png">Components/category.png</file>
+        <file alias="export.png">Components/export.png</file>
+        <file alias="map.png">Components/map.png</file>
+        <file alias="trip.png">Components/trip.png</file>
+        <file alias="zoom-in.png">Components/zoom-in.png</file>
+        <file alias="zoom-out.png">Components/zoom-out.png</file>
+        <file alias="locator_green.png">Components/locator_green.png</file>
+        <file alias="locator_red.png">Components/locator_red.png</file>
+        <file alias="exit.png">Components/exit.png</file>
     </qresource>
 </RCC>

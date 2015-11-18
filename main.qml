@@ -31,11 +31,16 @@ ApplicationWindow {
         property double scale:       (widthscale>heightscale)? heightscale: widthscale
         property double pointSize:   18
     }
-
+/*
     Dashboard {
         id: dashboard
-        anchors.fill: parent
         stack: pagestack
+    }
+*/
+    Mapview {
+        id: mapview
+        stack: pagestack
+        onQuit: close()
     }
 
     PageStack {
@@ -59,7 +64,8 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        pagestack.push(dashboard)
+        //pagestack.push(dashboard)
+        pagestack.push(mapview)
 
         console.log("Screen.width: ", Screen.width)
         console.log("Screen.height: ", Screen.height)
