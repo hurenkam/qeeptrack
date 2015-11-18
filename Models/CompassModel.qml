@@ -54,6 +54,9 @@ Item {
         }
     }
 
+    function reset() {
+    }
+
     function update() {
         var rotation = 0
         if (orientation != null)

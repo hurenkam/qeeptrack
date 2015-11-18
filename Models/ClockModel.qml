@@ -12,6 +12,10 @@ Item {
     signal timeUpdate(date value)
     signal elapsedUpdate(date value)
 
+    function reset() {
+        timer.start = new Date()
+    }
+
     Timer {
         id: timer
         interval: 1000;

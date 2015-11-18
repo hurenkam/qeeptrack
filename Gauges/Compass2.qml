@@ -5,7 +5,17 @@ Item {
     id: root
     anchors.fill: parent
 
+    property string prefix: "qeeptrack.compass."
     property string name: "compass"
+
+    SettingsDatabase {
+        id: settings
+        filename: "qeeptrack"
+        prefix: root.prefix
+
+        Component.onCompleted: root.loadSettings()
+    }
+
     property list<QtObject> sources: [
         Item { id: north;   property string name: "North";            property double source: 0 },
         Item { id: heading; property string name: "Current Heading";  property double source: compassmodel.heading },
@@ -43,6 +53,20 @@ Item {
             function setMode(value,name) { mode = value }
         }
     ]
+
+    function loadSettings() {
+        dial.mode = settings.getValue("dial.mode","0")
+        needle.mode = settings.getValue("needle.mode","1")
+        up.mode = settings.getValue("up.mode","1")
+        ring.mode = settings.getValue("ring.mode","3")
+    }
+
+    function saveSettings() {
+        settings.setValue("dial.mode",dial.mode.toString())
+        settings.setValue("needle.mode",needle.mode.toString())
+        settings.setValue("up.mode",up.mode.toString())
+        settings.setValue("ring.mode",ring.mode.toString())
+    }
 
     Image {
         source: "compassring.png"

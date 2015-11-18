@@ -6,6 +6,7 @@ Base {
     id: root
     anchors.fill: parent
 
+    prefix: "qeeptrack.altimeter."
     name:                  "altitude (100m)"
     dialimagesource:       "speed10.png"
     shorthandimagesource:  "shorthand.png"

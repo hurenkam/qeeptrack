@@ -117,6 +117,7 @@ TabOptionsPage {
                 //instance.disableAnimations()
                 for (var i=0; i<gaugeref.targets.length; i++)
                     instance.targets[i].setMode(gaugeref.targets[i].mode)
+                instance.saveSettings()
                 root.cancel();
             }
         }

@@ -5,6 +5,7 @@ Item {
     id: root
     anchors.fill: parent
 
+    property string prefix: ""
     property int compass:     0
     property int battery:     0
     property int horizontal:  0

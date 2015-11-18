@@ -6,6 +6,7 @@ Base {
     id: root
     anchors.fill: parent
 
+    prefix: "qeeptrack.speedometer."
     name:                  "speed (km/h)"
     dialimagesource:       ((analogvalue>10) || (maximum.source>10))? "speed200.png" : "speed10.png"
     shorthandimagesource:  "speedneedle.png"

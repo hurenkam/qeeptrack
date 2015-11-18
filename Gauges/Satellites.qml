@@ -6,6 +6,7 @@ Item {
     id: root
     anchors.fill: parent
 
+    property string prefix: ""
     property variant satellitemodel: null
 
     Image {

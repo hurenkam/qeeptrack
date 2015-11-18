@@ -6,6 +6,7 @@ Base {
     id: root
     anchors.fill: parent
 
+    prefix: "qeeptrack.distancemeter."
     name: "distance (km)"
     dialimagesource: "speed10.png"
     shorthandimagesource: "shorthand.png"

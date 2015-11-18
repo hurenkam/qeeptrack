@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "qrc:/Components"
 
 Item {
     id: root
@@ -11,6 +12,7 @@ Item {
     property date   remainingTime: new Date(0,0,0)
     property double bearing: 0
     property double averageSpeed: 0
+    property string prefix: "qeeptrack.monitormodel."
 
     property bool testmode: false
 
@@ -56,6 +58,16 @@ Item {
     onWaypointChanged: updatePosition()
     onElapsedtimeChanged: updateTime()
 
+    SettingsDatabase {
+        id: settings
+        filename: "qeeptrack"
+        prefix: root.prefix
+
+        Component.onCompleted: {
+            internal.totalDistance = settings.getValue("totalDistance",0)
+        }
+    }
+
     Item {
         id: internal
         property variant start: null
@@ -74,6 +86,10 @@ Item {
             delta = 0
             valid = true
         }
+    }
+
+    function reset() {
+        internal.valid = false
     }
 
     function updatePosition()

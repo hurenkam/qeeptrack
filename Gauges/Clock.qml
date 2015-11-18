@@ -5,6 +5,8 @@ import "qrc:/Components"
 Item {
     id: root
     anchors.fill: parent
+
+    property string prefix: "qeeptrack.clock."
     property bool enableanimations: false
 
     property string name: "clock"
@@ -14,14 +16,62 @@ Item {
         Item { id: remainingtime; property string name: "Remaining Time"; property date source: monitormodel.remainingTime }
     ]
 
+    SettingsDatabase {
+        id: settings
+        filename: "qeeptrack"
+        prefix: root.prefix
+
+        Component.onCompleted: root.loadSettings()
+    }
+
     property list<QtObject> targets: [
-        Item { id: analog; property string name: "Analog"; property int mode: 0; property date value: sources[mode].source
-            function setMode(value,name) { disableAnimations(); analog.mode = value; console.log("analog.setMode() New mode:",value) } },
-        Item { id: top;    property string name: "Top";    property int mode: 1; property date value: sources[mode].source
-            function setMode(value,name) { disableAnimations(); top.mode = value; console.log("top.setMode() New mode:",value) } },
-        Item { id: bottom; property string name: "Bottom"; property int mode: 2; property date value: sources[mode].source
-            function setMode(value,name) { disableAnimations(); bottom.mode = value; console.log("bottom.setMode() New mode:",value) } }
+        Item {
+            id: analog;
+            property string name: "Analog";
+            property int mode: 0;
+            property date value: sources[mode].source
+            function setMode(value,name) {
+                disableAnimations();
+                analog.mode = value;
+                console.log("analog.setMode() New mode:",value)
+            }
+        },
+        Item {
+            id: top;
+            property string name: "Top";
+            property int mode: 1;
+            property date value: sources[mode].source
+            function setMode(value,name) {
+                disableAnimations();
+                top.mode = value;
+                console.log("top.setMode() New mode:",value)
+            }
+        },
+        Item {
+            id: bottom;
+            property string name: "Bottom";
+            property int mode: 2;
+            property date value: sources[mode].source
+            function setMode(value,name) {
+                disableAnimations();
+                bottom.mode = value;
+                console.log("bottom.setMode() New mode:",value)
+            }
+        }
     ]
+
+    function loadSettings() {
+        disableAnimations();
+        analog.mode = settings.getValue("analog.mode","0")
+        top.mode = settings.getValue("top.mode","1")
+        bottom.mode = settings.getValue("bottom.mode","2")
+    }
+
+    function saveSettings() {
+        settings.setValue("analog.mode",analog.mode.toString())
+        settings.setValue("top.mode",top.mode.toString())
+        settings.setValue("bottom.mode",bottom.mode.toString())
+    }
 
     Timer {
         id: timer

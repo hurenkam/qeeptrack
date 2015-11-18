@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets positioning svg location sensors
+QT += sql qml quick widgets positioning svg location sensors
 
 ios {
     QMAKE_INFO_PLIST = Info.plist
