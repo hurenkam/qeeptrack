@@ -51,8 +51,8 @@ Item {
         }
     }
 
-    property var position: null
-    property var waypoint: null
+    property var position
+    property var waypoint
     property var elapsedtime: null
     onPositionChanged: updatePosition()
     onWaypointChanged: updatePosition()
@@ -81,6 +81,8 @@ Item {
         function initialise()
         {
             start = root.position.coordinate
+            if (!waypoint)
+                waypoint = start
             previous = root.position.coordinate
             tripDistance = 0
             delta = 0
@@ -94,7 +96,7 @@ Item {
 
     function updatePosition()
     {
-        if ((position == null) || (!position.coordinate.isValid))
+        if ((!position) || (!position.coordinate.isValid))
             return
 
         if (!internal.valid)
@@ -129,7 +131,7 @@ Item {
     }
 
     function updateBearing() {
-        bearing = position.coordinate.bearingTo(waypoint.coordinate)
+        bearing = position.coordinate.azimuthTo(waypoint)
     }
 
     function updateTripAndTotalDistance() {
@@ -155,22 +157,22 @@ Item {
     }
 
     function updateRemainingAscent() {
-        remainingAscent = waypoint.coordinate.altitude - position.coordinate.altitude
+        remainingAscent = waypoint.altitude - position.coordinate.altitude
     }
 
     function updateRemainingTime() {
         var remaining = 0
         var elapsedseconds = (elapsedtime.getTime() - new Date(0,0,0).getTime())/1000
 
-        if ((position.coordinate.isValid) && (distance != null))
+        if ((position.coordinate.isValid) && (tripDistance != null))
         {
-            var delta = (distance+remaining)/distance * elapsedseconds
+            var delta = (tripDistance+remaining)/tripDistance * elapsedseconds
             remaining = (delta > remaining)? delta : remaining
         }
 
         if (position.altitudeValid)
         {
-            var ascent = position.coordinate.altitude - start.altitude
+            var ascent = position.coordinate.altitude - internal.start.altitude
             var remainingascent = waypoint.altitude - position.coordinate.altitude
             var delta = (ascent+remainingascent)/ascent * elapsedseconds
             remaining = (delta > remaining)? delta : remaining

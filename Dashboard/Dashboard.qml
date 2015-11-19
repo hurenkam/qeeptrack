@@ -146,4 +146,21 @@ Page {
             Component.onCompleted: gauges.push(gaugeitem)
         }
     }
+
+    ToolButton {
+        id: back
+
+        x: 0
+        y: 0
+        width: buttonwidth*0.7
+        height: width
+
+        source: "qrc:/Components/back.png";
+        bgcolor: "black"
+
+        onClicked: {
+            console.log("Dashboard.Back")
+            stack.pop()
+        }
+    }
 }

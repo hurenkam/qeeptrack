@@ -13,6 +13,8 @@ Page {
 
     signal quit()
 
+    property bool init: false
+    property var waypoint
     property var stack: null
     property bool followme: true
     property int buttonwidth: 50 * screen.scale
@@ -22,29 +24,99 @@ Page {
         stack: root.stack
     }
 
+    Timer {
+        id: inittimer
+        running: false
+        repeat: false
+        interval: 100
+        onTriggered: init=true
+    }
+
     PositionSource {
         id: positionSource
         active: root.followme
+        property var current
 
         onPositionChanged: {
             if (positionSource.position) {
-                locator.iscurrent = true
-                map.center = positionSource.position.coordinate
+                if (map.followcurrent)
+                    map.center = positionSource.position.coordinate
+                else
+                    map.followcurrent = false
+
+                current = positionSource.position.coordinate
+
+                if (!init) {
+                    console.log ("setting waypoint to current location")
+                    markwaypoint.coordinate = current
+                    inittimer.running = true
+                }
             }
         }
     }
 
     Map {
         id: map
-        x: parent.x; width: parent.width;
-        y: parent.y-60; height: parent.height+120
-
+        //anchors.fill: parent
+        anchors.left: parent.left
+        anchors.right: parent.right
+        y: parent.y - buttonwidth -10
+        height: parent.height + 2*buttonwidth +20
         zoomLevel: maximumZoomLevel - 2
-        center { latitude: 51.47292064801667; longitude: 5.489283303657714 } // Home
+        property bool followcurrent: true
+        center: QtPositioning.coordinate(47.24372,10.72052) // Hoch Imst
+              //QtPositioning.coordinate(42.627,0.765) // Hospice de Vielha (GR11)
+        onCenterChanged: if (center !== positionSource.current) followcurrent = false
 
         plugin: Plugin {
             id: plugin
             name:"osm"
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onPressAndHold: map.followcurrent=false
+        }
+
+        MapQuickItem {
+            id: markcurrentposition
+            anchorPoint.x: currentimage.width/2
+            anchorPoint.y: currentimage.height/2
+            coordinate: positionSource.current
+            visible: (!map.followcurrent && positionSource.current)
+            zoomLevel: 0.0
+
+            sourceItem: Image {
+                id: currentimage
+                source: "qrc:/Components/locator_green.png"
+                width: buttonwidth
+                height: width
+            }
+        }
+
+        MapQuickItem {
+            id: markwaypoint
+            anchorPoint.x: 13
+            anchorPoint.y: 48
+            coordinate: waypoint
+            //visible: (waypoint)
+            zoomLevel: 0.0
+
+            sourceItem: Image {
+                id: waypointimage
+                source: "qrc:/Components/flag-plain.png"
+                width: 48
+                height: width
+            }
+        }
+
+        Component.onCompleted: {
+            for (var i=0; i<supportedMapTypes.length; i++) {
+                console.log("supports map type:",supportedMapTypes[i].description)
+                //if (supportedMapTypes[i].style===MapType.CycleMap)
+                if (supportedMapTypes[i].style===MapType.TerrainMap)
+                    activeMapType = supportedMapTypes[i]
+            }
         }
     }
 
@@ -55,72 +127,83 @@ Page {
         width: buttonwidth
         height: width
         source: iscurrent? "qrc:/Components/locator_green.png" : "qrc:/Components/locator_red.png"
-        property bool iscurrent: false
+        property bool iscurrent: (map.followcurrent && positionSource.current)
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                map.followcurrent = true
+                map.center = positionSource.current
+            }
+        }
     }
 
     Rectangle {
         id: infobox
         x: 10
         y: root.height - height - 10
-        width: root.width - buttonwidth - 30
+        width: 3*buttonwidth+20
         height: buttonwidth*2 + 10
         color: "white"
         border.color: "black"
         opacity: 0.5
         radius: 20
 
-        ColumnLayout {
+        GridLayout {
             x: 15
             y: 15
             width: parent.width-30
             height: parent.height-30
-            spacing: 5
+            columns: 2
+            rows: 3
 
             Text {
                 text: "WGS84"
                 color: "black"
-                font.bold: true; font.pixelSize: screen.pixelSize*1.5
+                font.bold: true; font.pointSize: screen.pointSize
                 style: Text.Raised; styleColor: "white"
+                Layout.columnSpan: 2
             }
             Text {
-                text: "Latitude:"
+                text: "Lat:"
                 color: "black"
-                font.bold: true; font.pixelSize: screen.pixelSize
+                font.bold: true; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
                 text: map.center.latitude.toFixed(8).toString()
                 color: "black"
-                font.bold: false; font.pixelSize: screen.pixelSize*0.7
+                font.bold: false; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
-                text: "Longitude: "
+                text: "Lon:"
                 color: "black"
-                font.bold: true; font.pixelSize: screen.pixelSize
+                font.bold: true; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
                 text: map.center.longitude.toFixed(8).toString()
                 color: "black"
-                font.bold: false; font.pixelSize: screen.pixelSize*0.7
+                font.bold: false; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
         }
     }
 
     ToolButton {
-        id: options
+        id: gauge
 
-        x: 10; y: 10
+        x: 10;
+        y: 10
         width: buttonwidth
         height: width
 
-        source: "qrc:/Components/options.png";
+        source: "qrc:/Components/gauge.png";
         bgcolor: "black"
 
         onClicked: {
-            console.log("Mapview.Options")
+            console.log("Mapview.Gauge")
             stack.push(dashboard)
         }
     }
@@ -128,7 +211,8 @@ Page {
     ToolButton {
         id: exit
 
-        x: root.width - width - 10; y: 10
+        y: 10;
+        x: parent.width - (10+buttonwidth)
         width: buttonwidth
         height: width
 

@@ -77,5 +77,8 @@
         <file alias="locator_green.png">Components/locator_green.png</file>
         <file alias="locator_red.png">Components/locator_red.png</file>
         <file alias="exit.png">Components/exit.png</file>
+        <file alias="options.png">Components/options.png</file>
+        <file alias="flag-plain.png">Components/flag-plain.png</file>
+        <file alias="gauge.png">Components/gauge.png</file>
     </qresource>
 </RCC>
