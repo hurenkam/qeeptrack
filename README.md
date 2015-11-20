@@ -36,9 +36,10 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
  * Any gauge can be put in any spot
  * Options now work and are persistent over restart (gauge positions also)
  * MapView
-   * Scroll 
-   * Zoom
+   * Scroll & Zoom
    * Follow me
+   * Select waypoint
+   * Show distance between map center and waypoint
  * Datums
    * WGS84
 
@@ -47,14 +48,11 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
 
 ## Todo: ##
  * MapView
-   * Select waypoint
    * Create route
-   * Show distance from current to scrolled location
  * Datums
    * Amersfoort RD new
    * UTM
  * MonitorModel
-   * Waypoint (currently fixed to startpoint, should be flexible)
    * Route (remaining distance, remaining time)
  * Speedometer
    * Ascent/Descent speed
