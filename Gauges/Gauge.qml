@@ -15,7 +15,6 @@ Item {
     property int gaugeindex: -1
     property var gaugeinstance
     property bool started: false
-    property bool testmode: false
     property var stack: null
     property bool landscape: screen.landscape
 
@@ -35,7 +34,8 @@ Item {
             root.enableanimations = true
         }
     }
-
+/*
+    property bool testmode: false
     PositionSource {
         id: positionsource
         updateInterval: 250
@@ -101,7 +101,7 @@ Item {
         //enableanimations: root.enableanimations
         testmode: root.testmode
     }
-
+*/
     MouseHandler {
         id: mouseHandler
         anchors.fill: parent

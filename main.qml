@@ -31,12 +31,7 @@ ApplicationWindow {
         property double scale:       (widthscale>heightscale)? heightscale: widthscale
         property double pointSize:   18
     }
-/*
-    Dashboard {
-        id: dashboard
-        stack: pagestack
-    }
-*/
+
     Mapview {
         id: mapview
         stack: pagestack

@@ -80,5 +80,6 @@
         <file alias="options.png">Components/options.png</file>
         <file alias="flag-plain.png">Components/flag-plain.png</file>
         <file alias="gauge.png">Components/gauge.png</file>
+        <file alias="flag.png">Components/flag.png</file>
     </qresource>
 </RCC>
