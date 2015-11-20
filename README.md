@@ -11,9 +11,11 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
  * Clock
    * Current time
    * Trip time
+   * Remaining time (to waypoint)
  * Compass
    * Heading
    * Course
+   * Bearing (to waypoint)
  * Speedometer
    * Current speed
    * Minimum speed
@@ -25,29 +27,38 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
    * Maximum altitude
    * Ascent
    * Descent
+ * Distancemeter
+   * Trip distance
+   * Total distance
+   * Remaining distance (to waypoint)
  * Levels
    * Compass calibration 
- * Any gauge can be put in any spot (gauge position is not yet persistent)
- * Options now work and are persistent over restart
+ * Any gauge can be put in any spot
+ * Options now work and are persistent over restart (gauge positions also)
+ * MapView
+   * Scroll 
+   * Zoom
+   * Follow me
+ * Datums
+   * WGS84
 
 ## Bugs: ##
  * PageStack push/pop animation doesn't seem to work (options screen)
 
 ## Todo: ##
- * Monitor
-   * Waypoint
-   * Route
- * Clock
-   * Remaining time
- * Compass
-   * Bearing to waypoint (or next routepoint)
+ * MapView
+   * Select waypoint
+   * Create route
+   * Show distance from current to scrolled location
+ * Datums
+   * Amersfoort RD new
+   * UTM
+ * MonitorModel
+   * Waypoint (currently fixed to startpoint, should be flexible)
+   * Route (remaining distance, remaining time)
  * Speedometer
    * Ascent/Descent speed
  * Altimeter
    * Average altitude
- * Distance
-   * Total
-   * Remaining distance
  * Battery level / horizontal & vertical accuracy levels
  * Satellite view (it seems Qt on iOS does not support this, so will probably work on android only)
- * MapView
