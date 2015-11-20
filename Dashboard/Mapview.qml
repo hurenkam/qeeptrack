@@ -3,6 +3,7 @@ import QtPositioning 5.5
 import QtLocation 5.5
 import QtSensors 5.0
 import QtQuick.Layouts 1.2
+import Proj4 1.0
 import "qrc:/Components"
 import "qrc:/Models"
 
@@ -23,7 +24,7 @@ Page {
         id: positionsource
         updateInterval: 250
         active: true
-        property var current
+        property var current: QtPositioning.coordinate(51.43930725,5.47577798)
         preferredPositioningMethods: PositionSource.SatellitePositioningMethods
 
         onPositionChanged: {
@@ -93,6 +94,8 @@ Page {
         position: positionsource.position
         elapsedtime: clockmodel.elapsed
         enableanimations: root.enableanimations
+
+        Component.onCompleted: waypoint=positionsource.current
     }
 
     CompassModel
@@ -127,8 +130,7 @@ Page {
         height: parent.height + 2*buttonwidth +20
         zoomLevel: maximumZoomLevel - 2
         property bool followcurrent: true
-        center: QtPositioning.coordinate(47.24372,10.72052) // Hoch Imst
-              //QtPositioning.coordinate(42.627,0.765) // Hospice de Vielha (GR11)
+        center: QtPositioning.coordinate(51.43930725,5.47577798)
         onCenterChanged: if (center !== positionsource.current) followcurrent = false
 
         plugin: Plugin {
@@ -207,6 +209,25 @@ Page {
         }
     }
 
+    property var datum: Projection {
+        coordinate: map.center
+        title: "RD"
+        xname: "X:"
+        yname: "Y:"
+        definition: "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.04,49.91,465.84,-1.9848,1.7439,-9.0587,4.0772 +units=m +no_defs"
+        property int digits: 0
+    }
+/*
+    property var datum: Projection {
+        id: datum
+        coordinate: map.center
+        title: "WGS84"
+        xname: "Lon:"
+        yname: "Lat:"
+        definition: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        property int digits: 8
+    }
+*/
     Rectangle {
         id: infobox
         x: 10
@@ -227,32 +248,32 @@ Page {
             rows: 4
 
             Text {
-                text: "WGS84"
+                text: datum.title
                 color: "black"
                 font.bold: true; font.pointSize: screen.pointSize
                 style: Text.Raised; styleColor: "white"
                 Layout.columnSpan: 2
             }
             Text {
-                text: "Lat:"
+                text: datum.xname
                 color: "black"
                 font.bold: true; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
-                text: map.center.latitude.toFixed(8).toString()
+                text: datum.x.toFixed(datum.digits).toString()
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
-                text: "Lon:"
+                text: datum.yname
                 color: "black"
                 font.bold: true; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
-                text: map.center.longitude.toFixed(8).toString()
+                text: datum.y.toFixed(datum.digits).toString()
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
