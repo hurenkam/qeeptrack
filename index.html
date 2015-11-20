@@ -46,6 +46,7 @@
 <ul>
 <li>Current time</li>
 <li>Trip time</li>
+<li>Remaining time (to waypoint)</li>
 </ul>
 </li>
 <li>Compass
@@ -53,6 +54,7 @@
 <ul>
 <li>Heading</li>
 <li>Course</li>
+<li>Bearing (to waypoint)</li>
 </ul>
 </li>
 <li>Speedometer
@@ -74,14 +76,37 @@
 <li>Descent</li>
 </ul>
 </li>
+<li>Distancemeter
+
+<ul>
+<li>Trip distance</li>
+<li>Total distance</li>
+<li>Remaining distance (to waypoint)</li>
+</ul>
+</li>
 <li>Levels
 
 <ul>
 <li>Compass calibration </li>
 </ul>
 </li>
-<li>Any gauge can be put in any spot (gauge position is not yet persistent)</li>
-<li>Options now work and are persistent over restart</li>
+<li>Any gauge can be put in any spot</li>
+<li>Options now work and are persistent over restart (gauge positions also)</li>
+<li>MapView
+
+<ul>
+<li>Scroll &amp; Zoom</li>
+<li>Follow me</li>
+<li>Select waypoint</li>
+<li>Show distance between map center and waypoint</li>
+</ul>
+</li>
+<li>Datums
+
+<ul>
+<li>WGS84</li>
+</ul>
+</li>
 </ul>
 
 <h2>
@@ -95,23 +120,23 @@
 <a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Todo:</h2>
 
 <ul>
-<li>Monitor
+<li>MapView
 
 <ul>
-<li>Waypoint</li>
-<li>Route</li>
+<li>Create route</li>
 </ul>
 </li>
-<li>Clock
+<li>Datums
 
 <ul>
-<li>Remaining time</li>
+<li>Amersfoort RD new</li>
+<li>UTM</li>
 </ul>
 </li>
-<li>Compass
+<li>MonitorModel
 
 <ul>
-<li>Bearing to waypoint (or next routepoint)</li>
+<li>Route (remaining distance, remaining time)</li>
 </ul>
 </li>
 <li>Speedometer
@@ -126,16 +151,8 @@
 <li>Average altitude</li>
 </ul>
 </li>
-<li>Distance
-
-<ul>
-<li>Total</li>
-<li>Remaining distance</li>
-</ul>
-</li>
 <li>Battery level / horizontal &amp; vertical accuracy levels</li>
 <li>Satellite view (it seems Qt on iOS does not support this, so will probably work on android only)</li>
-<li>MapView</li>
 </ul>
       </section>
     </div>
