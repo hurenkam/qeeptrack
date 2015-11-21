@@ -199,6 +199,8 @@ Page {
             }
         }
 
+        activeMapType: supportedMapTypes[mapoptions.selectedmap]
+/*
         Component.onCompleted: {
             for (var i=0; i<supportedMapTypes.length; i++) {
                 console.log("supports map type:",supportedMapTypes[i].description)
@@ -207,27 +209,35 @@ Page {
                     activeMapType = supportedMapTypes[i]
             }
         }
+*/
     }
 
-    property var datum: Projection {
-        coordinate: map.center
-        title: "RD"
-        xname: "X:"
-        yname: "Y:"
-        definition: "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.04,49.91,465.84,-1.9848,1.7439,-9.0587,4.0772 +units=m +no_defs"
-        property int digits: 0
+    property list<QtObject> availableDatums: [
+        Projection {
+            id: datum
+            coordinate: map.center
+            title: "WGS84"
+            xname: "Lon:"
+            yname: "Lat:"
+            definition: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+            property int digits: 8
+        },
+        Projection {
+            coordinate: map.center
+            title: "RD"
+            xname: "X:"
+            yname: "Y:"
+            definition: "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.04,49.91,465.84,-1.9848,1.7439,-9.0587,4.0772 +units=m +no_defs"
+            property int digits: 0
+        }
+    ]
+
+    MapOptions {
+        id: mapoptions
+        title: "Map Options"
+        maptypes: map.supportedMapTypes
     }
-/*
-    property var datum: Projection {
-        id: datum
-        coordinate: map.center
-        title: "WGS84"
-        xname: "Lon:"
-        yname: "Lat:"
-        definition: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
-        property int digits: 8
-    }
-*/
+
     Rectangle {
         id: infobox
         x: 10
@@ -239,6 +249,11 @@ Page {
         opacity: 0.5
         radius: 20
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: stack.push(mapoptions)
+        }
+
         GridLayout {
             x: 15
             y: 15
@@ -248,32 +263,32 @@ Page {
             rows: 4
 
             Text {
-                text: datum.title
+                text: availableDatums[mapoptions.selecteddatum].title
                 color: "black"
                 font.bold: true; font.pointSize: screen.pointSize
                 style: Text.Raised; styleColor: "white"
                 Layout.columnSpan: 2
             }
             Text {
-                text: datum.xname
+                text: availableDatums[mapoptions.selecteddatum].xname
                 color: "black"
                 font.bold: true; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
-                text: datum.x.toFixed(datum.digits).toString()
+                text: availableDatums[mapoptions.selecteddatum].x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
-                text: datum.yname
+                text: availableDatums[mapoptions.selecteddatum].yname
                 color: "black"
                 font.bold: true; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"
             }
             Text {
-                text: datum.y.toFixed(datum.digits).toString()
+                text: availableDatums[mapoptions.selecteddatum].y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.7
                 style: Text.Raised; styleColor: "white"

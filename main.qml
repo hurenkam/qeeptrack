@@ -18,6 +18,9 @@ ApplicationWindow {
     title: qsTr("qeeptrack")
     property int realwidth: (width>height)? height: width
     property int buttonheight: realwidth/10
+    property int buttonlarge: realwidth/7
+    property int buttonmedium: realwidth/10
+    property int buttonsmall: realwidth/15
 
     Item {
         id: screen
@@ -32,7 +35,7 @@ ApplicationWindow {
         property double pointSize:   18
     }
 
-    Mapview {
+    MapView {
         id: mapview
         stack: pagestack
         onQuit: close()

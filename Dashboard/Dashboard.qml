@@ -13,7 +13,7 @@ import "qrc:/Components"
 Page {
     id: root
     anchors.fill: parent
-    //color: "black"
+    color: "black"
     onPushed: console.log("Dashboard.onPushed")
     onPopped: console.log("Dashboard.onPopped")
 
