@@ -1,21 +1,14 @@
 import QtQuick 2.0
 import "qrc:/Components"
 
-Page {
+MapOptionsPage {
     id: root
-    anchors.fill: parent
-    color: "white"
 
-    property string title: "Options"
     property int selecteddatum: 0
     property int selectedmap: 0
     property var maptypes
     property var datums
     property string prefix: "qeeptrack.mapoptions."
-
-    function cancel() {
-        pagestack.pop();
-    }
 
     function confirm() {
         root.selecteddatum = internal.selecteddatum
@@ -43,13 +36,8 @@ Page {
     }
 
     onPushed: {
-        console.log("MapOptions.onPushed")
         internal.selecteddatum = root.selecteddatum
         internal.selectedmap = root.selectedmap
-    }
-
-    onPopped: {
-        console.log("MapOptions.onPopped")
     }
 
     Item {
@@ -62,21 +50,6 @@ Page {
 
         onSelecteddatumChanged: datumUpdate(selecteddatum)
         onSelectedmapChanged: mapUpdate(selectedmap)
-    }
-
-    Item {
-        x: 20 + buttonwidth
-        y: 10
-        width: parent.width - 2* (20+buttonwidth)
-        height: buttonwidth
-
-        Text {
-            anchors.centerIn: parent
-            id: titlewidget
-            font.bold: true
-            font.pointSize: screen.pointSize*10/8
-            text: root.title
-        }
     }
 
     MapOptionList {
@@ -139,40 +112,20 @@ Page {
             }
         }
 
+        MapOptionBox {
+            id: testoptions
+            title: "TestBox"
+
+            MapOptionMenuItem {
+                id: submenu
+                text: "SubMenu"
+                onClicked: console.log("MapOptions.testoptions.submenu.onClicked()")
+            }
+        }
+
         Component.onCompleted: {
             mapselection.populate()
             datumselection.populate()
-        }
-    }
-
-    ToolButton {
-        id: leftbutton
-        x: 10; y:10
-        width: buttonwidth
-        height: width
-
-        bgcolor: "white"
-        source: "qrc:/Gauges/backc.png";
-        onClicked: {
-            console.log("MapOptions.onCancel")
-            root.cancel();
-        }
-    }
-
-    ToolButton {
-        id: rightbutton
-
-        x: root.width - 10 -buttonwidth; y:10
-        width: buttonwidth
-        height: width
-
-        source: "qrc:/Gauges/confirmc.png";
-        bgcolor: "white"
-
-        onClicked: {
-            console.log("MapOptions.onConfirm")
-            root.confirm();
-            saveSettings()
         }
     }
 }
