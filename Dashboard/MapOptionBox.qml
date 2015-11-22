@@ -14,8 +14,9 @@ Rectangle {
     default property alias items: column.children
     property Item columnlayout: column
 
-    Layout.preferredHeight: column.height + titlewidget.height + 40
-    Layout.preferredWidth: parent.width
+    Layout.preferredHeight: column.height + titlewidget.height + 15
+    Layout.fillWidth: true
+    Layout.alignment: Qt.AlignTop
 
     Text {
         x: 10

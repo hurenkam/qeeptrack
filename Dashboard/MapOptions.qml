@@ -10,6 +10,8 @@ Page {
     property int selecteddatum: 0
     property int selectedmap: 0
     property var maptypes
+    property var datums
+    property string prefix: "qeeptrack.mapoptions."
 
     function cancel() {
         pagestack.pop();
@@ -19,6 +21,25 @@ Page {
         root.selecteddatum = internal.selecteddatum
         root.selectedmap = internal.selectedmap
         pagestack.pop()
+    }
+
+    SettingsDatabase {
+        id: settings
+        filename: "qeeptrack"
+        prefix: root.prefix
+
+        Component.onCompleted: root.loadSettings()
+    }
+
+    function loadSettings() {
+        selecteddatum = settings.getValue("datum","0")
+        selectedmap = settings.getValue("maptype","0")
+        console.log("MapOptions.loadSettings", selecteddatum,selectedmap)
+    }
+
+    function saveSettings() {
+        settings.setValue("datum",selecteddatum.toString())
+        settings.setValue("maptype",selectedmap.toString())
     }
 
     onPushed: {
@@ -60,10 +81,10 @@ Page {
 
     MapOptionList {
         id: options
-        x: screen.portrait?  10 : 20 + buttonwidth
-        y: screen.landscape? 10 : 20 + buttonwidth
-        width:  screen.portrait?  parent.width - 20: parent.width -40 -2*buttonwidth
-        height: screen.landscape? parent.height - 20: parent.height -30 -buttonwidth
+        x: 10
+        y: 20 + buttonwidth
+        width:  parent.width - 20
+        height: parent.height -30 -buttonwidth
 
         MapOptionBox {
             id: mapselection
@@ -81,7 +102,7 @@ Page {
                     //console.log("MapOptions.MapOptionBox.populate()", maptypes[i].description)
                     var component = Qt.createComponent("qrc:/Dashboard/MapOptionRadioButton.qml");
                     var result = component.createObject(mapselection.columnlayout, {
-                        text: maptypes[i].description,
+                        text: maptypes[i].name,
                         index: i,
                         selected: internal.selectedmap
                     } );
@@ -91,25 +112,36 @@ Page {
             }
         }
 
-        Component.onCompleted: mapselection.populate()
-
         MapOptionBox {
             id: datumselection
             title: "Datum"
 
             property int selected: 0
-            MapOptionRadioButton {
-                text: "WGS84"
-                index: 0
-                selected: internal.selecteddatum
-                onTicked: internal.selecteddatum = value
+            function updateTicked(value) {
+                console.log("MapOptions.datumselection.updateTicked()",value)
+                internal.selecteddatum = value
             }
-            MapOptionRadioButton {
-                text: "RD"
-                index: 1
-                selected: internal.selecteddatum
-                onTicked: internal.selecteddatum = value
+
+            function populate() {
+                console.log("MapOptions.datumselection.populate()")
+                for (var i=0; i<datums.length; i++)
+                {
+                    console.log("MapOptions.datumselection.populate()", datums[i].title)
+                    var component = Qt.createComponent("qrc:/Dashboard/MapOptionRadioButton.qml");
+                    var result = component.createObject(datumselection.columnlayout, {
+                        text: datums[i].title,
+                        index: i,
+                        selected: internal.selecteddatum
+                    } );
+                    result.ticked.connect(updateTicked)
+                    internal.datumUpdate.connect(result.updateSelected)
+                }
             }
+        }
+
+        Component.onCompleted: {
+            mapselection.populate()
+            datumselection.populate()
         }
     }
 
@@ -140,6 +172,7 @@ Page {
         onClicked: {
             console.log("MapOptions.onConfirm")
             root.confirm();
+            saveSettings()
         }
     }
 }

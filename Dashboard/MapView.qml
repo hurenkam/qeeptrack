@@ -200,16 +200,6 @@ Page {
         }
 
         activeMapType: supportedMapTypes[mapoptions.selectedmap]
-/*
-        Component.onCompleted: {
-            for (var i=0; i<supportedMapTypes.length; i++) {
-                console.log("supports map type:",supportedMapTypes[i].description)
-                //if (supportedMapTypes[i].style===MapType.CycleMap)
-                if (supportedMapTypes[i].style===MapType.TerrainMap)
-                    activeMapType = supportedMapTypes[i]
-            }
-        }
-*/
     }
 
     property list<QtObject> availableDatums: [
@@ -229,6 +219,17 @@ Page {
             yname: "Y:"
             definition: "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.04,49.91,465.84,-1.9848,1.7439,-9.0587,4.0772 +units=m +no_defs"
             property int digits: 0
+        },
+        Projection {
+            coordinate: map.center
+            title: "UTM/WGS84"
+            xname: "X:"
+            yname: "Y:"
+            property int zone: map.center.longitude > 180
+                ? Math.floor((map.center.longitude - 180) / 6) + 1
+                : Math.floor((map.center.longitude + 180) / 6) + 1
+            definition: "+proj=utm +zone=" + zone.toString() + " +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+            property int digits: 0
         }
     ]
 
@@ -236,6 +237,7 @@ Page {
         id: mapoptions
         title: "Map Options"
         maptypes: map.supportedMapTypes
+        datums: availableDatums
     }
 
     Rectangle {
@@ -246,7 +248,7 @@ Page {
         height: buttonwidth*2 + 10
         color: "white"
         border.color: "black"
-        opacity: 0.5
+        opacity: 0.7
         radius: 20
 
         MouseArea {

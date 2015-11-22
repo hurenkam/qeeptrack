@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.1
 Item {
     default property alias items: container.children
     Layout.preferredHeight: childrenRect.height+2
-    Layout.preferredWidth: parent.width
+    Layout.fillWidth: true
 
     Rectangle {
         x: 0

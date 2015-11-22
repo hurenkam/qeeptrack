@@ -24,12 +24,13 @@ Item {
             fillMode: Image.Tile
         }
 
-        ColumnLayout {
+        GridLayout {
             id: column
             x: 10
             y: 10
             width: parent.width - 20
-            spacing: 10
+            columns: screen.portrait? 1 : 2
+            //spacing: 10
         }
     }
 }
