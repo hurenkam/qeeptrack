@@ -70,5 +70,31 @@ ApplicationWindow {
         console.log("Screen.pixelDensity: ", Screen.pixelDensity)
         console.log("Screen.logicalPixelDensity: ", Screen.logicalPixelDensity)
         console.log("Screen.devicePixelRatio: ", Screen.devicePixelRatio)
+/*
+    iPad 3:
+
+        qml: Screen.width:  768
+        qml: Screen.height:  1024
+        qml: Screen.pixelDensity:  5.196850393700786
+        qml: Screen.logicalPixelDensity:  2.834645669291339
+        qml: Screen.devicePixelRatio:  2
+
+    iPhone 6s:
+
+        qml: Screen.width:  375
+        qml: Screen.height:  667
+        qml: Screen.pixelDensity:  6.41732283464567
+        qml: Screen.logicalPixelDensity:  2.834645669291339
+        qml: Screen.devicePixelRatio:  2
+
+    Macbook Retina:
+
+        qml: Screen.width:  1440
+        qml: Screen.height:  900
+        qml: Screen.pixelDensity:  4.350393766123761
+        qml: Screen.logicalPixelDensity:  2.834645669291339
+        qml: Screen.devicePixelRatio:  2
+
+*/
     }
 }
