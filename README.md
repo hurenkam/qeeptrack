@@ -36,12 +36,15 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
  * Any gauge can be put in any spot
  * Options now work and are persistent over restart (gauge positions also)
  * MapView
+   * Map type selection
    * Scroll & Zoom
    * Follow me
    * Select waypoint
    * Show distance between map center and waypoint
  * Datums
    * WGS84
+   * UTM/WGS84 (used in e.g. french ign maps)
+   * Amersfoort RD new (dutch)
 
 ## Bugs: ##
  * PageStack push/pop animation doesn't seem to work (options screen)
@@ -50,8 +53,8 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
  * MapView
    * Create route
  * Datums
-   * Amersfoort RD new
-   * UTM
+   * UTM/ED50 (spanish pyrenees)
+   * UTM/WGS84 exceptions (zones 32V, 31X, 33X, 35X)
  * MonitorModel
    * Route (remaining distance, remaining time)
  * Speedometer
