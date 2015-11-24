@@ -20,7 +20,6 @@ Item {
 
     signal clicked(int index)
     signal options(int index)
-    //signal reset(int index)
 
     onGaugetypeChanged: draw()
 
@@ -34,74 +33,7 @@ Item {
             root.enableanimations = true
         }
     }
-/*
-    property bool testmode: false
-    PositionSource {
-        id: positionsource
-        updateInterval: 250
-        active: true
-        preferredPositioningMethods: PositionSource.SatellitePositioningMethods
 
-        Component.onCompleted: {
-            positionsource.start()
-            positionsource.update()
-        }
-    }
-
-    OrientationSensor {
-        id: orientationsensor
-
-        Component.onCompleted: {
-            orientationsensor.start()
-        }
-    }
-
-    Compass {
-        id: compasssensor
-        dataRate: 1
-        active: true
-
-        Component.onCompleted: {
-            compasssensor.start()
-        }
-    }
-
-    ClockModel {
-        id: clockmodel
-        //enableanimations: root.enableanimations
-    }
-
-    SpeedModel {
-        id: speedmodel;
-        position: positionsource.position
-        enableanimations: root.enableanimations
-        testmode: root.testmode
-    }
-
-    AltitudeModel {
-        id: altitudemodel;
-        position: positionsource.position
-        enableanimations: root.enableanimations
-        testmode: root.testmode
-    }
-
-    MonitorModel {
-        id: monitormodel;
-        position: positionsource.position
-        elapsedtime: clockmodel.elapsed
-        enableanimations: root.enableanimations
-    }
-
-    CompassModel
-    {
-        id: compassmodel;
-        position: positionsource.position;
-        compass: compasssensor.reading;
-        orientation: orientationsensor.reading
-        //enableanimations: root.enableanimations
-        testmode: root.testmode
-    }
-*/
     MouseHandler {
         id: mouseHandler
         anchors.fill: parent

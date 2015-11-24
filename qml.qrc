@@ -36,16 +36,6 @@
         <file alias="DashboardLayout.qml">Dashboard/DashboardLayout.qml</file>
         <file alias="MapView.qml">Dashboard/MapView.qml</file>
         <file alias="MapOptions.qml">Dashboard/MapOptions.qml</file>
-        <file alias="MapOptionList.qml">Dashboard/MapOptionList.qml</file>
-        <file alias="MapOptionBox.qml">Dashboard/MapOptionBox.qml</file>
-        <file alias="MapOptionItem.qml">Dashboard/MapOptionItem.qml</file>
-        <file alias="MapOptionText.qml">Dashboard/MapOptionText.qml</file>
-        <file alias="MapOptionRadioButton.qml">Dashboard/MapOptionRadioButton.qml</file>
-        <file alias="MapOptionMenuItem.qml">Dashboard/MapOptionMenuItem.qml</file>
-        <file alias="MapOptionsPage.qml">Dashboard/MapOptionsPage.qml</file>
-        <file alias="MapOptionTabsLayout.qml">Dashboard/MapOptionTabsLayout.qml</file>
-        <file alias="MapOptionTab.qml">Dashboard/MapOptionTab.qml</file>
-        <file alias="MapOptionRadioBox.qml">Dashboard/MapOptionRadioBox.qml</file>
     </qresource>
     <qresource prefix="/Models">
         <file alias="AltitudeModel.qml">Models/AltitudeModel.qml</file>
@@ -60,20 +50,9 @@
         <file alias="PageStack.qml">Components/PageStack.qml</file>
         <file alias="PageStack.js">Components/PageStack.js</file>
         <file alias="Page.qml">Components/Page.qml</file>
-        <file alias="TabOptionsPage.qml">Components/TabOptionsPage.qml</file>
-        <file alias="TabLayout.qml">Components/TabLayout.qml</file>
-        <file alias="TabItem.qml">Components/TabItem.qml</file>
-        <file alias="OptionList.qml">Components/OptionList.qml</file>
-        <file alias="OptionHeader.qml">Components/OptionHeader.qml</file>
         <file alias="ToolButton.qml">Components/ToolButton.qml</file>
         <file alias="back.png">Components/back.png</file>
         <file alias="visible.png">Components/visible.png</file>
-        <file alias="RadioBox.qml">Components/RadioBox.qml</file>
-        <file alias="DynamicItemModel.qml">Components/DynamicItemModel.qml</file>
-        <file alias="DynamicList.js">Components/DynamicList.js</file>
-        <file alias="OptionRadioButton.qml">Components/OptionRadioButton.qml</file>
-        <file alias="OptionTextItem.qml">Components/OptionTextItem.qml</file>
-        <file alias="OptionItem.qml">Components/OptionItem.qml</file>
         <file alias="options-bg.png">Components/options-bg.png</file>
         <file alias="ticked.png">Components/ticked.png</file>
         <file alias="unticked.png">Components/unticked.png</file>
@@ -94,5 +73,15 @@
         <file alias="flag.png">Components/flag.png</file>
         <file alias="forward.png">Components/forward.png</file>
         <file alias="backc.png">Components/backc.png</file>
+        <file alias="OptionList.qml">Components/OptionList.qml</file>
+        <file alias="OptionBox.qml">Components/OptionBox.qml</file>
+        <file alias="OptionItem.qml">Components/OptionItem.qml</file>
+        <file alias="OptionText.qml">Components/OptionText.qml</file>
+        <file alias="OptionRadioButton.qml">Components/OptionRadioButton.qml</file>
+        <file alias="OptionMenuItem.qml">Components/OptionMenuItem.qml</file>
+        <file alias="OptionsPage.qml">Components/OptionsPage.qml</file>
+        <file alias="OptionTabsLayout.qml">Components/OptionTabsLayout.qml</file>
+        <file alias="OptionTab.qml">Components/OptionTab.qml</file>
+        <file alias="OptionRadioBox.qml">Components/OptionRadioBox.qml</file>
     </qresource>
 </RCC>
