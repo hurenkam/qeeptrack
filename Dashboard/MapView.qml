@@ -24,7 +24,7 @@ Page {
         id: positionsource
         updateInterval: 250
         active: true
-        property var current: QtPositioning.coordinate(51.43930725,5.47577798)
+        property var current: QtPositioning.coordinate(53.21938317,6.56820053)
         preferredPositioningMethods: PositionSource.SatellitePositioningMethods
 
         onPositionChanged: {
@@ -130,7 +130,7 @@ Page {
         height: parent.height + 2*screen.buttonwidth +20
         zoomLevel: maximumZoomLevel - 2
         property bool followcurrent: true
-        center: QtPositioning.coordinate(51.43930725,5.47577798)
+        center: QtPositioning.coordinate(53.21938317,6.56820053)
         onCenterChanged: if (center !== positionsource.current) followcurrent = false
 
         plugin: Plugin {
@@ -204,7 +204,6 @@ Page {
 
     property list<QtObject> availableDatums: [
         Projection {
-            id: datum
             coordinate: map.center
             title: "WGS84"
             xname: "Lon:"
@@ -217,20 +216,41 @@ Page {
             title: "RD"
             xname: "X:"
             yname: "Y:"
-            definition: "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.04,49.91,465.84,-1.9848,1.7439,-9.0587,4.0772 +units=m +no_defs"
+            definition: "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725 +units=m +no_defs"
             property int digits: 0
         },
         Projection {
             coordinate: map.center
             title: "UTM/WGS84"
-            xname: "X:"
-            yname: "Y:"
+            xname: "E:"
+            yname: "N:"
             property int zone: map.center.longitude > 180
                 ? Math.floor((map.center.longitude - 180) / 6) + 1
                 : Math.floor((map.center.longitude + 180) / 6) + 1
-            definition: "+proj=utm +zone=" + zone.toString() + " +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+            property string south: (map.center.latitude < 0)? " +south": ""
+            definition: "+proj=utm +zone=" + zone.toString() + south + " +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
             property int digits: 0
-        }
+        },
+        Projection {
+            coordinate: map.center
+            title: "UTM/ED50"
+            xname: "E:"
+            yname: "N:"
+            property int zone: map.center.longitude > 180
+                ? Math.floor((map.center.longitude - 180) / 6) + 1
+                : Math.floor((map.center.longitude + 180) / 6) + 1
+            property string south: (map.center.latitude < 0)? " +south": ""
+            definition: "+proj=utm +zone=" + zone.toString() + south + " +ellps=intl +towgs84=-87,-98,-121,0,0,0,0 +units=m +no_defs"
+            property int digits: 0
+        }/*,
+        Projection {
+            coordinate: map.center
+            title: "NAD27"
+            xname: "Lon:"
+            yname: "Lat:"
+            definition: "+proj=longlat +datum=NAD27 +no_defs"
+            property int digits: 8
+        }*/
     ]
 
     MapOptions {

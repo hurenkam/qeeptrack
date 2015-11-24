@@ -3,18 +3,30 @@ import QtQuick 2.5
 MapOptionItem {
     id: root
     width: parent.width
-    height: title.height+14
-    property string text: ""
+    height: titletext.height+14
+    property string title: ""
+    property string subtitle: submenu? submenu.selectedvalue : ""
+    property MapOptionsPage submenu
 
     signal clicked()
 
     Text {
-        id: title
+        id: titletext
         x: 0
         y: 6
-        width: parent.width - button.width -10
-        text: root.text
+        text: root.title
         color: "black"
+        font.pointSize: screen.pointSize
+        clip: true
+    }
+
+    Text {
+        id: subtitletext
+        x: button.x - subtitletext.width -5
+        y: 6
+        text: root.subtitle
+        color: "grey"
+        font.italic: true
         font.pointSize: screen.pointSize
         clip: true
     }
@@ -23,14 +35,18 @@ MapOptionItem {
         id: button
         x: parent.width - width
         y: 2
-        height: title.height+4
+        height: titletext.height+4
         width: height
         source: "qrc:/Components/forward.png"
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: root.clicked()
+        onClicked: {
+            if (root.submenu)
+                stack.push(root.submenu)
+            else
+                root.clicked()
+        }
     }
 }
-
