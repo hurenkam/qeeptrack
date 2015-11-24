@@ -31,7 +31,7 @@ Item {
 
     function addTab(value) {
         if (value) {
-            console.log("MapOptionTabsLayout.addTab",value.title)
+            console.log("OptionTabsLayout.addTab",value.title)
             content.push(value)
         }
         value.parent = _content
@@ -40,11 +40,11 @@ Item {
     function layout() {
         move()
 
-        console.log("MapOptionTabsLayout.layout() length:",content.length,"window:",x,y,width,height)
+        console.log("OptionTabsLayout.layout() length:",content.length,"window:",x,y,width,height)
         var xpos = startx
         for (var i=0; i<content.length; i++) {
             if (content[i]) {
-                // Assume MapOptionTab
+                // Assume OptionTab
                 content[i].x = 0
                 content[i].y = 0
                 content[i].width = width
@@ -56,7 +56,7 @@ Item {
                 content[i].parent = root
                 xpos = content[i].tabx + content[i].tabwidth + spacing
 
-                console.log("MapOptionTabsLayout.layout",i,content[i].name,content[i].tabx,content[i].tabwidth)
+                console.log("OptionTabsLayout.layout",i,content[i].name,content[i].tabx,content[i].tabwidth)
             }
         }
 
@@ -64,7 +64,7 @@ Item {
     }
 
     function selectTab(value) {
-        console.log("MapOptionTabsLayout.selectTab",value)
+        console.log("OptionTabsLayout.selectTab",value)
         for (var i=0; i<content.length; i++)
             if (content[i])
                 content[i].selected = (content[i].index === value)

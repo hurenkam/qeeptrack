@@ -40,7 +40,7 @@ Page {
         bgcolor: "white"
         source: "qrc:/Gauges/backc.png";
         onClicked: {
-            console.log("MapOptions.onCancel")
+            console.log("OptionsPage.onCancel")
             root.cancel();
         }
     }
@@ -56,7 +56,7 @@ Page {
         bgcolor: "white"
 
         onClicked: {
-            console.log("MapOptions.onConfirm")
+            console.log("OptionsPage.onConfirm")
             root.confirm();
             saveSettings()
         }

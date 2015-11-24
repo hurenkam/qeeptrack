@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import "qrc:/Components"
 
-
-MapOptionsPage {
+OptionsPage {
     id: root
 
     property int selecteddatum: 0
@@ -53,14 +52,14 @@ MapOptionsPage {
         onSelectedmapChanged: mapUpdate(selectedmap)
     }
 
-    MapOptionList {
+    OptionList {
         id: options
         x: 10
         y: 20 + screen.buttonwidth
         width:  parent.width - 20
         height: parent.height -30 -screen.buttonwidth
 
-        MapOptionBox {
+        OptionBox {
             id: mapselection
             title: "Map Type"
 
@@ -74,7 +73,7 @@ MapOptionsPage {
                 for (var i=0; i<maptypes.length; i++)
                 {
                     //console.log("MapOptions.MapOptionBox.populate()", maptypes[i].description)
-                    var component = Qt.createComponent("qrc:/Dashboard/MapOptionRadioButton.qml");
+                    var component = Qt.createComponent("qrc:/Components/OptionRadioButton.qml");
                     var result = component.createObject(mapselection.columnlayout, {
                         text: maptypes[i].name,
                         index: i,
@@ -86,7 +85,7 @@ MapOptionsPage {
             }
         }
 
-        MapOptionBox {
+        OptionBox {
             id: datumselection
             title: "Datum"
 
@@ -101,7 +100,7 @@ MapOptionsPage {
                 for (var i=0; i<datums.length; i++)
                 {
                     console.log("MapOptions.datumselection.populate()", datums[i].title)
-                    var component = Qt.createComponent("qrc:/Dashboard/MapOptionRadioButton.qml");
+                    var component = Qt.createComponent("qrc:/Components/OptionRadioButton.qml");
                     var result = component.createObject(datumselection.columnlayout, {
                         text: datums[i].title,
                         index: i,
@@ -112,22 +111,7 @@ MapOptionsPage {
                 }
             }
         }
-/*
-        MapOptionRadioBox {
-            id: _mapselectionbox
-            title: "Map Type"
 
-            MapOptionRadioButton {
-                id: _mapselection1
-                text: "button1"
-            }
-
-            MapOptionRadioButton {
-                id: _mapselection2
-                text: "button2"
-            }
-        }
-*/
         Component.onCompleted: {
             mapselection.populate()
             datumselection.populate()

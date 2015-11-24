@@ -5,15 +5,7 @@ Item {
     default property alias items: container.children
     Layout.preferredHeight: childrenRect.height+2
     Layout.fillWidth: true
-/*
-    Rectangle {
-        x: 0
-        y: 0
-        width: parent.width
-        height: 1
-        color: "grey"
-    }
-*/
+
     Item {
         id: container
         x: 10

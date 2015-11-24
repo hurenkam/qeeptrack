@@ -1,6 +1,6 @@
 import QtQuick 2.0
 
-MapOptionItem {
+OptionItem {
     id: root
     width: parent.width
     height: title.height+14

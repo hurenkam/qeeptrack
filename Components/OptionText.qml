@@ -1,6 +1,6 @@
 import QtQuick 2.0
 
-MapOptionItem {
+OptionItem {
     id: root
     property string text: ""
 

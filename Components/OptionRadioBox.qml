@@ -1,15 +1,14 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 
-MapOptionBox {
+OptionBox {
     id: root
     property int selectedButton
 
-    //onSelectedButtonChanged: buttonUpdate(selectedButton)
     signal selectedButtonUpdated(int value)
 
     function updateSelectedButton(value) {
-        console.log("MapOptionRadioBox.updateSelectedButton()",title,value)
+        console.log("OptionRadioBox.updateSelectedButton()",title,value)
         selectedButton = value
         selectedButtonUpdated(value)
     }
@@ -31,7 +30,7 @@ MapOptionBox {
     }
 
     function addButton(value) {
-        console.log("MapOptionRadioBox.addButton",value.text)
+        console.log("OptionRadioBox.addButton",value.text)
         content.push(value)
         value.ticked.connect(updateSelectedButton)
         root.selectedButtonUpdated.connect(value.updateSelected)
@@ -40,7 +39,7 @@ MapOptionBox {
 
     onContentChanged: layout()
     function layout() {
-        console.log("MapOptionRadioBox.layout() length:",content.length,root.x,root.y,root.width,root.height)
+        console.log("OptionRadioBox.layout() length:",content.length,root.x,root.y,root.width,root.height)
         for (var i=0; i<content.length; i++) {
             if (content[i]) {
                 content[i].index = i
@@ -56,7 +55,6 @@ MapOptionBox {
         x: 0
         y: 10 + titleheight
         width: parent.width
-        //height: childrenRect.height
         spacing: 0
     }
 }

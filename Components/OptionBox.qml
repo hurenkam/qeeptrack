@@ -51,7 +51,7 @@ Rectangle {
     function addLines() {
         var ypos = 0
         for (var i=0; i<(children.length-1); i++) {
-            console.log("MapOptionBox.addLines()",i)
+            console.log("OptionBox.addLines()",i)
         }
     }
 

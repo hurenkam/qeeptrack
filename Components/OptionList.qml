@@ -30,7 +30,6 @@ Item {
             y: 10
             width: parent.width - 20
             columns: screen.portrait? 1 : 2
-            //spacing: 10
         }
     }
 }

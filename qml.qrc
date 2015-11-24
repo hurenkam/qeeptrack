@@ -56,7 +56,6 @@
         <file alias="options-bg.png">Components/options-bg.png</file>
         <file alias="ticked.png">Components/ticked.png</file>
         <file alias="unticked.png">Components/unticked.png</file>
-        <file alias="DynamicBinding.qml">Components/DynamicBinding.qml</file>
         <file alias="SettingsDatabase.qml">Components/SettingsDatabase.qml</file>
         <file alias="category.png">Components/category.png</file>
         <file alias="export.png">Components/export.png</file>

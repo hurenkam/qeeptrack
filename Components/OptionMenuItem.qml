@@ -1,12 +1,12 @@
 import QtQuick 2.5
 
-MapOptionItem {
+OptionItem {
     id: root
     width: parent.width
     height: titletext.height+14
     property string title: ""
     property string subtitle: submenu? submenu.selectedvalue : ""
-    property MapOptionsPage submenu
+    property OptionsPage submenu
 
     signal clicked()
 

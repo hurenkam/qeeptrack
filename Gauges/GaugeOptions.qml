@@ -3,7 +3,7 @@ import QtQuick.Window 2.2
 import "qrc:/Components"
 import "qrc:/Dashboard"
 
-MapOptionsPage {
+OptionsPage {
     id: root
     color: "black"
 
@@ -41,7 +41,7 @@ MapOptionsPage {
         //radius: width/2
     }
 
-    MapOptionTabsLayout {
+    OptionTabsLayout {
         id: tabslayout
         x: screen.portrait? 0 : gaugecontainer.width
         y: screen.portrait? gaugecontainer.height + 20: 10
@@ -49,19 +49,19 @@ MapOptionsPage {
         height: parent.height -y
         selected: 0
 /*
-        MapOptionTab {
+        OptionTab {
             name: "Gauge"
 
-            MapOptionRadioBox {
+            OptionRadioBox {
                 id: mapselectionbox
                 title: "Map Type"
 
-                MapOptionRadioButton {
+                OptionRadioButton {
                     id: mapselection1
                     text: "button1"
                 }
 
-                MapOptionRadioButton {
+                OptionRadioButton {
                     id: mapselection2
                     text: "button2"
                 }
@@ -78,16 +78,16 @@ MapOptionsPage {
             {
                 console.log("Adding tab:", gaugeref.targets[i].name)
                 var component
-                component = Qt.createComponent("qrc:/Dashboard/MapOptionTab.qml");
+                component = Qt.createComponent("qrc:/Components/OptionTab.qml");
                 var tabitem = component.createObject(tabslayout, { name: gaugeref.targets[i].name } );
 
-                component = Qt.createComponent("qrc:/Dashboard/MapOptionRadioBox.qml");
+                component = Qt.createComponent("qrc:/Components/OptionRadioBox.qml");
                 var radiobox = component.createObject(temp, { } );
                 //tabitem._content.push(radiobox)
 
                 for (var j=0; j<gaugeref.sources.length; j++)
                 {
-                    component = Qt.createComponent("qrc:/Dashboard/MapOptionRadioButton.qml");
+                    component = Qt.createComponent("qrc:/Components/OptionRadioButton.qml");
                     var optionradiobutton = component.createObject(temp, { text: gaugeref.sources[j].name } );
                     radiobox.addButton(optionradiobutton)
                 }
