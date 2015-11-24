@@ -11,10 +11,12 @@ Rectangle {
     smooth: true
 
     property string title: ""
+    property int titleheight: titlewidget.height
+    property bool titlevisible: titlewidget.visible
     default property alias items: column.children
     property Item columnlayout: column
 
-    Layout.preferredHeight: column.height + titlewidget.height + 15
+    Layout.preferredHeight: titlewidget.visible? column.height + titlewidget.height + 15: column.height + 10
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignTop
 
@@ -25,14 +27,34 @@ Rectangle {
         font.bold: true
         font.pointSize: screen.pointSize
         text: root.title
+        visible: (root.title != "")
+    }
+
+    Rectangle {
+        x: 0
+        y: column.y-2
+        width: parent.width
+        height: 1
+        color: "grey"
+        visible: titlewidget.visible
     }
 
     ColumnLayout {
         id: column
         x: 0
-        y: 10 + titlewidget.height
+        y: titlewidget.visible? 10 + titlewidget.height: 5
         width: parent.width
-        height: childrenRect.height
+        //height: childrenRect.height
         spacing: 0
     }
+
+    function addLines() {
+        var ypos = 0
+        for (var i=0; i<(children.length-1); i++) {
+            console.log("MapOptionBox.addLines()",i)
+        }
+    }
+
+    Component.onCompleted: addLines()
+    onChildrenChanged: addLines()
 }

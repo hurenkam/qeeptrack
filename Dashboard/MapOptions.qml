@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import "qrc:/Components"
 
+
 MapOptionsPage {
     id: root
 
@@ -55,9 +56,9 @@ MapOptionsPage {
     MapOptionList {
         id: options
         x: 10
-        y: 20 + buttonwidth
+        y: 20 + screen.buttonwidth
         width:  parent.width - 20
-        height: parent.height -30 -buttonwidth
+        height: parent.height -30 -screen.buttonwidth
 
         MapOptionBox {
             id: mapselection
@@ -111,18 +112,22 @@ MapOptionsPage {
                 }
             }
         }
+/*
+        MapOptionRadioBox {
+            id: _mapselectionbox
+            title: "Map Type"
 
-        MapOptionBox {
-            id: testoptions
-            title: "TestBox"
+            MapOptionRadioButton {
+                id: _mapselection1
+                text: "button1"
+            }
 
-            MapOptionMenuItem {
-                id: submenu
-                text: "SubMenu"
-                onClicked: console.log("MapOptions.testoptions.submenu.onClicked()")
+            MapOptionRadioButton {
+                id: _mapselection2
+                text: "button2"
             }
         }
-
+*/
         Component.onCompleted: {
             mapselection.populate()
             datumselection.populate()

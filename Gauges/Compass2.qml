@@ -1,9 +1,11 @@
 import QtQuick 2.5
 import "qrc:/Components"
 
-Item {
+Rectangle {
     id: root
     anchors.fill: parent
+    color: "black"
+    radius: width/2
 
     property string prefix: "qeeptrack.compass."
     property string name: "compass"

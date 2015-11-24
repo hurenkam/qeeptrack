@@ -41,6 +41,11 @@
         <file alias="MapOptionItem.qml">Dashboard/MapOptionItem.qml</file>
         <file alias="MapOptionText.qml">Dashboard/MapOptionText.qml</file>
         <file alias="MapOptionRadioButton.qml">Dashboard/MapOptionRadioButton.qml</file>
+        <file alias="MapOptionMenuItem.qml">Dashboard/MapOptionMenuItem.qml</file>
+        <file alias="MapOptionsPage.qml">Dashboard/MapOptionsPage.qml</file>
+        <file alias="MapOptionTabsLayout.qml">Dashboard/MapOptionTabsLayout.qml</file>
+        <file alias="MapOptionTab.qml">Dashboard/MapOptionTab.qml</file>
+        <file alias="MapOptionRadioBox.qml">Dashboard/MapOptionRadioBox.qml</file>
     </qresource>
     <qresource prefix="/Models">
         <file alias="AltitudeModel.qml">Models/AltitudeModel.qml</file>
@@ -87,5 +92,7 @@
         <file alias="flag-plain.png">Components/flag-plain.png</file>
         <file alias="gauge.png">Components/gauge.png</file>
         <file alias="flag.png">Components/flag.png</file>
+        <file alias="forward.png">Components/forward.png</file>
+        <file alias="backc.png">Components/backc.png</file>
     </qresource>
 </RCC>

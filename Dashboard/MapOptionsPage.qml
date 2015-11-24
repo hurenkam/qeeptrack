@@ -4,7 +4,7 @@ import "qrc:/Components"
 Page {
     id: root
     anchors.fill: parent
-    color: "white"
+    color: "#e0e0e0"
 
     property string title: "Options"
 
@@ -17,10 +17,10 @@ Page {
     }
 
     Item {
-        x: 20 + buttonwidth
+        x: 20 + screen.buttonwidth
         y: 10
-        width: parent.width - 2* (20+buttonwidth)
-        height: buttonwidth
+        width: parent.width - 2* (20+screen.buttonwidth)
+        height: screen.buttonwidth
 
         Text {
             anchors.centerIn: parent
@@ -34,7 +34,7 @@ Page {
     ToolButton {
         id: leftbutton
         x: 10; y:10
-        width: buttonwidth
+        width: screen.buttonwidth
         height: width
 
         bgcolor: "white"
@@ -48,8 +48,8 @@ Page {
     ToolButton {
         id: rightbutton
 
-        x: root.width - 10 -buttonwidth; y:10
-        width: buttonwidth
+        x: root.width - 10 -screen.buttonwidth; y:10
+        width: screen.buttonwidth
         height: width
 
         source: "qrc:/Gauges/confirmc.png";

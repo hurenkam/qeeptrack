@@ -30,4 +30,8 @@ Rectangle {
     property real w: (landscape)? width/667  : width/375
 
     property Item pageStack: null
+
+    MouseHandler {
+        anchors.fill: parent
+    }
 }

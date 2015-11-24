@@ -2,9 +2,11 @@ import QtQuick 2.5
 import QtQuick.Window 2.2
 import "qrc:/Components"
 
-Item {
+Rectangle {
     id: root
     anchors.fill: parent
+    color: "black"
+    radius: width/2
 
     property string prefix: "qeeptrack.clock."
     property bool enableanimations: false

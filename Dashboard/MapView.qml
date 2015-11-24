@@ -18,7 +18,7 @@ Page {
     property bool init: false
     property var stack: null
     property bool followme: true
-    property int buttonwidth: 50 * screen.scale
+    //property int buttonwidth: 50 * screen.scale
 
     PositionSource {
         id: positionsource
@@ -126,8 +126,8 @@ Page {
         //anchors.fill: parent
         anchors.left: parent.left
         anchors.right: parent.right
-        y: parent.y - buttonwidth -10
-        height: parent.height + 2*buttonwidth +20
+        y: parent.y - screen.buttonwidth -10
+        height: parent.height + 2*screen.buttonwidth +20
         zoomLevel: maximumZoomLevel - 2
         property bool followcurrent: true
         center: QtPositioning.coordinate(51.43930725,5.47577798)
@@ -154,7 +154,7 @@ Page {
                 id: locator
                 source: iscurrent? "qrc:/Components/locator_green.png" : "qrc:/Components/locator_red.png"
                 property bool iscurrent: (map.followcurrent && positionsource.current)
-                width: buttonwidth
+                width: screen.buttonwidth
                 height: width
 
                 MouseArea {
@@ -178,7 +178,7 @@ Page {
             sourceItem: Image {
                 id: currentimage
                 source: "qrc:/Components/locator_green.png"
-                width: buttonwidth
+                width: screen.buttonwidth
                 height: width
             }
         }
@@ -244,8 +244,8 @@ Page {
         id: infobox
         x: 10
         y: root.height - height - 10
-        width: 3*buttonwidth+20
-        height: buttonwidth*2 + 10
+        width: 3*screen.buttonwidth+20
+        height: screen.buttonwidth*2 + 10
         color: "white"
         border.color: "black"
         opacity: 0.7
@@ -267,39 +267,39 @@ Page {
             Text {
                 text: availableDatums[mapoptions.selecteddatum].title
                 color: "black"
-                font.bold: true; font.pointSize: screen.pointSize
+                font.bold: true; font.pointSize: screen.pointSize *0.7
                 style: Text.Raised; styleColor: "white"
                 Layout.columnSpan: 2
             }
             Text {
                 text: availableDatums[mapoptions.selecteddatum].xname
                 color: "black"
-                font.bold: true; font.pointSize: screen.pointSize*0.7
+                font.bold: true; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
             }
             Text {
                 text: availableDatums[mapoptions.selecteddatum].x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
                 color: "black"
-                font.bold: false; font.pointSize: screen.pointSize*0.7
+                font.bold: false; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
             }
             Text {
                 text: availableDatums[mapoptions.selecteddatum].yname
                 color: "black"
-                font.bold: true; font.pointSize: screen.pointSize*0.7
+                font.bold: true; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
             }
             Text {
                 text: availableDatums[mapoptions.selecteddatum].y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
                 color: "black"
-                font.bold: false; font.pointSize: screen.pointSize*0.7
+                font.bold: false; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
             }
             Text {
                 text: "Dist:"
                 color: "black"
                 visible: (distancedisplay.distance !== 0)
-                font.bold: true; font.pointSize: screen.pointSize*0.7
+                font.bold: true; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
             }
             Text {
@@ -309,7 +309,7 @@ Page {
                 text: distance.toFixed(3).toString()
                 visible: (distance !== 0)
                 color: "black"
-                font.bold: false; font.pointSize: screen.pointSize*0.7
+                font.bold: false; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
             }
         }
@@ -320,7 +320,7 @@ Page {
 
         x: 10;
         y: 10
-        width: buttonwidth
+        width: screen.buttonwidth
         height: width
 
         source: "qrc:/Components/gauge.png";
@@ -335,9 +335,9 @@ Page {
     ToolButton {
         id: wptbutton
 
-        x: 20 + buttonwidth
+        x: 20 + screen.buttonwidth
         y: 10
-        width: buttonwidth
+        width: screen.buttonwidth
         height: width
 
         source: "qrc:/Components/flag.png";
@@ -353,8 +353,8 @@ Page {
         id: exit
 
         y: 10;
-        x: parent.width - (10+buttonwidth)
-        width: buttonwidth
+        x: parent.width - (10+screen.buttonwidth)
+        width: screen.buttonwidth
         height: width
 
         source: "qrc:/Components/exit.png";
@@ -369,8 +369,8 @@ Page {
     ToolButton {
         id: zoomin
 
-        x: root.width - 10 -buttonwidth; y: root.height - 2 * (10 + buttonwidth)
-        width: buttonwidth
+        x: root.width - 10 -screen.buttonwidth; y: root.height - 2 * (10 + screen.buttonwidth)
+        width: screen.buttonwidth
         height: width
 
         source: "qrc:/Components/zoom-in.png";
@@ -385,8 +385,8 @@ Page {
     ToolButton {
         id: zoomout
 
-        x: root.width - 10 -buttonwidth; y: root.height - 1 * (10 + buttonwidth)
-        width: buttonwidth
+        x: root.width - 10 -screen.buttonwidth; y: root.height - 1 * (10 + screen.buttonwidth)
+        width: screen.buttonwidth
         height: width
 
         source: "qrc:/Components/zoom-out.png";

@@ -9,7 +9,6 @@ import "qrc:/Dashboard"
 import "qrc:/Gauges"
 import "qrc:/Components"
 
-//Rectangle {
 Page {
     id: root
     anchors.fill: parent
@@ -150,12 +149,12 @@ Page {
     ToolButton {
         id: back
 
-        x: 0
-        y: 0
-        width: buttonwidth*0.7
+        x: 3
+        y: 3
+        width: screen.buttonwidth
         height: width
 
-        source: "qrc:/Components/back.png";
+        source: "qrc:/Components/backc.png";
         bgcolor: "black"
 
         onClicked: {

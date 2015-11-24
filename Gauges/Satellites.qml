@@ -2,9 +2,11 @@ import QtQuick 2.5
 import Local 1.0
 import "qrc:/Components"
 
-Item {
+Rectangle {
     id: root
     anchors.fill: parent
+    color: "black"
+    radius: width/2
 
     property string prefix: ""
     property variant satellitemodel: null

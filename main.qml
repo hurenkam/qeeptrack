@@ -33,6 +33,18 @@ ApplicationWindow {
         property double heightscale: (portrait)?  height/667: height/375
         property double scale:       (widthscale>heightscale)? heightscale: widthscale
         property double pointSize:   18
+        property double buttonwidth: realwidth/10
+
+        property string optionitembordercolor: "grey"
+        property string optiontextcolor: "black"
+        property string optionradiobuttontickedimage: "qrc:/Components/ticked.png"
+        property string optionradiobuttonuntickedimage: "qrc:/Components/unticked.png"
+        property string optionlistcolor: "white"
+        property string optionlistimage: "qrc:/Components/options-bg.png"
+        property string optionpagecolor: "white"
+        property string optionpagecancelimage: "qrc:/Gauges/backc.png"
+        property string optionpageconfirmimage: "qrc:/Gauges/confirmc.png"
+        property string optionmenuitemimage: "qrc:/Components/forward.png"
     }
 
     MapView {
