@@ -8,6 +8,7 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
    * PC/Android Simulator
    * PC/Windows Desktop
    * iPhone 6s
+   * iPad 3 (ui is not designed for this resolution, dashboard is clipped, buttons are big, but app is functional)
  * Clock
    * Current time
    * Trip time
@@ -43,23 +44,64 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
    * Show distance between map center and waypoint
  * Datums
    * WGS84
-   * UTM/WGS84 (used in e.g. french ign maps)
-   * Amersfoort RD new (dutch)
+   * UTM/WGS84 (used in french ign maps)
+   * UTM/ED50 (used in spanish maps)
+   * Amersfoort RD new (dutch national grid)
 
 ## Bugs: ##
  * PageStack push/pop animation doesn't seem to work (options screen)
 
 ## Todo: ##
- * MapView
-   * Create route
+ * User Interface
+   * Make UI themable
+   * Better support for 4:3 resolution (dashboard looks bad on iPad)
+ * Waypoints
+   * Allow direct coordinate input (in currently selected datum coordinates)
+   * Store more than one waypoint
+ * Routes/Tracks
+   * Import
+   * Show on map
+   * Create on map
+   * Record
+   * Export
+   * Add metadata
+   * Remaining distance from current position
+   * Remaining time from current position
  * Datums
-   * UTM/ED50 (spanish pyrenees)
-   * UTM/WGS84 exceptions (zones 32V, 31X, 33X, 35X)
- * MonitorModel
-   * Route (remaining distance, remaining time)
+   * UTM exceptions (zones 32V, 31X, 33X, 35X)
+   * Store the definitions in a database rather than hardcoded
+   * Edit/Add/Remove datum proj4 definition
+   * Display Lattitude/Longitude:
+     * Decimal (current)
+     * Degrees, minutes
+     * Degrees, minutes, seconds
+   * Display Northing/Easting, X/Y:
+     * km
+     * m (current)
  * Speedometer
    * Ascent/Descent speed
+   * Specify units:
+     * km/h (current)
+     * mph
+     * m/s
+     * min/km
+   * More scales
+     * 0-10 (current)
+     * 0-20
+     * 0-50
+     * 0-100
+     * 0-200 (current)
+     * auto-scale up
  * Altimeter
    * Average altitude
+   * Specify units:
+     * m (current)
+     * feet
+ * Distancemeter
+   * Specify units:
+     * km (current)
+     * m
+     * miles
+     * feet
  * Battery level / horizontal & vertical accuracy levels
  * Satellite view (it seems Qt on iOS does not support this, so will probably work on android only)
