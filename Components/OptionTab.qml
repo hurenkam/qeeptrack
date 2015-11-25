@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 
 Item {
     id: root
+    anchors.fill: parent
 
     property string name: "tab"
     property int index: -1

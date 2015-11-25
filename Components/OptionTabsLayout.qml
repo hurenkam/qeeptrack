@@ -45,10 +45,6 @@ Item {
         for (var i=0; i<content.length; i++) {
             if (content[i]) {
                 // Assume OptionTab
-                content[i].x = 0
-                content[i].y = 0
-                content[i].width = width
-                content[i].height = height
                 content[i].index = i
                 content[i].selected = false
                 content[i].tabx = xpos
