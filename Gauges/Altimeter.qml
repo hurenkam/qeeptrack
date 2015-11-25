@@ -8,7 +8,7 @@ Base {
 
     prefix: "qeeptrack.altimeter."
     name:                  "altitude (100m)"
-    dialimagesource:       "speed10.png"
+    dialimagesource:       "qrc:/Gauges/gauge-numbers10-black.png"
     shorthandimagesource:  "shorthand.png"
     longhandimagesource:   "longhand.png"
     secondhandimagesource: "secondhand.png"

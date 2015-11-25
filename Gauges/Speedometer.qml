@@ -8,7 +8,7 @@ Base {
 
     prefix: "qeeptrack.speedometer."
     name:                  "speed (km/h)"
-    dialimagesource:       ((analogvalue>10) || (maximum.source>10))? "speed200.png" : "speed10.png"
+    dialimagesource:       ((analogvalue>10) || (maximum.source>10))? "qrc:/Gauges/gauge-numbers200-black.png" : "qrc:/Gauges/gauge-numbers10-black.png"
     shorthandimagesource:  "speedneedle.png"
     divider: 1
     digits: 0

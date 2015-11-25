@@ -1,11 +1,9 @@
 import QtQuick 2.5
 import "qrc:/Components"
 
-Rectangle {
+Item {
     id: root
     anchors.fill: parent
-    color: "black"
-    radius: width/2
 
     property string prefix: ""
     property int compass:     0
@@ -30,12 +28,12 @@ Rectangle {
     }
 
     Image {
-        source: "level.png"
+        source: "level-white.png"
         anchors.fill: parent
     }
 
     Image {
-        source: "levelhand.png"
+        source: "secondhand.png"
         width: parent.width
         height: parent.height*0.55
         transform: Rotation {
@@ -53,7 +51,7 @@ Rectangle {
     }
 
     Image {
-        source: "levelhand.png"
+        source: "secondhand.png"
         width: parent.width
         height: parent.height*0.55
         transform: Rotation {
@@ -71,7 +69,7 @@ Rectangle {
     }
 
     Image {
-        source: "levelhand.png"
+        source: "secondhand.png"
         width: parent.width
         height: parent.height*0.55
         transform: Rotation {
@@ -89,7 +87,7 @@ Rectangle {
     }
 
     Image {
-        source: "levelhand.png"
+        source: "secondhand.png"
         width: parent.width
         height: parent.height*0.55
         transform: Rotation {
@@ -104,5 +102,14 @@ Rectangle {
                 }
             }
         }
+    }
+
+    Rectangle {
+        x: parent.width/4
+        y: x
+        width: parent.width-2*x
+        height: parent.height-2*y
+        color: "#e0e0e0"
+        radius: parent.width/2
     }
 }

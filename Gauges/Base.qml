@@ -2,11 +2,9 @@ import QtQuick 2.5
 import QtPositioning 5.2
 import "qrc:/Components"
 
-Rectangle {
+Item {
     id: root
     anchors.fill: parent
-    color: "black"
-    radius: width/2
 
     property string prefix: ""
     property string name: ""
@@ -56,6 +54,10 @@ Rectangle {
     }
 
     Image {
+        source: "qrc:/Gauges/gauge-faceplate-white.png";
+        anchors.fill: parent
+    }
+    Image {
         source: root.dialimagesource
         anchors.fill: parent
 
@@ -64,7 +66,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             y: parent.height * 0.3
             text: root.name;
-            color: "white"
+            color: "black"
             font.bold: true; font.pixelSize: parent.height/3* 0.18
             style: Text.Raised; styleColor: "black"
         }
@@ -73,7 +75,7 @@ Rectangle {
     Rectangle {
         y: parent.height * 0.75
         height: parent.height * 0.16
-        color: "black"
+        color: "#e0e0e0"
         width: parent.width/4
         anchors.horizontalCenter: parent.horizontalCenter
         Text {
@@ -82,9 +84,9 @@ Rectangle {
             anchors.right: parent.right
             anchors.margins: 2
             text: root.toFixed(top.value/root.divider,root.digits)
-            color: "white"
+            color: "black"
             font.bold: true; font.pixelSize: parent.height/3
-            style: Text.Raised; styleColor: "black"
+            style: Text.Raised; styleColor: "white"
         }
         Text {
             //id: bottom
@@ -92,9 +94,9 @@ Rectangle {
             anchors.right: parent.right
             anchors.margins: 2
             text: root.toFixed(bottom.value/root.divider,root.digits)
-            color: "white"
+            color: "black"
             font.bold: true; font.pixelSize: parent.height/3
-            style: Text.Raised; styleColor: "black"
+            style: Text.Raised; styleColor: "white"
         }
     }
 

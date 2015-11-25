@@ -5,7 +5,7 @@ import "qrc:/Dashboard"
 
 OptionsPage {
     id: root
-    color: "black"
+    color: "#e0e0e0"
 
     title: ""
     property var gauge

@@ -8,7 +8,7 @@ Base {
 
     prefix: "qeeptrack.distancemeter."
     name: "distance (km)"
-    dialimagesource: "speed10.png"
+    dialimagesource: "qrc:/Gauges/gauge-numbers10-black.png"
     shorthandimagesource: "shorthand.png"
     longhandimagesource: "longhand.png"
     secondhandimagesource: "secondhand.png"

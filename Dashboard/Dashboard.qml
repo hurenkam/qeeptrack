@@ -12,7 +12,7 @@ import "qrc:/Components"
 Page {
     id: root
     anchors.fill: parent
-    color: "black"
+    color: "#e0e0e0"
     onPushed: console.log("Dashboard.onPushed")
     onPopped: console.log("Dashboard.onPopped")
 
@@ -149,8 +149,8 @@ Page {
     ToolButton {
         id: back
 
-        x: 3
-        y: 3
+        x: 0
+        y: 0
         width: screen.buttonwidth
         height: width
 

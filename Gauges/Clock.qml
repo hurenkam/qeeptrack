@@ -2,11 +2,9 @@ import QtQuick 2.5
 import QtQuick.Window 2.2
 import "qrc:/Components"
 
-Rectangle {
+Item {
     id: root
     anchors.fill: parent
-    color: "black"
-    radius: width/2
 
     property string prefix: "qeeptrack.clock."
     property bool enableanimations: false
@@ -92,42 +90,46 @@ Rectangle {
     }
 
     Image {
-        source: "clock.png";
+        source: "qrc:/Gauges/gauge-faceplate-white.png";
         anchors.fill: parent
+    }
+    Image {
+        source: "qrc:/Gauges/clock-numbers-black.png";
+        anchors.fill: parent
+    }
 
-        Text {
-            id: nametext
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: parent.height * 0.3
-            text: root.name;
-            color: "white"
-            font.bold: true; font.pixelSize: parent.height/3* 0.18
-            style: Text.Raised; styleColor: "black"
-        }
+    Text {
+        id: nametext
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: parent.height * 0.3
+        text: root.name;
+        color: "black"
+        font.bold: true; font.pixelSize: parent.height/3* 0.18
+        style: Text.Raised; styleColor: "white"
     }
 
     Rectangle {
         y: parent.height * 0.7
         height: parent.height * 0.18
-        color: "black"
         width: parent.width/3.5
+        color: "#e0e0e0"
         anchors.horizontalCenter: parent.horizontalCenter
         Text {
             id: toptext
             anchors.horizontalCenter: parent.horizontalCenter
             text: Qt.formatDateTime(top.value,"hh:mm:ss");
-            color: "white"
+            color: "black"
             font.bold: true; font.pixelSize: parent.height/3
-            style: Text.Raised; styleColor: "black"
+            style: Text.Raised; styleColor: "white"
         }
         Text {
             y: parent.height/2
             id: bottomtext
             anchors.horizontalCenter: parent.horizontalCenter
             text: Qt.formatDateTime(bottom.value,"hh:mm:ss");
-            color: "white"
+            color: "black"
             font.bold: true; font.pixelSize: parent.height/3
-            style: Text.Raised; styleColor: "black"
+            style: Text.Raised; styleColor: "white"
         }
     }
 

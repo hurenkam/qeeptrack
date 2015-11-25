@@ -30,6 +30,13 @@
         <file alias="confirmc.png">Gauges/confirmc.png</file>
         <file alias="Distancemeter.qml">Gauges/Distancemeter.qml</file>
         <file alias="Base.qml">Gauges/Base.qml</file>
+        <file alias="clock-numbers-black.png">Gauges/clock-numbers-black.png</file>
+        <file alias="compass-rose-black.png">Gauges/compass-rose-black.png</file>
+        <file alias="gauge-faceplate-white.png">Gauges/gauge-faceplate-white.png</file>
+        <file alias="compass-ring-white.png">Gauges/compass-ring-white.png</file>
+        <file alias="gauge-numbers10-black.png">Gauges/gauge-numbers10-black.png</file>
+        <file alias="gauge-numbers200-black.png">Gauges/gauge-numbers200-black.png</file>
+        <file alias="level-white.png">Gauges/level-white.png</file>
     </qresource>
     <qresource prefix="/Dashboard">
         <file alias="Dashboard.qml">Dashboard/Dashboard.qml</file>

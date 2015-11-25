@@ -64,7 +64,7 @@ OptionsPage {
             title: "Map Type"
 
             function updateTicked(value) {
-                console.log("MapOptions.MapOptionBox.updateTicked()",value)
+                console.log("MapOptions.OptionBox.updateTicked()",value)
                 internal.selectedmap = value
             }
 
@@ -72,7 +72,7 @@ OptionsPage {
                 //console.log("MapOptions.MapOptionBox.populate()")
                 for (var i=0; i<maptypes.length; i++)
                 {
-                    //console.log("MapOptions.MapOptionBox.populate()", maptypes[i].description)
+                    //console.log("MapOptions.OptionBox.populate()", maptypes[i].description)
                     var component = Qt.createComponent("qrc:/Components/OptionRadioButton.qml");
                     var result = component.createObject(mapselection.columnlayout, {
                         text: maptypes[i].name,

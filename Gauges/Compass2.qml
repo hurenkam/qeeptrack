@@ -1,11 +1,9 @@
 import QtQuick 2.5
 import "qrc:/Components"
 
-Rectangle {
+Item {
     id: root
     anchors.fill: parent
-    color: "black"
-    radius: width/2
 
     property string prefix: "qeeptrack.compass."
     property string name: "compass"
@@ -71,7 +69,11 @@ Rectangle {
     }
 
     Image {
-        source: "compassring.png"
+        source: "qrc:/Gauges/gauge-faceplate-white.png";
+        anchors.fill: parent
+    }
+    Image {
+        source: "qrc:/Gauges/compass-ring-white.png"
         anchors.fill: parent
         transform: Rotation {
             origin.x: width/2
@@ -88,7 +90,7 @@ Rectangle {
     }
 
     Image {
-        source: "compass.png"
+        source: "qrc:/Gauges/compass-rose-black.png"
         anchors.fill: parent
         transform: Rotation {
             origin.x: width/2
