@@ -40,9 +40,14 @@
     </qresource>
     <qresource prefix="/Dashboard">
         <file alias="Dashboard.qml">Dashboard/Dashboard.qml</file>
-        <file alias="DashboardLayout.qml">Dashboard/DashboardLayout.qml</file>
         <file alias="MapView.qml">Dashboard/MapView.qml</file>
         <file alias="MapOptions.qml">Dashboard/MapOptions.qml</file>
+        <file alias="DashboardLayout1x1.qml">Dashboard/DashboardLayout1x1.qml</file>
+        <file alias="DashboardLayout3x2.qml">Dashboard/DashboardLayout3x2.qml</file>
+        <file alias="DashboardLayout4x3.qml">Dashboard/DashboardLayout4x3.qml</file>
+        <file alias="DashboardLayout16x9.qml">Dashboard/DashboardLayout16x9.qml</file>
+        <file alias="DashboardLayout16x10.qml">Dashboard/DashboardLayout16x10.qml</file>
+        <file alias="DashboardLayout21x9.qml">Dashboard/DashboardLayout21x9.qml</file>
     </qresource>
     <qresource prefix="/Models">
         <file alias="AltitudeModel.qml">Models/AltitudeModel.qml</file>

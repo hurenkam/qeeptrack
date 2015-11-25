@@ -43,31 +43,11 @@ OptionsPage {
 
     OptionTabsLayout {
         id: tabslayout
-        x: screen.portrait? 0 : gaugecontainer.width
-        y: screen.portrait? gaugecontainer.height + 20: 10
+        x: screen.portrait? 0 : gaugecontainer.width + gaugecontainer.x * 2
+        y: screen.portrait? gaugecontainer.height + 20: 30
         width:  parent.width - x
         height: parent.height -y
         selected: 0
-/*
-        OptionTab {
-            name: "Gauge"
-
-            OptionRadioBox {
-                id: mapselectionbox
-                title: "Map Type"
-
-                OptionRadioButton {
-                    id: mapselection1
-                    text: "button1"
-                }
-
-                OptionRadioButton {
-                    id: mapselection2
-                    text: "button2"
-                }
-            }
-        }
-*/
     }
 
     property Item _temp: Item { id: temp }
@@ -80,10 +60,11 @@ OptionsPage {
                 var component
                 component = Qt.createComponent("qrc:/Components/OptionTab.qml");
                 var tabitem = component.createObject(tabslayout, { name: gaugeref.targets[i].name } );
+                tabslayout.addTab(tabitem)
 
                 component = Qt.createComponent("qrc:/Components/OptionRadioBox.qml");
                 var radiobox = component.createObject(temp, { } );
-                //tabitem._content.push(radiobox)
+                tabitem.addBox(radiobox)
 
                 for (var j=0; j<gaugeref.sources.length; j++)
                 {
@@ -95,8 +76,6 @@ OptionsPage {
                 radiobox.updateSelectedButton(gaugeref.targets[i].mode)
                 radiobox.selectedButtonUpdated.connect(gaugeref.targets[i].setMode)
                 radiobox.layout()
-                tabitem.addBox(radiobox)
-                tabslayout.addTab(tabitem)
             }
             tabslayout.layout()
         }

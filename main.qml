@@ -16,24 +16,22 @@ ApplicationWindow {
     height: 667
 
     title: qsTr("qeeptrack")
-    property int realwidth: (width>height)? height: width
-    property int buttonheight: realwidth/10
-    property int buttonlarge: realwidth/7
-    property int buttonmedium: realwidth/10
-    property int buttonsmall: realwidth/15
 
     Item {
         id: screen
         width: root.width
         height: root.height
 
+        property var    mode:        4
         property bool   portrait:    (width<=height)
         property bool   landscape:   (width>height)
         property double widthscale:  (landscape)?  width/667: width/375
         property double heightscale: (portrait)?  height/667: height/375
         property double scale:       (widthscale>heightscale)? heightscale: widthscale
         property double pointSize:   18
-        property double buttonwidth: realwidth/10
+        property int    shortside:   landscape? height: width
+        property int    longside:    portrait? height: width
+        property double buttonwidth: shortside/10
 
         property string optionitembordercolor: "grey"
         property string optiontextcolor: "black"
@@ -45,6 +43,28 @@ ApplicationWindow {
         property string optionpagecancelimage: "qrc:/Gauges/backc.png"
         property string optionpageconfirmimage: "qrc:/Gauges/confirmc.png"
         property string optionmenuitemimage: "qrc:/Components/forward.png"
+
+        onWidthChanged: layout()
+        onHeightChanged: layout()
+
+        function layout() {
+            var small = portrait? width: height
+            var big = portrait? height: width
+
+            var divider = big/small
+            if (divider >= 21/9)        // 2.333
+                screen.mode = 5
+            else if (divider >= 16/9)   // 1.777
+                screen.mode = 4
+            else if (divider >= 16/10)  // 1.6
+                screen.mode = 3
+            else if (divider >= 3/2)    // 1.333
+                screen.mode = 2
+            else if (divider >= 4/3)    // 1.5
+                screen.mode = 1
+            else
+                screen.mode = 0
+        }
     }
 
     MapView {
@@ -82,6 +102,11 @@ ApplicationWindow {
         console.log("Screen.pixelDensity: ", Screen.pixelDensity)
         console.log("Screen.logicalPixelDensity: ", Screen.logicalPixelDensity)
         console.log("Screen.devicePixelRatio: ", Screen.devicePixelRatio)
+
+        console.log("screen.width:", screen.width)
+        console.log("screen.height:", screen.height)
+        console.log("screen.portrait:", screen.portrait)
+        console.log("screen.mode:", screen.mode)
 /*
     iPad 3:
 
@@ -107,6 +132,13 @@ ApplicationWindow {
         qml: Screen.logicalPixelDensity:  2.834645669291339
         qml: Screen.devicePixelRatio:  2
 
+    Hp EliteBook:
+
+        qml: Screen.width:  1600
+        qml: Screen.height:  900
+        qml: Screen.pixelDensity:  2.833534055934698
+        qml: Screen.logicalPixelDensity:  3.7795275590551185
+        qml: Screen.devicePixelRatio:  1
 */
     }
 }

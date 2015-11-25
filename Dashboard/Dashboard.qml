@@ -87,21 +87,24 @@ Page {
         delegate: gaugedelegate
     }
 
-    DashboardLayout {
-        id: layout;
-        mode: (root.height>root.width)? 0: 1
-        anchors.fill: parent
-    }
+    property list<Item> layouts: [
+        DashboardLayout1x1   { },
+        DashboardLayout4x3   { },
+        DashboardLayout3x2   { },
+        DashboardLayout16x10 { },
+        DashboardLayout16x9  { },
+        DashboardLayout21x9  { }
+    ]
 
     Component {
         id: gaugedelegate
 
         Gauge {
             id: gaugeitem
-            x: layout.current[gaugeindex].x
-            y: layout.current[gaugeindex].y
-            width: layout.current[gaugeindex].width
-            height: layout.current[gaugeindex].height
+            x: layouts[screen.mode].current[gaugeindex].x
+            y: layouts[screen.mode].current[gaugeindex].y
+            width: layouts[screen.mode].current[gaugeindex].width
+            height: layouts[screen.mode].current[gaugeindex].height
 
             Behavior on x {
                 PropertyAnimation {
@@ -142,7 +145,10 @@ Page {
 
             onClicked: root.zoomGauge(gaugeindex)
 
-            Component.onCompleted: gauges.push(gaugeitem)
+            Component.onCompleted: {
+                console.log("Dashboard.Gauge.onCompleted()",screen.mode,layouts[screen.mode].current[gaugeindex].x,layouts[screen.mode].current[gaugeindex].y,layouts[screen.mode].current[gaugeindex].width,layouts[screen.mode].current[gaugeindex].height)
+                gauges.push(gaugeitem)
+            }
         }
     }
 
