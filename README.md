@@ -8,7 +8,7 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
    * PC/Android Simulator
    * PC/Windows Desktop
    * iPhone 6s
-   * iPad 3 (ui is not designed for this resolution, dashboard is clipped, buttons are big, but app is functional)
+   * iPad 3
  * Clock
    * Current time
    * Trip time
@@ -50,11 +50,11 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
 
 ## Bugs: ##
  * PageStack push/pop animation doesn't seem to work (options screen)
+ * Remaining time to waypoint calculation is not working as expected
 
 ## Todo: ##
  * User Interface
    * Make UI themable
-   * Better support for 4:3 resolution (dashboard looks bad on iPad)
  * Waypoints
    * Allow direct coordinate input (in currently selected datum coordinates)
    * Store more than one waypoint
