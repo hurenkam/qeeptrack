@@ -7,6 +7,10 @@ Item {
     property string imageSource: "qrc:/Components/options-bg.png"
     default property alias items: column.children
 
+    function addBox(value) {
+        value.parent = column
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "white"

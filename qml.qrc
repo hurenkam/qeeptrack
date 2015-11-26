@@ -48,6 +48,7 @@
         <file alias="DashboardLayout16x9.qml">Dashboard/DashboardLayout16x9.qml</file>
         <file alias="DashboardLayout16x10.qml">Dashboard/DashboardLayout16x10.qml</file>
         <file alias="DashboardLayout21x9.qml">Dashboard/DashboardLayout21x9.qml</file>
+        <file alias="LocationOptions.qml">Dashboard/LocationOptions.qml</file>
     </qresource>
     <qresource prefix="/Models">
         <file alias="AltitudeModel.qml">Models/AltitudeModel.qml</file>
@@ -94,5 +95,6 @@
         <file alias="OptionTabsLayout.qml">Components/OptionTabsLayout.qml</file>
         <file alias="OptionTab.qml">Components/OptionTab.qml</file>
         <file alias="OptionRadioBox.qml">Components/OptionRadioBox.qml</file>
+        <file alias="OptionTextEdit.qml">Components/OptionTextEdit.qml</file>
     </qresource>
 </RCC>

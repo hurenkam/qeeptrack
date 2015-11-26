@@ -72,6 +72,38 @@ void Projection::setCoordinate(QGeoCoordinate value)
     transform();
 }
 
+bool Projection::isLatLong()
+{
+    if (_pj_destination==0)
+        return false;
+
+    return _pj_destination->is_latlong;
+}
+
+bool Projection::isGeoCent()
+{
+    if (_pj_destination==0)
+        return false;
+
+    return _pj_destination->is_geocent;
+}
+
+double Projection::fromMeter()
+{
+    if (_pj_destination==0)
+        return false;
+
+    return _pj_destination->fr_meter;
+}
+
+double Projection::toMeter()
+{
+    if (_pj_destination==0)
+        return false;
+
+    return _pj_destination->to_meter;
+}
+
 void Projection::transform()
 {
     if (!_coordinate.isValid())

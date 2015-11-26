@@ -20,6 +20,11 @@ class Projection: public QObject
     Q_PROPERTY(double  y  READ y  NOTIFY transformed)
     Q_PROPERTY(double  z  READ z  NOTIFY transformed)
 
+    Q_PROPERTY(bool    isLatLong  READ isLatLong  NOTIFY definitionChanged)
+    Q_PROPERTY(bool    isGeoCent  READ isGeoCent  NOTIFY definitionChanged)
+    Q_PROPERTY(double  fromMeter  READ fromMeter  NOTIFY definitionChanged)
+    Q_PROPERTY(double  toMeter    READ toMeter    NOTIFY definitionChanged)
+
 public:
     QString definition() const;
     void setDefinition(QString value);
@@ -38,6 +43,11 @@ public:
     QString yName() const;
     void setXName(QString value);
     void setYName(QString value);
+
+    bool isLatLong();
+    bool isGeoCent();
+    double fromMeter();
+    double toMeter();
 
     Projection();
 

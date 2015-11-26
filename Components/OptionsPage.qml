@@ -7,6 +7,7 @@ Page {
     color: "#e0e0e0"
 
     property string title: "Options"
+    property string selectedvalue: ""
 
     function cancel() {
         pagestack.pop();
