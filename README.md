@@ -42,13 +42,12 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
    * Follow me
    * Select waypoint
    * Show distance between map center and waypoint
+   * Allow direct coordinate input (in currently selected datum coordinates) to select position
  * Datums
    * WGS84
    * UTM/WGS84 (used in french ign maps)
    * UTM/ED50 (used in spanish maps)
    * Amersfoort RD new (dutch national grid)
- * Waypoints 
-   * Allow direct coordinate input (in currently selected datum coordinates)
 
 ## Bugs: ##
  * PageStack push/pop animation doesn't seem to work (options screen)
