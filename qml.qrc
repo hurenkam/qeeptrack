@@ -97,4 +97,10 @@
         <file alias="OptionRadioBox.qml">Components/OptionRadioBox.qml</file>
         <file alias="OptionTextEdit.qml">Components/OptionTextEdit.qml</file>
     </qresource>
+    <qresource prefix="/Proj4">
+        <file alias="Transformer.qml">Proj4/Transformer.qml</file>
+        <file alias="Wgs84Transformer.qml">Proj4/Wgs84Transformer.qml</file>
+        <file alias="UtmTransformer.qml">Proj4/UtmTransformer.qml</file>
+        <file alias="RDTransformer.qml">Proj4/RDTransformer.qml</file>
+    </qresource>
 </RCC>

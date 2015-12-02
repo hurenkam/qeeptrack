@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.2
 import Proj4 1.0
 import "qrc:/Components"
 import "qrc:/Models"
+import "qrc:/Proj4"
 
 Page {
     id: root
@@ -131,18 +132,18 @@ Page {
         zoomLevel: maximumZoomLevel - 2
         property bool followcurrent: true
         center: QtPositioning.coordinate(53.21938317,6.56820053)
-        onCenterChanged: if (center !== positionsource.current) followcurrent = false
+        property var p4center: Proj4.coordinate(0,0,0)
+        onCenterChanged: {
+            if (center !== positionsource.current)
+                followcurrent = false
+            p4center = Proj4.coordinate(center.longitude,center.latitude,0)
+        }
 
         plugin: Plugin {
             id: plugin
             name:"osm"
         }
-/*
-        MouseArea {
-            anchors.fill: parent
-            onPressAndHold: map.followcurrent=false
-        }
-*/
+
         MapQuickItem {
             id: markcenterposition
             anchorPoint.x: currentimage.width/2
@@ -205,117 +206,51 @@ Page {
         activeMapType: supportedMapTypes[mapoptions.selectedmap]
     }
 
+
+
     property list<QtObject> availableDatums: [
-        Projection {
+        Wgs84Transformer {
+            id: wgs84transformer
             coordinate: map.center
-            title: "WGS84"
-            xname: "Lon:"
-            yname: "Lat:"
-            definition: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
-            property int digits: 8
-            property var inputbox: OptionBox {
-                    id: wgs84input
-                    title: "Go to WGS84 position:"
-
-                    OptionTextEdit {
-                        title: "Latitude"
-                        value: availableDatums[mapoptions.selecteddatum].y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                    OptionTextEdit {
-                        title: "Longitude"
-                        value: availableDatums[mapoptions.selecteddatum].x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                }
+            onPositionInput: {
+                console.log("wgs84transformer.input:",position.x,position.y)
+            }
         },
-        Projection {
+        UtmTransformer {
+            id: utmwgs84transformer
             coordinate: map.center
-            title: "RD"
-            xname: "X:"
-            yname: "Y:"
-            definition: "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725 +units=m +no_defs"
-            property int digits: 0
-            property var inputbox: OptionBox {
-                    id: rdinput
-                    title: "Go to RD position:"
-
-                    OptionTextEdit {
-                        title: "X"
-                        value: availableDatums[mapoptions.selecteddatum].x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                    OptionTextEdit {
-                        title: "Y"
-                        value: availableDatums[mapoptions.selecteddatum].y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                }
-        },
-        Projection {
-            coordinate: map.center
-            title: "UTM/WGS84" //+ " ("+zone.toString()+((map.center.latitude<0)? "S)" : "N)")
-            xname: "E:"
-            yname: "N:"
-            property int zone: map.center.longitude > 180
+            title: "UTM/WGS84"
+            ellps: "+ellps=WGS84"
+            datum: "+datum=WGS84"
+            zone: map.center.longitude > 180
                 ? Math.floor((map.center.longitude - 180) / 6) + 1
                 : Math.floor((map.center.longitude + 180) / 6) + 1
-            property string south: (map.center.latitude < 0)? " +south": ""
-            definition: "+proj=utm +zone=" + zone.toString() + south + " +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
-            property int digits: 0
-            property var inputbox: OptionBox {
-                    id: utmwgs84input
-                    title: "Go to UTM/WGS84 position:"
-
-                    OptionTextEdit {
-                        title: "Zone"
-                        value: availableDatums[mapoptions.selecteddatum].zone.toString()+hemisphere
-                        property var hemisphere: (map.center.latitude < 0)? "S": "N"
-                    }
-                    OptionTextEdit {
-                        title: "Northing"
-                        value: availableDatums[mapoptions.selecteddatum].y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                    OptionTextEdit {
-                        title: "Easting"
-                        value: availableDatums[mapoptions.selecteddatum].x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                }
+            south: (map.center.latitude < 0)
+            onPositionInput: {
+                console.log("utmwgs84transformer.input:",position.x,position.y)
+            }
         },
-        Projection {
+        UtmTransformer {
+            id: utmed50transformer
             coordinate: map.center
             title: "UTM/ED50"
-            xname: "E:"
-            yname: "N:"
-            property int zone: map.center.longitude > 180
+            ellps: "+ellps=intl"
+            datum: "+towgs84=-87,-98,-121,0,0,0,0"
+            zone: map.center.longitude > 180
                 ? Math.floor((map.center.longitude - 180) / 6) + 1
                 : Math.floor((map.center.longitude + 180) / 6) + 1
-            property string south: (map.center.latitude < 0)? " +south": ""
-            definition: "+proj=utm +zone=" + zone.toString() + south + " +ellps=intl +towgs84=-87,-98,-121,0,0,0,0 +units=m +no_defs"
-            property int digits: 0
-            property var inputbox: OptionBox {
-                    id: utmed50input
-                    title: "Go to UTM/ED50 position:"
-
-                    OptionTextEdit {
-                        title: "Zone"
-                        value: availableDatums[mapoptions.selecteddatum].zone.toString()+hemisphere
-                        property var hemisphere: (map.center.latitude < 0)? "S": "N"
-                    }
-                    OptionTextEdit {
-                        title: "Northing"
-                        value: availableDatums[mapoptions.selecteddatum].y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                    OptionTextEdit {
-                        title: "Easting"
-                        value: availableDatums[mapoptions.selecteddatum].x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
-                    }
-                }
-        }/*,
-        Projection {
+            south: (map.center.latitude < 0)
+            onPositionInput: {
+                console.log("utmed50transformer.input:",position.x,position.y)
+            }
+        },
+        RDTransformer {
+            id: rdtransformer
             coordinate: map.center
-            title: "NAD27"
-            xname: "Lon:"
-            yname: "Lat:"
-            definition: "+proj=longlat +datum=NAD27 +no_defs"
-            property int digits: 8
-        }*/
+            onPositionInput: {
+                console.log("rdtransformer.input:",position.x,position.y)
+            }
+        }
     ]
 
     MapOptions {
@@ -370,7 +305,7 @@ Page {
             }
             Text {
                 id: xtext
-                text: availableDatums[mapoptions.selecteddatum].x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
+                text: availableDatums[mapoptions.selecteddatum].forwarded.x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
@@ -383,7 +318,7 @@ Page {
             }
             Text {
                 id: ytext
-                text: availableDatums[mapoptions.selecteddatum].y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
+                text: availableDatums[mapoptions.selecteddatum].forwarded.y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"

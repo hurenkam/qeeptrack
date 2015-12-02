@@ -1,5 +1,152 @@
 #include "projection.h"
 
+P4Projection::P4Projection(QString s)
+    : _definition(s)
+{
+    _pj = pj_init_plus(_definition.toLatin1());
+    _isValid = (_pj != 0);
+}
+
+void P4Projection::setDefinition(QString s)
+{
+    _definition = s;
+    if (_pj != 0)
+        delete _pj;
+    _pj = pj_init_plus(_definition.toLatin1());
+    _isValid = (_pj != 0);
+}
+
+P4Coordinate P4Singleton::coordinate(double x, double y, double z)
+{
+    return P4Coordinate(x,y,z);
+}
+
+P4Projection P4Singleton::projection(QString s)
+{
+    return P4Projection(s);
+}
+
+P4Coordinate P4Singleton::transform(P4Coordinate p4c, P4Projection from, P4Projection to)
+{
+    if (!p4c.isValid() || !from.isValid() || !to.isValid())
+        return P4Coordinate();
+
+    double x = p4c.x();
+    double y = p4c.y();
+    double z = p4c.z();
+
+    if (from.pj()->is_latlong)
+    {
+        x *= DEG_TO_RAD;
+        y *= DEG_TO_RAD;
+    }
+
+    int result = pj_transform(from.pj(),to.pj(),1,1,&x,&y,&z);
+
+    if (result != 0)
+        return P4Coordinate();
+
+    if (to.pj()->is_latlong)
+    {
+        x *= RAD_TO_DEG;
+        y *= RAD_TO_DEG;
+    }
+
+    return P4Coordinate(x,y,z);
+}
+
+/*
+void P4Coordinate::setXYZ(double x, double y, double z)
+{
+    _x = x;
+    _y = y;
+    _z = z;
+    _valid = true;
+    emit coordinateChanged();
+    emit validChanged();
+}
+
+P4Coordinate* Projection::Proj4coordinate() const
+{
+    return new P4Coordinate();
+}
+
+
+
+void P4Transformer::setSource(QString value)
+{
+    _source = value;
+    _spj = pj_init_plus(_source.toLatin1());
+    sourceChanged();
+}
+
+void P4Transformer::setDestination(QString value)
+{
+    _destination = value;
+    _dpj = pj_init_plus(_destination.toLatin1());
+    destinationChanged();
+}
+
+P4Coordinate* P4Transformer::forward(P4Coordinate* value) const
+{
+    if ((_spj == 0) || (_dpj == 0) || (value == 0) || (!value->valid()))
+        return 0;
+
+    double x = value->x();
+    double y = value->y();
+    double z = value->z();
+
+    if (_spj->is_latlong)
+    {
+        x *= DEG_TO_RAD;
+        y *= DEG_TO_RAD;
+    }
+
+    int result = pj_transform(_spj,_dpj,1,1,&x,&y,&z);
+
+    if (result != 0)
+        return 0;
+
+    if (_dpj->is_latlong)
+    {
+        x *= RAD_TO_DEG;
+        y *= RAD_TO_DEG;
+    }
+
+    return new P4Coordinate(x,y,z);
+}
+
+P4Coordinate* P4Transformer::reverse(P4Coordinate* value) const
+{
+    if ((_spj == 0) || (_dpj == 0) || (value == 0) || (!value->valid()))
+        return 0;
+
+    double x = value->x();
+    double y = value->y();
+    double z = value->z();
+
+    if (_dpj->is_latlong)
+    {
+        x *= DEG_TO_RAD;
+        y *= DEG_TO_RAD;
+    }
+
+    int result = pj_transform(_dpj,_spj,1,1,&x,&y,&z);
+
+    if (result != 0)
+        return 0;
+
+    if (_spj->is_latlong)
+    {
+        x *= RAD_TO_DEG;
+        y *= RAD_TO_DEG;
+    }
+
+    return new P4Coordinate(x,y,z);
+}
+*/
+
+/*
 Projection::Projection()
     : QObject()
 {
@@ -144,13 +291,7 @@ void Projection::transform()
             x *= RAD_TO_DEG;
             y *= RAD_TO_DEG;
         }
-/*
-        else
-        {
-            setXName("X:");
-            setYName("Y:");
-        }
-*/
+
         _x = x;
         _y = y;
         _z = z;
@@ -172,3 +313,4 @@ double Projection::z() const
 {
     return _z;
 }
+*/

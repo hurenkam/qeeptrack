@@ -6,79 +6,66 @@
 #include <QGeoCoordinate>
 #include <projects.h>
 
-class Projection: public QObject
+class P4Coordinate
 {
-    Q_OBJECT
-    Q_PROPERTY(QString title      READ title      WRITE setTitle      NOTIFY titleChanged)
-    Q_PROPERTY(QString xname      READ xName      WRITE setXName      NOTIFY xNameChanged)
-    Q_PROPERTY(QString yname      READ yName      WRITE setYName      NOTIFY yNameChanged)
-    Q_PROPERTY(QString definition READ definition WRITE setDefinition NOTIFY definitionChanged)
-
-    Q_PROPERTY(QGeoCoordinate coordinate READ coordinate WRITE setCoordinate NOTIFY coordinateChanged)
-
-    Q_PROPERTY(double  x  READ x  NOTIFY transformed)
-    Q_PROPERTY(double  y  READ y  NOTIFY transformed)
-    Q_PROPERTY(double  z  READ z  NOTIFY transformed)
-
-    Q_PROPERTY(bool    isLatLong  READ isLatLong  NOTIFY definitionChanged)
-    Q_PROPERTY(bool    isGeoCent  READ isGeoCent  NOTIFY definitionChanged)
-    Q_PROPERTY(double  fromMeter  READ fromMeter  NOTIFY definitionChanged)
-    Q_PROPERTY(double  toMeter    READ toMeter    NOTIFY definitionChanged)
+    Q_GADGET
+    Q_PROPERTY(double x        READ x)
+    Q_PROPERTY(double y        READ y)
+    Q_PROPERTY(double z        READ z)
+    Q_PROPERTY(bool   isValid  READ isValid)
 
 public:
-    QString definition() const;
-    void setDefinition(QString value);
+    P4Coordinate()
+        : _x(0), _y(0), _z(0), _isValid(false) {}
 
-    QString title() const;
-    void setTitle(QString value);
+    P4Coordinate(double x, double y, double z)
+        : _x(x), _y(y), _z(z), _isValid(true) {}
 
-    QGeoCoordinate coordinate() const;
-    void setCoordinate(QGeoCoordinate value);
-
-    double x() const;
-    double y() const;
-    double z() const;
-
-    QString xName() const;
-    QString yName() const;
-    void setXName(QString value);
-    void setYName(QString value);
-
-    bool isLatLong();
-    bool isGeoCent();
-    double fromMeter();
-    double toMeter();
-
-    Projection();
-
-signals:
-    void definitionChanged();
-    void titleChanged();
-    void coordinateChanged();
-    void transformed();
-    void xNameChanged();
-    void yNameChanged();
-
-public slots:
-
-protected:
-    void transform();
+    double x()       const { return _x; }
+    double y()       const { return _y; }
+    double z()       const { return _z; }
+    bool   isValid() const { return _isValid; }
 
 private:
-    QString _title;
-    QGeoCoordinate _coordinate;
-
-    QString _source;
-    QString _destination;
-    PJ *_pj_source;
-    PJ *_pj_destination;
-
+    bool _isValid;
     double _x;
     double _y;
     double _z;
+};
 
-    QString _xname;
-    QString _yname;
+class P4Projection
+{
+    Q_GADGET
+    Q_PROPERTY(QString definition  READ definition)
+    Q_PROPERTY(bool    isValid     READ isValid)
+
+public:
+    P4Projection(): _isValid(false) {}
+    P4Projection(QString s);
+
+    QString definition() const { return _definition; }
+    bool    isValid() const    { return _isValid; }
+
+protected:
+    void setDefinition(QString s);
+    PJ* pj() const { return _pj; }
+
+private:
+    bool _isValid;
+    QString _definition;
+    PJ* _pj;
+
+    friend class P4Singleton;
+};
+
+class P4Singleton: public QObject
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE P4Coordinate coordinate(double x, double y, double z);
+    Q_INVOKABLE P4Projection projection(QString s);
+    Q_INVOKABLE P4Coordinate transform(P4Coordinate p4c, P4Projection from, P4Projection to);
 };
 
 #endif // PROJ4PROJECTION_H
