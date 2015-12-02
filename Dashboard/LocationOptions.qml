@@ -7,7 +7,11 @@ OptionsPage {
     property var datumbox
     property string prefix: "qeeptrack.locationoptions."
 
+    signal positionChanged(var position)
+
     function confirm() {
+        console.log("LocationOptions.confirm()",datumbox,datumbox.title)
+        positionChanged(datumbox.getCoordinate())
         pagestack.pop()
     }
 

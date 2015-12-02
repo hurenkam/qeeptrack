@@ -44,9 +44,6 @@ ApplicationWindow {
         property string optionpageconfirmimage: "qrc:/Gauges/confirmc.png"
         property string optionmenuitemimage: "qrc:/Components/forward.png"
 
-        onWidthChanged: layout()
-        onHeightChanged: layout()
-
         function layout() {
             var small = portrait? width: height
             var big = portrait? height: width
@@ -93,7 +90,12 @@ ApplicationWindow {
         //property var windowText: ""
     }
 
+    onWidthChanged: screen.layout()
+    onHeightChanged: screen.layout()
+
     Component.onCompleted: {
+        screen.layout()
+
         //pagestack.push(dashboard)
         pagestack.push(mapview)
 

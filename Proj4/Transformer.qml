@@ -9,7 +9,7 @@ Item {
     //============================
     // values to be set by client
     //============================
-    property string title: "WGS84"
+    property string title: "<unknown>"
     property int digits: 0
     property var coordinate:  QtPositioning.coordinate(0,0,0)
     property string source: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
@@ -47,10 +47,12 @@ Item {
 
         function updateSource() {
             _source = Proj4.projection(root.source);
+            console.log("Transformer.updateSource()",_source)
         }
 
         function updateDestination() {
             _destination = Proj4.projection(root.destination);
+            console.log("Transformer.updateDestination()",_destination)
         }
     }
 
@@ -61,7 +63,10 @@ Item {
     }
 
     function inverse(p4coordinate) {
+        //console.log("Transformer.inverse()",p4coordinate.x,p4coordinate.y)
         var r = Proj4.transform(p4coordinate,internal._destination,internal._source)
-        return QtPositioning.coordinate(r.y,r.x)
+        var result = QtPositioning.coordinate(r.y,r.x,0)
+        //console.log("Transformer.inverse()",result.longitude,result.latitude)
+        return result
     }
 }

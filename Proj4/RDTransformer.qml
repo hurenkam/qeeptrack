@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import Proj4 1.0
 import "qrc:/Components"
 
 Transformer {
@@ -12,11 +13,23 @@ Transformer {
             id: rdinput
             title: "Go to RD position:"
 
+            function getCoordinate() {
+                var x = parseFloat(xinput.value)
+                var y = parseFloat(yinput.value)
+                var p4c = Proj4.coordinate(x,y,0)
+                var result = root.inverse(p4c)
+
+                console.log("RDTransformer.getCoordinate()",result.latitude,result.longitude)
+                return result
+            }
+
             OptionTextEdit {
+                id: xinput
                 title: "X"
                 value: root.forwarded.x.toFixed(root.digits).toString()
             }
             OptionTextEdit {
+                id: yinput
                 title: "Y"
                 value: root.forwarded.y.toFixed(root.digits).toString()
             }

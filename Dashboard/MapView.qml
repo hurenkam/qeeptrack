@@ -213,7 +213,7 @@ Page {
             id: wgs84transformer
             coordinate: map.center
             onPositionInput: {
-                console.log("wgs84transformer.input:",position.x,position.y)
+                console.log("wgs84transformer.input:",position.latitude,position.longitude)
             }
         },
         UtmTransformer {
@@ -227,7 +227,7 @@ Page {
                 : Math.floor((map.center.longitude + 180) / 6) + 1
             south: (map.center.latitude < 0)
             onPositionInput: {
-                console.log("utmwgs84transformer.input:",position.x,position.y)
+                console.log("utmwgs84transformer.input:",position.latitude,position.longitude)
             }
         },
         UtmTransformer {
@@ -241,14 +241,14 @@ Page {
                 : Math.floor((map.center.longitude + 180) / 6) + 1
             south: (map.center.latitude < 0)
             onPositionInput: {
-                console.log("utmed50transformer.input:",position.x,position.y)
+                console.log("utmed50transformer.input:",position.latitude,position.longitude)
             }
         },
         RDTransformer {
             id: rdtransformer
             coordinate: map.center
             onPositionInput: {
-                console.log("rdtransformer.input:",position.x,position.y)
+                console.log("rdtransformer.input:",position.latitude,position.longitude)
             }
         }
     ]
@@ -264,6 +264,10 @@ Page {
         id: locationoptions
         title: "Location"
         datumbox: availableDatums[mapoptions.selecteddatum].inputbox
+        onPositionChanged: {
+            console.log("locationoptions.onPositionChanged:",position.latitude,position.longitude)
+            map.center = position
+        }
     }
 
     Rectangle {

@@ -27,10 +27,10 @@ public:
     bool   isValid() const { return _isValid; }
 
 private:
-    bool _isValid;
     double _x;
     double _y;
     double _z;
+    bool _isValid;
 };
 
 class P4Projection
