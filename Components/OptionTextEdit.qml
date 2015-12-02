@@ -5,7 +5,7 @@ OptionItem {
     width: parent.width
     height: titletext.height+14
     property string title: ""
-    property string value : ""
+    property alias value: valuetext.text
 
     Text {
         id: titletext
@@ -17,11 +17,13 @@ OptionItem {
         clip: true
     }
 
-    Text {
+    TextInput {
         id: valuetext
-        x: parent.width - valuetext.width -5
+        x: titletext.width + 4
+        width: parent.width - titletext.width - 12
+        horizontalAlignment: TextEdit.AlignRight
         y: 4
-        text: root.value
+        text: ""
         color: "grey"
         font.italic: true
         font.pointSize: screen.pointSize
