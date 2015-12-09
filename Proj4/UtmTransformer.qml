@@ -4,11 +4,11 @@ import "qrc:/Components"
 
 Transformer {
     id: root
-    title: "UTM/WGS84"
+    title: "UTM"
     destination: "+proj=utm +zone=" + zone.toString() + ((south)?" +south":"") + " " + ellps + " " + datum + " " + extra
     digits: 0
-    xname: "Easting"
-    yname: "Northing"
+    xname: "E"
+    yname: "N"
 
     property int zone: 31
     property bool south: false
@@ -17,7 +17,7 @@ Transformer {
     property string extra: "+units=m +no_defs"
 
     inputbox: OptionBox {
-            title: "Go to UTM/WGS84 position:"
+            title: "Go to " + root.title + " position:"
 
             function getCoordinate() {
                 var input = zoneinput.value
@@ -29,14 +29,15 @@ Transformer {
                     input = input.substring(0,length-2)
                     root.south = false
                 }
-                root.zone = parseInt(zone)
-
+                root.zone = parseInt(input)
                 var northing = parseFloat(northinput.value)
                 var easting = parseFloat(eastinput.value)
+                console.log("UtmTransformer.getCoordinate() input:",root.title,root.zone,(root.south? "S":"N"),northing,easting)
+
                 var p4c = Proj4.coordinate(easting,northing,0)
                 var result = root.inverse(p4c)
 
-                console.log("UtmTransformer.getCoordinate()",result.latitude,result.longitude)
+                console.log("UtmTransformer.getCoordinate() result:",result.latitude,result.longitude)
                 return result
             }
 
