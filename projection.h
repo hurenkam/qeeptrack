@@ -40,18 +40,17 @@ class P4Projection
     Q_PROPERTY(bool    isValid     READ isValid)
 
 public:
-    P4Projection(): _isValid(false) {}
+    P4Projection(): _pj(0) {}
     P4Projection(QString s);
 
     QString definition() const { return _definition; }
-    bool    isValid() const    { return _isValid; }
+    bool    isValid() const    { return (_pj != 0); }
 
 protected:
     void setDefinition(QString s);
     PJ* pj() const { return _pj; }
 
 private:
-    bool _isValid;
     QString _definition;
     PJ* _pj;
 

@@ -4,7 +4,6 @@ P4Projection::P4Projection(QString s)
     : _definition(s)
 {
     _pj = pj_init_plus(_definition.toLatin1());
-    _isValid = (_pj != 0);
 }
 
 void P4Projection::setDefinition(QString s)
@@ -13,7 +12,6 @@ void P4Projection::setDefinition(QString s)
     if (_pj != 0)
         delete _pj;
     _pj = pj_init_plus(_definition.toLatin1());
-    _isValid = (_pj != 0);
 }
 
 P4Coordinate P4Singleton::coordinate(double x, double y, double z)
