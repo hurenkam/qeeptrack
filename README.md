@@ -105,3 +105,7 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
      * feet
  * Battery level / horizontal & vertical accuracy levels
  * Satellite view (it seems Qt on iOS does not support this, so will probably work on android only)
+
+## License/Copyright
+Unless stated otherwise in the code, the source is licensed under GPLv2. (http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+Should you want to use this code under a different license, please contact me.
