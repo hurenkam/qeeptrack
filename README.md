@@ -107,6 +107,6 @@ Advanced GPS dashboard with altimeter, speedometer and compass.
  * Satellite view (it seems Qt on iOS does not support this, so will probably work on android only)
 
 ## License/Copyright
-Unless explicitly stated otherwise, the source code is licensed under GPLv2. (http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-Unless explicitly stated otherwise, all creative works (images, documentation, icons, etc) are licensed under Creative Commons Attribution/Share Alike (http://creativecommons.org/licenses/by-sa/4.0/).
-Should you want to use any of this work under a different license, please contact me.
+ * Unless explicitly stated otherwise, the source code is licensed under GPLv2. (http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+ * Unless explicitly stated otherwise, all creative works (images, documentation, icons, etc) are licensed under Creative Commons Attribution/Share Alike (http://creativecommons.org/licenses/by-sa/4.0/).
+ * Should you want to use any of this work under a different license, please contact me.
