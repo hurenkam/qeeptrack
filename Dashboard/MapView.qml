@@ -95,6 +95,7 @@ Page {
         position: positionsource.position
         elapsedtime: clockmodel.elapsed
         enableanimations: root.enableanimations
+        onRouteChanged: map.updateRoute()
 
         Component.onCompleted: waypoint=positionsource.current
     }
@@ -201,6 +202,51 @@ Page {
                 width: 48
                 height: width
             }
+        }
+
+        MapPolyline {
+            line.width: 5
+            line.color: "blue"
+            path: monitormodel.route
+            visible: (path.length > 1)
+        }
+
+        Component {
+            id: routepointdelegate
+
+            MapQuickItem {
+                id: routepointitem
+                anchorPoint.x: screen.buttonwidth/4
+                anchorPoint.y: screen.buttonwidth/4
+                coordinate: modelData
+                onCoordinateChanged: console.log("MapView.map.routepointdelegate.onCoordinateChanged",coordinate.latitude,coordinate.longitude)
+                zoomLevel: 0.0
+
+                sourceItem: Image {
+                    id: routepointimage
+                    source: "qrc:/Components/locator_green.png"
+                    width: screen.buttonwidth/2
+                    height: width
+                }
+
+                MouseHandler {
+                    anchors.fill: parent
+                    onSingleTap: monitormodel.setWaypoint(modelData)
+                    onLongTap: monitormodel.removeRoutePoint(modelData)
+                }
+
+                Component.onCompleted: map.addMapItem(routepointitem)
+            }
+        }
+
+        Repeater {
+            id: routedisplay
+            model: monitormodel.route
+            delegate: routepointdelegate
+        }
+
+        function updateRoute() {
+            console.log("MapView.map.updateRoute()")
         }
 
         activeMapType: supportedMapTypes[mapoptions.selectedmap]
@@ -337,7 +383,7 @@ Page {
             Text {
                 id: distancedisplay
                 //text: map.center.longitude.toFixed(8).toString()
-                property double distance: map.center.distanceTo(monitormodel.waypoint)/1000
+                property double distance: (distancemode=="wpt")? map.center.distanceTo(monitormodel.waypoint)/1000 : monitormodel.routeDistance/1000
                 text: distance.toFixed(3).toString()
                 visible: (distance !== 0)
                 color: "black"
@@ -347,10 +393,12 @@ Page {
         }
     }
 
+    property string distancemode: "wpt"
+
     ToolButton {
         id: gaugebutton
 
-        x: 10;
+        x: 10
         y: 10
         width: screen.buttonwidth
         height: width
@@ -375,9 +423,37 @@ Page {
         source: "qrc:/Components/flag.png";
         bgcolor: "black"
 
-        onClicked: {
-            console.log("Mapview.Waypoint",map.center.latitude,map.center.longitude)
-            monitormodel.waypoint = QtPositioning.coordinate(map.center.latitude,map.center.longitude)
+        onShortPressed: {
+            //console.log("Mapview.wptbutton.onShortPressed",map.center.latitude,map.center.longitude)
+            monitormodel.setWaypoint(QtPositioning.coordinate(map.center.latitude,map.center.longitude))
+            distancemode = "wpt"
+        }
+        onLongPressed: {
+            //console.log("Mapview.wptbutton.onLongPressed")
+            monitormodel.resetWaypoint()
+        }
+    }
+
+    ToolButton {
+        id: rtebutton
+
+        x: 30 + 2*screen.buttonwidth
+        y: 10
+        width: screen.buttonwidth
+        height: width
+
+        source: "qrc:/Components/route-2.png";
+        bgcolor: "black"
+
+        onShortPressed: {
+            console.log("Mapview.rtebutton.onShortPressed",map.center.latitude,map.center.longitude)
+            monitormodel.addRoutePoint(QtPositioning.coordinate(map.center.latitude,map.center.longitude))
+            distancemode = "rte"
+        }
+        onLongPressed: {
+            console.log("Mapview.rtebutton.onLongPressed")
+            monitormodel.resetRoute()
+            distancemode = "wpt"
         }
     }
 

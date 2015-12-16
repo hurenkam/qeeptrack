@@ -16,11 +16,11 @@ Base {
     digits: 2
 
     sources: [
-        Item { property string name: "Current Altitude";  property double source: altitudemodel.current },
-        Item { property string name: "Average Altitude";  property double source: altitudemodel.average },
-        Item { property string name: "Minimum Altitude";  property double source: altitudemodel.minimum },
-        Item { property string name: "Maximum Altitude";  property double source: altitudemodel.maximum },
-        Item { property string name: "Total Ascent";      property double source: altitudemodel.ascent  },
-        Item { property string name: "Total Descent";     property double source: altitudemodel.descent }
+        Item { property string name: "Current Altitude";  property double source: altitudemodel.availablesources[0].value },
+        Item { property string name: "Average Altitude";  property double source: altitudemodel.availablesources[1].value },
+        Item { property string name: "Minimum Altitude";  property double source: altitudemodel.availablesources[2].value },
+        Item { property string name: "Maximum Altitude";  property double source: altitudemodel.availablesources[3].value },
+        Item { property string name: "Total Ascent";      property double source: altitudemodel.availablesources[4].value },
+        Item { property string name: "Total Descent";     property double source: altitudemodel.availablesources[5].value }
     ]
 }

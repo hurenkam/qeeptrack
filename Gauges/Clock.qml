@@ -11,9 +11,9 @@ Item {
 
     property string name: "clock"
     property list<QtObject> sources: [
-        Item { id: currenttime;   property string name: "Current Time";   property date source: clockmodel.time },
-        Item { id: elapsedtime;   property string name: "Elapsed Time";   property date source: clockmodel.elapsed },
-        Item { id: remainingtime; property string name: "Remaining Time"; property date source: monitormodel.remainingTime }
+        Item { id: currenttime;   property string name: "Current Time";   property date source: clockmodel.availablesources[0].value },
+        Item { id: elapsedtime;   property string name: "Elapsed Time";   property date source: clockmodel.availablesources[1].value },
+        Item { id: remainingtime; property string name: "Remaining Time"; property date source: monitormodel.availablesources[4].value }
     ]
 
     SettingsDatabase {

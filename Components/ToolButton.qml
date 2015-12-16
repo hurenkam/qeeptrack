@@ -28,44 +28,54 @@ Item {
         anchors.fill: parent
     }
 
-    signal clicked
-    signal repeat
+    signal clicked()
+    signal repeat()
+
+    signal shortPressed()
+    signal longPressed()
+    signal released()
+
+    property int repeatcount: 0
 
     Timer {
         id: timer
         interval: 250; running: false; repeat: true
-        onTriggered: root.repeat()
+        onTriggered: {
+            //console.log("ToolButton.timer.onTriggered")
+            root.repeat()
+            root.repeatcount += 1
+            if (root.repeatcount == 3)
+                longPressed()
+        }
     }
 
     states: [
-        State { name: "pressed";  PropertyChanges { target: root; scale: 0.9 } },
-        State { name: "released"; }
+        State { name: "pressed";  PropertyChanges { target: timer; running: true }  PropertyChanges { target: root; scale: 0.9 } },
+        State { name: "released";  PropertyChanges { target: timer; running: false } }
     ]
 
-    function pressed() {
+    function _pressed() {
+        //console.log("ToolButton._pressed()")
+        root.repeatcount = 0
         root.selected = true
         state = "pressed"
-        if (repeat) {
-            //root.repeat()
-            timer.interval = root.interval
-            timer.start()
-        }
     }
 
-    function released() {
+    function _released() {
+        //console.log("ToolButton._released()")
         root.selected = false
         state = "released"
-        if (repeat) {
-            timer.stop()
-        }
+        if (root.repeatcount<3)
+            shortPressed()
+        released()
     }
 
     MouseArea {
         id: mouseArea
         anchors.fill:  parent
         onClicked: root.clicked();
-        onPressed: root.pressed()
-        onCanceled: root.released()
-        onReleased: root.released()
+        onPressed: root._pressed()
+        onCanceled: root._released()
+        onReleased: root._released()
     }
 }

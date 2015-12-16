@@ -6,8 +6,10 @@ Item {
     property date time: new Date(0,0,0)
     property date elapsed: new Date(0,0,0)
 
-    onTimeChanged: timeUpdate(time)
-    onElapsedChanged: elapsedUpdate(elapsed)
+    property list<QtObject> availablesources: [
+        DateSource { id: time;        title: "Time";    name: "time";    units: "date"; onValueChanged: timeUpdate(value) },
+        DateSource { id: elapsedtime; title: "Elapsed"; name: "elapsed"; units: "date"; onValueChanged: elapsedUpdate(value) }
+    ]
 
     signal timeUpdate(date value)
     signal elapsedUpdate(date value)
@@ -29,8 +31,8 @@ Item {
             var elapsed = new Date(0,0,0)
             var delta = (current.getTime() - start.getTime())
             elapsed.setTime(elapsed.getTime() + delta)
-            root.time = current
-            root.elapsed = elapsed
+            time.value = current
+            elapsedtime.value = elapsed
         }
     }
 }

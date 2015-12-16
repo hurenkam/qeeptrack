@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>Components/trip.png</file>
     </qresource>
     <qresource prefix="/Gauges">
         <file alias="secondhand.png">Gauges/secondhand.png</file>
@@ -56,6 +57,9 @@
         <file alias="MonitorModel.qml">Models/MonitorModel.qml</file>
         <file alias="ClockModel.qml">Models/ClockModel.qml</file>
         <file alias="CompassModel.qml">Models/CompassModel.qml</file>
+        <file alias="DoubleSource.qml">Models/DoubleSource.qml</file>
+        <file alias="DateSource.qml">Models/DateSource.qml</file>
+        <file alias="RotationSource.qml">Models/RotationSource.qml</file>
     </qresource>
     <qresource prefix="/Components">
         <file alias="MouseHandler.qml">Components/MouseHandler.qml</file>
@@ -96,6 +100,7 @@
         <file alias="OptionTab.qml">Components/OptionTab.qml</file>
         <file alias="OptionRadioBox.qml">Components/OptionRadioBox.qml</file>
         <file alias="OptionTextEdit.qml">Components/OptionTextEdit.qml</file>
+        <file alias="route-2.png">Components/route-2.png</file>
     </qresource>
     <qresource prefix="/Proj4">
         <file alias="Transformer.qml">Proj4/Transformer.qml</file>

@@ -14,9 +14,9 @@ Base {
     digits: 0
 
     sources: [
-        Item { id: current; property string name: "Current Speed";  property double source: speedmodel.current },
-        Item { id: average; property string name: "Average Speed";  property double source: monitormodel.averageSpeed },
-        Item { id: minimum; property string name: "Minimum Speed";  property double source: speedmodel.minimum },
-        Item { id: maximum; property string name: "Maximum Speed";  property double source: speedmodel.maximum }
+        Item { id: current; property string name: "Current Speed";  property double source: speedmodel.availablesources[0].value },
+        Item { id: average; property string name: "Average Speed";  property double source: monitormodel.availablesources[6].value },
+        Item { id: minimum; property string name: "Minimum Speed";  property double source: speedmodel.availablesources[1].value },
+        Item { id: maximum; property string name: "Maximum Speed";  property double source: speedmodel.availablesources[2].value }
     ]
 }

@@ -10,17 +10,11 @@ Item {
 
     property bool enableanimations: true
 
-    property double course: 0
-    property double heading: 0
-    property double calibration: 0
-
-    Behavior on calibration {
-        id: calibrationanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
+    property list<QtObject> availablesources: [
+        RotationSource { id: course;      title: "Course";      name: "course";      units: "degrees" },
+        RotationSource { id: heading;     title: "Heading";     name: "heading";     units: "degrees" },
+        DoubleSource   { id: calibration; title: "Calibration"; name: "calibration"; units: "fraction" }
+    ]
 
     property bool testmode: false
 
@@ -38,19 +32,19 @@ Item {
         property double dhead: 0.5
 
         onTriggered: {
-            if (heading > 90)
+            if (heading.value > 90)
                 dhead = -0.5
-            if (heading < -90)
+            if (heading.value < -90)
                 dhead = 0.5
-            heading += dhead
+            heading.value += dhead
 
-            if (calibration > 0.9)
+            if (calibration.value > 0.9)
                 dcal = -0.002
-            if (calibration < 0.4)
+            if (calibration.value < 0.4)
                 dcal = 0.002
-            calibration += dcal
+            calibration.value += dcal
 
-            course = heading + calibration * 5
+            course.value = heading.value + calibration.value * 5
         }
     }
 
@@ -73,14 +67,14 @@ Item {
 
         if (compass != null)
         {
-            heading = compass.azimuth + rotation
-            calibration = compass.calibrationLevel * 100
+            heading.value = compass.azimuth + rotation
+            calibration.value = compass.calibrationLevel * 100
         }
 
         if (position != null)
         {
             if (position.courseValid)
-                course = position.course
+                course.value = position.course
         }
     }
 }

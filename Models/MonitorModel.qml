@@ -5,54 +5,23 @@ Item {
     id: root
 
     property bool   enableanimations: true
-    property double tripDistance: 0
-    property double totalDistance: 0
-    property double remainingDistance: 0
-    property double remainingAscent: 0
-    property date   remainingTime: new Date(0,0,0)
-    property double bearing: 0
-    property double averageSpeed: 0
     property string prefix: "qeeptrack.monitormodel."
 
     property bool testmode: false
 
-    Behavior on tripDistance {
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    Behavior on totalDistance {
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    Behavior on remainingDistance {
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    Behavior on remainingAscent {
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    Behavior on bearing {
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
+    property list<QtObject> availablesources: [
+        DoubleSource   { id: tripDistance;      title: "Trip Distance";      name: "tripdistance";      units: "m" },
+        DoubleSource   { id: totalDistance;     title: "Total Distance";     name: "totaldistance";     units: "m" },
+        DoubleSource   { id: remainingDistance; title: "Remaining Distance"; name: "remainingdistance"; units: "m" },
+        DoubleSource   { id: remainingAscent;   title: "Remaining Ascent";   name: "remainingascent";   units: "m" },
+        DateSource     { id: remainingTime;     title: "Remaining Time";     name: "remainingtime";     units: "date" },
+        RotationSource { id: bearing;           title: "Bearing";            name: "bearing";           units: "degrees" },
+        DoubleSource   { id: averageSpeed;      title: "Average Speed";      name: "averagespeed";      units: "km/h" }
+    ]
 
     property var position
     property var waypoint
+    property var route
     property var elapsedtime: null
     onPositionChanged: updatePosition()
     onWaypointChanged: updatePosition()
@@ -74,9 +43,12 @@ Item {
         property variant previous: null
         property double tripDistance: 0
         property double totalDistance: 0
+        property double routeDistance: 0
         property double delta: 0
         property int hysteresis: 25
         property bool valid: false
+
+        onRouteDistanceChanged: console.log("MonitorModel.internal.onRouteDistanceChanged:",routeDistance)
 
         function initialise()
         {
@@ -84,7 +56,7 @@ Item {
             if (!waypoint)
                 waypoint = start
             previous = root.position.coordinate
-            tripDistance = 0
+            tripDistance.value = 0
             delta = 0
             valid = true
         }
@@ -131,7 +103,7 @@ Item {
     }
 
     function updateBearing() {
-        bearing = position.coordinate.azimuthTo(waypoint)
+        bearing.value = position.coordinate.azimuthTo(waypoint)
     }
 
     function updateTripAndTotalDistance() {
@@ -143,30 +115,30 @@ Item {
             internal.totalDistance += internal.delta
             internal.delta = 0
         }
-        root.tripDistance = internal.tripDistance + internal.delta
-        root.totalDistance = internal.totalDistance + internal.delta
+        tripDistance.value = internal.tripDistance + internal.delta
+        totalDistance.value = internal.totalDistance + internal.delta
     }
 
     function updateAverageSpeed() {
         var elapsedseconds = (elapsedtime.getTime() - new Date(0,0,0).getTime())/1000
-        root.averageSpeed = root.tripDistance/elapsedseconds * 3.6
+        averageSpeed.value = root.tripDistance/elapsedseconds * 3.6
     }
 
     function updateRemainingDistance() {
-        remainingDistance = position.coordinate.distanceTo(waypoint)
+        remainingDistance.value = position.coordinate.distanceTo(waypoint)
     }
 
     function updateRemainingAscent() {
-        remainingAscent = waypoint.altitude - position.coordinate.altitude
+        remainingAscent.value = waypoint.altitude - position.coordinate.altitude
     }
 
     function updateRemainingTime() {
         var remaining = 0
         var elapsedseconds = (elapsedtime.getTime() - new Date(0,0,0).getTime())/1000
 
-        if ((position.coordinate.isValid) && (tripDistance != null))
+        if ((position.coordinate.isValid) && (tripDistance.value != null))
         {
-            var delta = (tripDistance+remaining)/tripDistance * elapsedseconds
+            var delta = (tripDistance.value+remaining)/tripDistance.value * elapsedseconds
             remaining = (delta > remaining)? delta : remaining
         }
 
@@ -180,6 +152,50 @@ Item {
 
         var temp = new Date(0,0,0)
         temp.setTime(temp.getTime()+remaining*1000)
-        remainingTime = temp
+        remainingTime.value = temp
+    }
+
+    function setWaypoint(coordinate) {
+        waypoint = coordinate
+    }
+
+    function resetWaypoint() {
+    }
+
+    function addRoutePoint(coordinate) {
+        if (route.length > 0)
+            internal.routeDistance += coordinate.distanceTo(route[route.length-1])
+
+        route.push(coordinate)
+        routeChanged()
+    }
+
+    function calculateRouteLength() {
+        var distance = 0.0
+        for (var i=1; i< route.length; i++)
+        {
+            distance += route[i-1].distanceTo(route[i])
+        }
+        internal.routeDistance = distance
+    }
+
+    function removeRoutePoint(coordinate) {
+        var index = route.lastIndexOf(coordinate)
+        if (index != -1) {
+            route.splice(index,1)
+            calculateRouteLength()
+            routeChanged()
+        }
+    }
+
+    function resetRoute() {
+        route = []
+        internal.routeDistance = 0
+        routeChanged()
+    }
+
+    Component.onCompleted: {
+        resetWaypoint()
+        resetRoute()
     }
 }

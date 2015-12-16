@@ -10,37 +10,12 @@ Item {
 
     readonly property bool valid: internal.valid
     property bool enableanimations: true
-    property double current: 0
-    Behavior on current {
-        id: currentanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
 
-    property double minimum: 0
-    Behavior on minimum {
-        id: minimumanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    property double maximum: 0
-    Behavior on maximum {
-        id: maximumanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    onCurrentChanged: currentUpdate(current)
-    //onAverageChanged: averageUpdate(average)
-    onMinimumChanged: minimumUpdate(minimum)
-    onMaximumChanged: maximumUpdate(maximum)
+    property list<QtObject> availablesources: [
+        DoubleSource { id: current; title: "Current"; name: "current"; units: "km/h"; onValueChanged: currentUpdate(current) },
+        DoubleSource { id: minimum; title: "Minimum"; name: "minimum"; units: "km/h"; onValueChanged: minimumUpdate(minimum) },
+        DoubleSource { id: maximum; title: "Maximum"; name: "maximum"; units: "km/h"; onValueChanged: maximumUpdate(maximum) }
+    ]
 
     Item {
         id: internal
@@ -93,15 +68,15 @@ Item {
         if (!internal.valid)
         {
             //average = value
-            minimum = value
-            maximum = value
-            internal.previous = current
+            minimum.value = value
+            maximum.value = value
+            internal.previous = current.value
             internal.average = new Array()
             internal.valid = true
         }
-        current = value
+        current.value = value
 
-        minimum = (current < minimum)? current : minimum
-        maximum = (current > maximum)? current : maximum
+        minimum.value = (current.value < minimum.value)? current.value : minimum.value
+        maximum.value = (current.value > maximum.value)? current.value : maximum.value
     }
 }

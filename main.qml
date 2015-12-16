@@ -23,14 +23,14 @@ ApplicationWindow {
         height: root.height
 
         property var    mode:        4
-        property bool   portrait:    (width<=height)
-        property bool   landscape:   (width>height)
-        property double widthscale:  (landscape)?  width/667: width/375
-        property double heightscale: (portrait)?  height/667: height/375
+        property bool   portrait:    (root.width<=root.height)
+        property bool   landscape:   (root.width>root.height)
+        property double widthscale:  (landscape)?  root.width/667: root.width/375
+        property double heightscale: (portrait)?  root.height/667: root.height/375
         property double scale:       (widthscale>heightscale)? heightscale: widthscale
         property double pointSize:   18
-        property int    shortside:   landscape? height: width
-        property int    longside:    portrait? height: width
+        property int    shortside:   landscape? root.height: root.width
+        property int    longside:    portrait? root.height: root.width
         property double buttonwidth: shortside/10
 
         property string optionitembordercolor: "grey"
@@ -45,8 +45,8 @@ ApplicationWindow {
         property string optionmenuitemimage: "qrc:/Components/forward.png"
 
         function layout() {
-            var small = portrait? width: height
-            var big = portrait? height: width
+            var small = portrait? root.width: root.height
+            var big = portrait? root.height: root.width
 
             var divider = big/small
             if (divider >= 21/9)        // 2.333
@@ -61,6 +61,9 @@ ApplicationWindow {
                 screen.mode = 1
             else
                 screen.mode = 0
+
+            console.log("main.screen.layout() divider:",screen.mode,big,small,divider)
+            //qml: main.screen.layout() divider: 4 667 375 1.7786666666666666
         }
     }
 

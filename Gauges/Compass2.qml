@@ -18,9 +18,9 @@ Item {
 
     property list<QtObject> sources: [
         Item { id: north;   property string name: "North";            property double source: 0 },
-        Item { id: heading; property string name: "Current Heading";  property double source: compassmodel.heading },
-        Item { id: course;  property string name: "Current Course";   property double source: compassmodel.course },
-        Item { id: bearing; property string name: "Current Bearing";  property double source: monitormodel.bearing }
+        Item { id: heading; property string name: "Current Heading";  property double source: compassmodel.availablesources[1].value },
+        Item { id: course;  property string name: "Current Course";   property double source: compassmodel.availablesources[0].value },
+        Item { id: bearing; property string name: "Current Bearing";  property double source: monitormodel.availablesources[5].value }
     ]
 
     property list<QtObject> targets: [
@@ -79,13 +79,6 @@ Item {
             origin.x: width/2
             origin.y: height/2
             angle: ring.value
-            Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
-                    modulus: 360
-                }
-            }
         }
     }
 
@@ -96,13 +89,6 @@ Item {
             origin.x: width/2
             origin.y: height/2
             angle: dial.value
-            Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
-                    modulus: 360
-                }
-            }
         }
     }
 
@@ -113,13 +99,6 @@ Item {
             origin.x: width/2
             origin.y: height/2
             angle: needle.value
-            Behavior on angle {
-                SpringAnimation {
-                    spring: 1.4
-                    damping: .15
-                    modulus: 360
-                }
-            }
         }
     }
 }

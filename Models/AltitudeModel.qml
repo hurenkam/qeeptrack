@@ -6,59 +6,14 @@ Item {
     property bool enableanimations: true
     readonly property bool valid: internal.valid
 
-    property double current: 0
-    Behavior on current {
-        id: currentanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    property double average: 0
-    Behavior on average {
-        id: averageanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    property double minimum: 0
-    Behavior on minimum {
-        id: minimumanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    property double maximum: 0
-    Behavior on maximum {
-        id: maximumanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    property double ascent:  0
-    Behavior on ascent {
-        id: ascentanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
-
-    property double descent: 0
-    Behavior on descent {
-        id: descentanimation
-        enabled: root.enableanimations
-        NumberAnimation {
-            duration: 1000
-        }
-    }
+    property list<QtObject> availablesources: [
+        DoubleSource { id: current; title: "Current"; name: "current"; units: "m" },
+        DoubleSource { id: average; title: "Average"; name: "average"; units: "m" },
+        DoubleSource { id: minimum; title: "Minimum"; name: "minimum"; units: "m" },
+        DoubleSource { id: maximum; title: "Maximum"; name: "maximum"; units: "m" },
+        DoubleSource { id: ascent;  title: "Ascent";  name: "ascent";  units: "m" },
+        DoubleSource { id: descent; title: "Descent"; name: "descent"; units: "m" }
+    ]
 
     Item {
         id: internal
@@ -111,41 +66,41 @@ Item {
         //console.log("AltitudeModel.updateAltitude: ", value)
         if (!internal.valid)
         {
-            average = value
-            minimum = value
-            maximum = value
-            ascent = 0
-            descent = 0
-            internal.previous = current
+            average.value = value
+            minimum.value = value
+            maximum.value = value
+            ascent.value = 0
+            descent.value = 0
+            internal.previous = current.value
             internal.average = new Array()
             internal.valid = true
         }
-        current = value
+        current.value = value
 
-        minimum = (current < minimum)? current : minimum
-        maximum = (current > maximum)? current : maximum
+        minimum.value = (current.value < minimum.value)? current.value : minimum.value
+        maximum.value = (current.value > maximum.value)? current.value : maximum.value
 
-        if (current > internal.previous + internal.hysteresis)
+        if (current.value > internal.previous + internal.hysteresis)
         {
-            ascent += (current - internal.previous)
-            internal.previous = current
+            ascent.value += (current.value - internal.previous)
+            internal.previous = current.value
         }
 
-        if (current < internal.previous - internal.hysteresis)
+        if (current.value < internal.previous - internal.hysteresis)
         {
-            descent += (internal.previous - current)
-            internal.previous = current
+            descent.value += (internal.previous - current.value)
+            internal.previous = current.value
         }
 
         if (internal.average.length == internal.averagekeep)
         {
             var old = internal.average[0]
             internal.average.shift()
-            internal.average.push(current)
-            average = average - old/(internal.averagekeep) + current/(internal.averagekeep)
+            internal.average.push(current.value)
+            average.value = average.value - old/(internal.averagekeep) + current.value/(internal.averagekeep)
         } else {
-            internal.average.push(current)
-            average = average/(internal.average.length) * (internal.average.length-1) + current/(internal.average.length)
+            internal.average.push(current.value)
+            average.value = average.value/(internal.average.length) * (internal.average.length-1) + current.value/(internal.average.length)
         }
     }
 }
