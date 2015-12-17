@@ -28,16 +28,23 @@ Item {
 
     property list<QtObject> sources
     property list<QtObject> targets: [
-        Item { id: analog; property string name: "Analog";  property int mode: 0; property double value: sources[mode].value
+        Item { id: analog; property string name: "Analog";  property int mode: 0; property var value: sources[mode].value
             function setMode(value,name) { mode = value } },
-        Item { id: top;    property string name: "Top";     property int mode: 1; property double value: sources[mode].value
+        Item { id: top;    property string name: "Top";     property int mode: 1; property var value: sources[mode].value
             function setMode(value,name) { mode = value } },
-        Item { id: bottom; property string name: "Bottom";  property int mode: 2; property double value: sources[mode].value
+        Item { id: bottom; property string name: "Bottom";  property int mode: 2; property var value: sources[mode].value
             function setMode(value,name) { mode = value } }
     ]
-    property double analogvalue: analog.value
-    property double topvalue:    top.value
-    property double bottomvalue: bottom.value
+
+    property var analogvalue: analog.value
+    property var topvalue:    top.value
+    property var bottomvalue: bottom.value
+
+    property double shortangle:  -180 + analog.value/(root.shorthanddivider*root.divider) * 360
+    property double longangle:   -180 + analog.value/(root.longhanddivider*root.divider) * 360
+    property double secondangle: -180 + analog.value/(root.secondhanddivider*root.divider) * 360
+    property string topstring:    root.toFixed(top.value/root.divider,root.digits)
+    property string bottomstring: root.toFixed(bottom.value/root.divider,root.digits)
 
     function loadSettings() {
         analog.mode = settings.getValue("analog.mode","0")
@@ -76,7 +83,7 @@ Item {
     }
 
     Rectangle {
-        y: parent.height * 0.75
+        y: parent.height * 0.7
         height: parent.height * 0.16
         color: "#e0e0e0"
         width: parent.width/4
@@ -86,7 +93,7 @@ Item {
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.margins: 2
-            text: root.toFixed(top.value/root.divider,root.digits)
+            text: topstring
             color: "black"
             font.bold: true; font.pixelSize: parent.height/3
             style: Text.Raised; styleColor: "white"
@@ -96,7 +103,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.margins: 2
-            text: root.toFixed(bottom.value/root.divider,root.digits)
+            text: bottomstring
             color: "black"
             font.bold: true; font.pixelSize: parent.height/3
             style: Text.Raised; styleColor: "white"
@@ -110,7 +117,7 @@ Item {
             id: shorthand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analog.value/(root.shorthanddivider*root.divider) * 360
+            angle: shortangle
             Behavior on angle {
                 id: shorthandanimation
                 enabled: false
@@ -128,7 +135,7 @@ Item {
             id: longhand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analog.value/(root.longhanddivider*root.divider) * 360
+            angle: longangle
             Behavior on angle {
                 id: longhandanimation
                 enabled: false
@@ -146,7 +153,7 @@ Item {
             id: secondhand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analog.value/(root.secondhanddivider*root.divider) * 360
+            angle: secondangle
             Behavior on angle {
                 id: secondhandanimation
                 enabled: false
