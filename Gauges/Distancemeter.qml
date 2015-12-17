@@ -14,10 +14,4 @@ Base {
     secondhandimagesource: "secondhand.png"
     divider: 1000
     digits: 1
-
-    sources: [
-        Item { property string name: "Trip Distance";       property double source: monitormodel.availablesources[0].value },
-        Item { property string name: "Total Distance";      property double source: monitormodel.availablesources[1].value },
-        Item { property string name: "Remaining Distance";  property double source: monitormodel.availablesources[2].value }
-    ]
 }

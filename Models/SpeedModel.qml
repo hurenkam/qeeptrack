@@ -12,9 +12,9 @@ Item {
     property bool enableanimations: true
 
     property list<QtObject> availablesources: [
-        DoubleSource { id: current; title: "Current"; name: "current"; units: "km/h"; onValueChanged: currentUpdate(current) },
-        DoubleSource { id: minimum; title: "Minimum"; name: "minimum"; units: "km/h"; onValueChanged: minimumUpdate(minimum) },
-        DoubleSource { id: maximum; title: "Maximum"; name: "maximum"; units: "km/h"; onValueChanged: maximumUpdate(maximum) }
+        DoubleSource { id: current; title: "Current Speed"; gaugetype: "speedometer"; units: "km/h"; onValueChanged: currentUpdate(current) },
+        DoubleSource { id: minimum; title: "Minimum Speed"; gaugetype: "speedometer"; units: "km/h"; onValueChanged: minimumUpdate(minimum) },
+        DoubleSource { id: maximum; title: "Maximum Speed"; gaugetype: "speedometer"; units: "km/h"; onValueChanged: maximumUpdate(maximum) }
     ]
 
     Item {

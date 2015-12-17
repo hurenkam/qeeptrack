@@ -65,36 +65,69 @@ Item {
         gauge.destroy()
     }
 
+    function findSources(gaugetype) {
+        var sources = []
+        var i
+        var source
+        for (i=0; i< clockmodel.availablesources.length; i++) {
+            source = clockmodel.availablesources[i]
+            if (source.gaugetype === gaugetype)
+                sources.push(source)
+        }
+        for (i=0; i< compassmodel.availablesources.length; i++) {
+            source = compassmodel.availablesources[i]
+            if (source.gaugetype === gaugetype)
+                sources.push(source)
+        }
+        for (i=0; i< altitudemodel.availablesources.length; i++) {
+            source = altitudemodel.availablesources[i]
+            if (source.gaugetype === gaugetype)
+                sources.push(source)
+        }
+        for (i=0; i< monitormodel.availablesources.length; i++) {
+            source = monitormodel.availablesources[i]
+            if (source.gaugetype === gaugetype)
+                sources.push(source)
+        }
+        for (i=0; i< speedmodel.availablesources.length; i++) {
+            source = speedmodel.availablesources[i]
+            if (source.gaugetype === gaugetype)
+                sources.push(source)
+        }
+        return sources
+    }
+
     function createGauge(parent,gaugetype) {
         var result = null
+        var sources = findSources(gaugetype)
         switch (gaugetype) {
             case "clock": {
                 var component = Qt.createComponent("qrc:/Gauges/Clock.qml");
-                result = component.createObject(parent, { prefix: "qeeptrack.clock." } );
+                result = component.createObject(parent, { prefix: "qeeptrack.clock.", sources: sources } );
                 break;
             }
 
             case "compass": {
                 var component = Qt.createComponent("qrc:/Gauges/Compass2.qml");
-                result =  component.createObject(parent, { prefix: "qeeptrack.compass." } );
+                result =  component.createObject(parent, { prefix: "qeeptrack.compass.", sources: sources } );
                 break;
             }
 
             case "altimeter": {
                 var component = Qt.createComponent("qrc:/Gauges/Altimeter.qml");
-                result = component.createObject(parent, { prefix: "qeeptrack.altimeter." } );
+                result = component.createObject(parent, { prefix: "qeeptrack.altimeter.", sources: sources } );
                 break;
             }
 
             case "distance": {
                 var component = Qt.createComponent("qrc:/Gauges/Distancemeter.qml");
-                result = component.createObject(parent, { prefix: "qeeptrack.distance." } );
+                result = component.createObject(parent, { prefix: "qeeptrack.distance.", sources: sources } );
                 break;
             }
 
             case "speedometer": {
                 var component = Qt.createComponent("qrc:/Gauges/Speedometer.qml");
-                result = component.createObject(parent, { prefix: "qeeptrack.speedometer." } );
+                result = component.createObject(parent, { prefix: "qeeptrack.speedometer.", sources: sources } );
                 break;
             }
 

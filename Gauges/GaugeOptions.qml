@@ -31,14 +31,11 @@ OptionsPage {
     }
 
     Item {
-    //Rectangle {
         id: gaugecontainer
         x: 10
         y: 10
         width: screen.portrait? parent.width-20: parent.height-20
         height: width
-        //color: "black"
-        //radius: width/2
     }
 
     OptionTabsLayout {
@@ -54,6 +51,8 @@ OptionsPage {
     function updateTabs() {
         console.log("GaugeOptions.updateTabs()",instance.sources,instance.targets)
         if (instance.sources) {
+            var sources = instance.sources;
+
             for (var i=0; i<gaugeref.targets.length; i++)
             {
                 console.log("Adding tab:", gaugeref.targets[i].name)
@@ -66,10 +65,10 @@ OptionsPage {
                 var radiobox = component.createObject(temp, { } );
                 tabitem.addBox(radiobox)
 
-                for (var j=0; j<gaugeref.sources.length; j++)
+                for (var j=0; j<sources.length; j++)
                 {
                     component = Qt.createComponent("qrc:/Components/OptionRadioButton.qml");
-                    var optionradiobutton = component.createObject(temp, { text: gaugeref.sources[j].name } );
+                    var optionradiobutton = component.createObject(temp, { text: sources[j].title } );
                     radiobox.addButton(optionradiobutton)
                 }
                 gaugeref.targets[i].setMode(instance.targets[i].mode)

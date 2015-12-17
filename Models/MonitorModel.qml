@@ -10,13 +10,13 @@ Item {
     property bool testmode: false
 
     property list<QtObject> availablesources: [
-        DoubleSource   { id: tripDistance;      title: "Trip Distance";      name: "tripdistance";      units: "m" },
-        DoubleSource   { id: totalDistance;     title: "Total Distance";     name: "totaldistance";     units: "m" },
-        DoubleSource   { id: remainingDistance; title: "Remaining Distance"; name: "remainingdistance"; units: "m" },
-        DoubleSource   { id: remainingAscent;   title: "Remaining Ascent";   name: "remainingascent";   units: "m" },
-        DateSource     { id: remainingTime;     title: "Remaining Time";     name: "remainingtime";     units: "date" },
-        RotationSource { id: bearing;           title: "Bearing";            name: "bearing";           units: "degrees" },
-        DoubleSource   { id: averageSpeed;      title: "Average Speed";      name: "averagespeed";      units: "km/h" }
+        DoubleSource   { id: tripDistance;      title: "Trip Distance";      gaugetype: "distance";    units: "m" },
+        DoubleSource   { id: totalDistance;     title: "Total Distance";     gaugetype: "distance";    units: "m" },
+        DoubleSource   { id: remainingDistance; title: "Remaining Distance"; gaugetype: "distance";    units: "m" },
+        DoubleSource   { id: remainingAscent;   title: "Remaining Ascent";   gaugetype: "altimeter";   units: "m" },
+        DateSource     { id: remainingTime;     title: "Remaining Time";     gaugetype: "clock";       units: "date" },
+        RotationSource { id: bearing;           title: "Bearing";            gaugetype: "compass";     units: "degrees" },
+        DoubleSource   { id: averageSpeed;      title: "Average Speed";      gaugetype: "speedometer"; units: "km/h" }
     ]
 
     property var position

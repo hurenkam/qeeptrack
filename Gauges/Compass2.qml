@@ -16,40 +16,34 @@ Item {
         Component.onCompleted: root.loadSettings()
     }
 
-    property list<QtObject> sources: [
-        Item { id: north;   property string name: "North";            property double source: 0 },
-        Item { id: heading; property string name: "Current Heading";  property double source: compassmodel.availablesources[1].value },
-        Item { id: course;  property string name: "Current Course";   property double source: compassmodel.availablesources[0].value },
-        Item { id: bearing; property string name: "Current Bearing";  property double source: monitormodel.availablesources[5].value }
-    ]
-
+    property list<QtObject> sources
     property list<QtObject> targets: [
         Item {
             id: dial;
             property string name: "Dial";
             property int mode: 0;
-            property double value: up.value + sources[mode].source
+            property double value: up.value + sources[mode].value
             function setMode(value,name) { mode = value }
         },
         Item {
             id: needle;
             property string name: "Needle";
             property int mode: 1;
-            property double value: up.value + sources[mode].source
+            property double value: up.value + sources[mode].value
             function setMode(value,name) { mode = value }
         },
         Item {
             id: up;
             property string name: "Up";
             property int mode: 1;
-            property double value: 360 - sources[mode].source
+            property double value: 360 - sources[mode].value
             function setMode(value,name) { mode = value }
         },
         Item {
             id: ring;
             property string name: "Ring";
             property int mode: 3;
-            property double value: up.value + sources[mode].source
+            property double value: up.value + sources[mode].value
             function setMode(value,name) { mode = value }
         }
     ]

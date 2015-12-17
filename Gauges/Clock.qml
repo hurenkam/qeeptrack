@@ -10,11 +10,7 @@ Item {
     property bool enableanimations: false
 
     property string name: "clock"
-    property list<QtObject> sources: [
-        Item { id: currenttime;   property string name: "Current Time";   property date source: clockmodel.availablesources[0].value },
-        Item { id: elapsedtime;   property string name: "Elapsed Time";   property date source: clockmodel.availablesources[1].value },
-        Item { id: remainingtime; property string name: "Remaining Time"; property date source: monitormodel.availablesources[4].value }
-    ]
+    property list<QtObject> sources
 
     SettingsDatabase {
         id: settings
@@ -29,7 +25,7 @@ Item {
             id: analog;
             property string name: "Analog";
             property int mode: 0;
-            property date value: sources[mode].source
+            property date value: sources[mode].value
             function setMode(value,name) {
                 disableAnimations();
                 analog.mode = value;
@@ -40,7 +36,7 @@ Item {
             id: top;
             property string name: "Top";
             property int mode: 1;
-            property date value: sources[mode].source
+            property date value: sources[mode].value
             function setMode(value,name) {
                 disableAnimations();
                 top.mode = value;
@@ -51,7 +47,7 @@ Item {
             id: bottom;
             property string name: "Bottom";
             property int mode: 2;
-            property date value: sources[mode].source
+            property date value: sources[mode].value
             function setMode(value,name) {
                 disableAnimations();
                 bottom.mode = value;

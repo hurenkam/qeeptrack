@@ -3,7 +3,7 @@ import QtQuick 2.0
 Item {
     id: root
     property string title
-    property string name
+    property string gaugetype
     property double value
     property string units
     property alias  duration: valueanimation.duration

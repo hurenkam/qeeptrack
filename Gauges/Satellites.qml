@@ -42,7 +42,6 @@ Rectangle {
                     angle: azimuth - 180
                 }
             ]
-
         }
     }
 }

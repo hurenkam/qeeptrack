@@ -14,6 +14,9 @@ Item {
     property string secondhandimagesource
     property int divider: 1000
     property int digits: 1
+    property int shorthanddivider: 100
+    property int longhanddivider: 10
+    property int secondhanddivider: 1
 
     SettingsDatabase {
         id: settings
@@ -25,11 +28,11 @@ Item {
 
     property list<QtObject> sources
     property list<QtObject> targets: [
-        Item { id: analog; property string name: "Analog";  property int mode: 0; property double value: sources[mode].source
+        Item { id: analog; property string name: "Analog";  property int mode: 0; property double value: sources[mode].value
             function setMode(value,name) { mode = value } },
-        Item { id: top;    property string name: "Top";     property int mode: 1; property double value: sources[mode].source
+        Item { id: top;    property string name: "Top";     property int mode: 1; property double value: sources[mode].value
             function setMode(value,name) { mode = value } },
-        Item { id: bottom; property string name: "Bottom";  property int mode: 2; property double value: sources[mode].source
+        Item { id: bottom; property string name: "Bottom";  property int mode: 2; property double value: sources[mode].value
             function setMode(value,name) { mode = value } }
     ]
     property double analogvalue: analog.value
@@ -107,7 +110,7 @@ Item {
             id: shorthand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analog.value/(100*root.divider) * 360
+            angle: -180 + analog.value/(root.shorthanddivider*root.divider) * 360
             Behavior on angle {
                 id: shorthandanimation
                 enabled: false
@@ -125,7 +128,7 @@ Item {
             id: longhand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analog.value/(10*root.divider) * 360
+            angle: -180 + analog.value/(root.longhanddivider*root.divider) * 360
             Behavior on angle {
                 id: longhandanimation
                 enabled: false
@@ -143,7 +146,7 @@ Item {
             id: secondhand
             origin.x: width/2
             origin.y: height/2
-            angle: -180 + analog.value/root.divider * 360
+            angle: -180 + analog.value/(root.secondhanddivider*root.divider) * 360
             Behavior on angle {
                 id: secondhandanimation
                 enabled: false

@@ -11,9 +11,10 @@ Item {
     property bool enableanimations: true
 
     property list<QtObject> availablesources: [
-        RotationSource { id: course;      title: "Course";      name: "course";      units: "degrees" },
-        RotationSource { id: heading;     title: "Heading";     name: "heading";     units: "degrees" },
-        DoubleSource   { id: calibration; title: "Calibration"; name: "calibration"; units: "fraction" }
+        RotationSource { id: north;       title: "North";       gaugetype: "compass"; units: "degrees"; value: 0.0 },
+        RotationSource { id: course;      title: "Course";      gaugetype: "compass"; units: "degrees"  },
+        RotationSource { id: heading;     title: "Heading";     gaugetype: "compass"; units: "degrees"  },
+        DoubleSource   { id: calibration; title: "Calibration"; gaugetype: "level";   units: "fraction" }
     ]
 
     property bool testmode: false

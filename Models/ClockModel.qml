@@ -7,8 +7,8 @@ Item {
     property date elapsed: new Date(0,0,0)
 
     property list<QtObject> availablesources: [
-        DateSource { id: time;        title: "Time";    name: "time";    units: "date"; onValueChanged: timeUpdate(value) },
-        DateSource { id: elapsedtime; title: "Elapsed"; name: "elapsed"; units: "date"; onValueChanged: elapsedUpdate(value) }
+        DateSource { id: time;        title: "Current Time"; gaugetype: "clock"; units: "date"; onValueChanged: timeUpdate(value) },
+        DateSource { id: elapsedtime; title: "Elapsed Time"; gaugetype: "clock"; units: "date"; onValueChanged: elapsedUpdate(value) }
     ]
 
     signal timeUpdate(date value)

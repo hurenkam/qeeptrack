@@ -7,12 +7,12 @@ Item {
     readonly property bool valid: internal.valid
 
     property list<QtObject> availablesources: [
-        DoubleSource { id: current; title: "Current"; name: "current"; units: "m" },
-        DoubleSource { id: average; title: "Average"; name: "average"; units: "m" },
-        DoubleSource { id: minimum; title: "Minimum"; name: "minimum"; units: "m" },
-        DoubleSource { id: maximum; title: "Maximum"; name: "maximum"; units: "m" },
-        DoubleSource { id: ascent;  title: "Ascent";  name: "ascent";  units: "m" },
-        DoubleSource { id: descent; title: "Descent"; name: "descent"; units: "m" }
+        DoubleSource { id: current; title: "Current"; gaugetype: "altimeter"; units: "m" },
+        DoubleSource { id: average; title: "Average"; gaugetype: "altimeter"; units: "m" },
+        DoubleSource { id: minimum; title: "Minimum"; gaugetype: "altimeter"; units: "m" },
+        DoubleSource { id: maximum; title: "Maximum"; gaugetype: "altimeter"; units: "m" },
+        DoubleSource { id: ascent;  title: "Ascent";  gaugetype: "altimeter"; units: "m" },
+        DoubleSource { id: descent; title: "Descent"; gaugetype: "altimeter"; units: "m" }
     ]
 
     Item {
