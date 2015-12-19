@@ -5,7 +5,6 @@ import Proj4 1.0
 Item {
     id: root
 
-
     //============================
     // values to be set by client
     //============================
@@ -17,13 +16,15 @@ Item {
     property string xname: "Longitude"
     property string yname: "Latitude"
     property var inputbox
-
+    property bool islatlon: false
 
     //===================================
     // result values to be read by client
     //===================================
     property var forwarded
     property var reversed
+    property string forwardedx: forwarded.x.toFixed(digits).toString()
+    property string forwardedy: forwarded.y.toFixed(digits).toString()
 
     signal positionInput(var position)
 

@@ -51,7 +51,7 @@ Page {
         }
     }
 
-    property bool testmode: false
+    property bool testmode: true
     property bool enableanimations: false
     OrientationSensor {
         id: orientationsensor
@@ -258,6 +258,7 @@ Page {
         Wgs84Transformer {
             id: wgs84transformer
             coordinate: map.center
+            datumformat: mapoptions.selectedformat
             onPositionInput: {
                 console.log("wgs84transformer.input:",position.latitude,position.longitude)
             }
@@ -355,7 +356,7 @@ Page {
             }
             Text {
                 id: xtext
-                text: availableDatums[mapoptions.selecteddatum].forwarded.x.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
+                text: availableDatums[mapoptions.selecteddatum].forwardedx
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
@@ -368,7 +369,7 @@ Page {
             }
             Text {
                 id: ytext
-                text: availableDatums[mapoptions.selecteddatum].forwarded.y.toFixed(availableDatums[mapoptions.selecteddatum].digits).toString()
+                text: availableDatums[mapoptions.selecteddatum].forwardedy
                 color: "black"
                 font.bold: false; font.pointSize: screen.pointSize*0.5
                 style: Text.Raised; styleColor: "white"
