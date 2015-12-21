@@ -1,8 +1,9 @@
 import QtQuick 2.5
+import QtQuick.Layouts 1.2
 import Proj4 1.0
 import "qrc:/Components"
 
-Transformer {
+Proj4Transformer {
     id: root
     title: "WGS84"
     destination: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"

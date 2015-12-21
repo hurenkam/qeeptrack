@@ -2,7 +2,7 @@ import QtQuick 2.5
 import Proj4 1.0
 import "qrc:/Components"
 
-Transformer {
+Proj4Transformer {
     id: root
     title: "UTM"
     destination: "+proj=utm +zone=" + zone.toString() + ((south)?" +south":"") + " " + ellps + " " + datum + " " + extra

@@ -55,6 +55,10 @@ Rectangle {
         }
     }
 
+    function confirm(callback) {
+        callback()
+    }
+
     Component.onCompleted: addLines()
     onChildrenChanged: addLines()
 }

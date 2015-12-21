@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Components/trip.png</file>
     </qresource>
     <qresource prefix="/Gauges">
         <file alias="secondhand.png">Gauges/secondhand.png</file>
@@ -102,10 +101,12 @@
         <file alias="OptionTextEdit.qml">Components/OptionTextEdit.qml</file>
         <file alias="route-2.png">Components/route-2.png</file>
     </qresource>
-    <qresource prefix="/Proj4">
-        <file alias="Transformer.qml">Proj4/Transformer.qml</file>
-        <file alias="Wgs84Transformer.qml">Proj4/Wgs84Transformer.qml</file>
-        <file alias="UtmTransformer.qml">Proj4/UtmTransformer.qml</file>
-        <file alias="RDTransformer.qml">Proj4/RDTransformer.qml</file>
+    <qresource prefix="/Location">
+        <file alias="Transformer.qml">Location/Transformer.qml</file>
+        <file alias="Wgs84Transformer.qml">Location/Wgs84Transformer.qml</file>
+        <file alias="UtmTransformer.qml">Location/UtmTransformer.qml</file>
+        <file alias="RDTransformer.qml">Location/RDTransformer.qml</file>
+        <file alias="Proj4Transformer.qml">Location/Proj4Transformer.qml</file>
+        <file alias="AddressTransformer.qml">Location/AddressTransformer.qml</file>
     </qresource>
 </RCC>

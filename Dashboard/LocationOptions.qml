@@ -4,14 +4,19 @@ import "qrc:/Components"
 OptionsPage {
     id: root
 
-    property var datumbox
+    property var infobox
     property string prefix: "qeeptrack.locationoptions."
 
     signal positionChanged(var position)
 
     function confirm() {
-        console.log("LocationOptions.confirm()",datumbox,datumbox.title)
-        positionChanged(datumbox.getCoordinate())
+        console.log("LocationOptions.confirm()",infobox,infobox.title)
+        infobox.confirm(confirmed)
+    }
+
+    function confirmed() {
+        console.log("LocationOptions.confirmed()")
+        positionChanged(infobox.getCoordinate())
         pagestack.pop()
     }
 
@@ -49,11 +54,11 @@ OptionsPage {
         }
     }
     property var oldbox
-    onDatumboxChanged: {
-        console.log("LocationOptions.onDatumboxChanged()",datumbox.title)
+    onInfoboxChanged: {
+        console.log("LocationOptions.onDatumboxChanged()",infobox.title)
         if (oldbox)
             oldbox.parent = null
-        oldbox = datumbox
-        options.addBox(datumbox)
+        oldbox = infobox
+        options.addBox(infobox)
     }
 }

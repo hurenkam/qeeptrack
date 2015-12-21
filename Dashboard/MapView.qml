@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.2
 import Proj4 1.0
 import "qrc:/Components"
 import "qrc:/Models"
-import "qrc:/Proj4"
+import "qrc:/Location"
 
 Page {
     id: root
@@ -252,16 +252,15 @@ Page {
         activeMapType: supportedMapTypes[mapoptions.selectedmap]
     }
 
-
-
-    property list<QtObject> availableDatums: [
+    property list<QtObject> availableTransformers: [
+        AddressTransformer {
+            id: addresstransformer
+            coordinate: map.center
+        },
         Wgs84Transformer {
             id: wgs84transformer
             coordinate: map.center
             datumformat: mapoptions.selectedformat
-            onPositionInput: {
-                console.log("wgs84transformer.input:",position.latitude,position.longitude)
-            }
         },
         UtmTransformer {
             id: utmwgs84transformer
@@ -273,9 +272,6 @@ Page {
                 ? Math.floor((map.center.longitude - 180) / 6) + 1
                 : Math.floor((map.center.longitude + 180) / 6) + 1
             south: (map.center.latitude < 0)
-            onPositionInput: {
-                console.log("utmwgs84transformer.input:",position.latitude,position.longitude)
-            }
         },
         UtmTransformer {
             id: utmed50transformer
@@ -287,16 +283,10 @@ Page {
                 ? Math.floor((map.center.longitude - 180) / 6) + 1
                 : Math.floor((map.center.longitude + 180) / 6) + 1
             south: (map.center.latitude < 0)
-            onPositionInput: {
-                console.log("utmed50transformer.input:",position.latitude,position.longitude)
-            }
         },
         RDTransformer {
             id: rdtransformer
             coordinate: map.center
-            onPositionInput: {
-                console.log("rdtransformer.input:",position.latitude,position.longitude)
-            }
         }
     ]
 
@@ -304,13 +294,13 @@ Page {
         id: mapoptions
         title: "Map Options"
         maptypes: map.supportedMapTypes
-        datums: availableDatums
+        transformers: availableTransformers
     }
 
     LocationOptions {
         id: locationoptions
         title: "Location"
-        datumbox: availableDatums[mapoptions.selecteddatum].inputbox
+        infobox: availableTransformers[mapoptions.selectedtransformer].inputbox
         onPositionChanged: {
             console.log("locationoptions.onPositionChanged:",position.latitude,position.longitude)
             map.center = position
@@ -333,64 +323,13 @@ Page {
             onClicked: stack.push(mapoptions)
         }
 
-        GridLayout {
-            x: 15
-            y: 15
-            width: parent.width-30
-            height: parent.height-30
-            columns: 2
-            rows: 4
-
-            Text {
-                text: availableDatums[mapoptions.selecteddatum].title
-                color: "black"
-                font.bold: true; font.pointSize: screen.pointSize *0.7
-                style: Text.Raised; styleColor: "white"
-                Layout.columnSpan: 2
-            }
-            Text {
-                text: availableDatums[mapoptions.selecteddatum].xname
-                color: "black"
-                font.bold: true; font.pointSize: screen.pointSize*0.5
-                style: Text.Raised; styleColor: "white"
-            }
-            Text {
-                id: xtext
-                text: availableDatums[mapoptions.selecteddatum].forwardedx
-                color: "black"
-                font.bold: false; font.pointSize: screen.pointSize*0.5
-                style: Text.Raised; styleColor: "white"
-            }
-            Text {
-                text: availableDatums[mapoptions.selecteddatum].yname
-                color: "black"
-                font.bold: true; font.pointSize: screen.pointSize*0.5
-                style: Text.Raised; styleColor: "white"
-            }
-            Text {
-                id: ytext
-                text: availableDatums[mapoptions.selecteddatum].forwardedy
-                color: "black"
-                font.bold: false; font.pointSize: screen.pointSize*0.5
-                style: Text.Raised; styleColor: "white"
-            }
-            Text {
-                text: "Dist:"
-                color: "black"
-                visible: (distancedisplay.distance !== 0)
-                font.bold: true; font.pointSize: screen.pointSize*0.5
-                style: Text.Raised; styleColor: "white"
-            }
-            Text {
-                id: distancedisplay
-                //text: map.center.longitude.toFixed(8).toString()
-                property double distance: (distancemode=="wpt")? map.center.distanceTo(monitormodel.waypoint)/1000 : monitormodel.routeDistance/1000
-                text: distance.toFixed(3).toString()
-                visible: (distance !== 0)
-                color: "black"
-                font.bold: false; font.pointSize: screen.pointSize*0.5
-                style: Text.Raised; styleColor: "white"
-            }
+        property var oldbox
+        property var outputbox: availableTransformers[mapoptions.selectedtransformer].outputbox
+        onOutputboxChanged: {
+            if (oldbox)
+                oldbox.parent = null
+            oldbox = outputbox
+            outputbox.parent = infobox
         }
     }
 
