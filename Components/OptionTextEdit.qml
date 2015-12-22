@@ -28,6 +28,6 @@ OptionItem {
         font.italic: true
         font.pointSize: screen.pointSize
         clip: true
-        onCursorVisibleChanged: cursorPosition = length
+        onFocusChanged: cursorPosition = length
     }
 }
