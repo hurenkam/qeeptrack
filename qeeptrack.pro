@@ -182,10 +182,12 @@ ICON = splash.icns
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
-# Default rules for deployment.
-include(deployment.pri)
-
 INCLUDEPATH += proj.4/src
+
+*-msvc2015 {
+    INCLUDEPATH += "C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"
+    LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x64"
+}
 
 HEADERS += \
     satellitemodel.h \
@@ -202,3 +204,7 @@ HEADERS += \
     proj.4/src/org_proj4_Projections.h \
     proj.4/src/proj_config.h
 
+ANDROID_PACKAGE_SOURCE_DIR = Android
+
+# Default rules for deployment.
+include(deployment.pri)
